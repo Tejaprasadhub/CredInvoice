@@ -1,1 +1,143 @@
-<p>dashboard works!</p>
+<div class="row app-container">
+    <div class="col-md-12">
+        <div class="row align-items-center">
+            <div class="col">
+                <h4>Welcome, Buyer Name</h4>
+            </div>
+            <div class="col-auto">
+                <p-button icon="pi pi-plus" label="Create a New Invoice"></p-button>
+            </div>
+        </div>
+        <div class="row align-items-center">
+            <div class="col">
+                <p-dropdown [options]="cities" [(ngModel)]="selectedCity" optionLabel="name"
+                    placeholder="Select a City" />
+            </div>
+            <div class="col">
+                <p-dropdown [options]="custom" [(ngModel)]="selectedCustom" optionLabel="name"
+                    placeholder="Select Custom" />
+            </div>
+            <div class="col">
+                <p-calendar [(ngModel)]="date1" [showIcon]="true" [showOnFocus]="false" inputId="buttondisplay"
+                    placeholder="From Date" />
+            </div>
+            <div class="col">
+                <p-calendar [(ngModel)]="date1" [showIcon]="true" [showOnFocus]="false" inputId="buttondisplay"
+                    placeholder="To Date" />
+            </div>
+            <div class="col-auto">
+                <p-button icon="pi pi-plus" class="btn-secondary" label="Download Reports"></p-button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <p-card>
+                    <ng-template pTemplate="header">
+                        <img alt="Card" class="img-fluid" src="/assets/icons/dashboard_receipt.png" /> Active Invoices
+                    </ng-template>
+                        <div class="row align-items-baseline">
+                            <div class="col-auto pr-0">
+                                <span class="value">77</span>
+                            </div>
+                            <div class="col pl-0">
+                                <span class="label">Active</span>
+                            </div>
+                        </div>
+                </p-card>
+            </div>
+            <div class="col">
+                <p-card>
+                    <ng-template pTemplate="header">
+                        <img alt="Card" class="img-fluid" src="/assets/icons/dashboard_payment.png" /> Total Upcoming Payments
+                    </ng-template>
+                        <div class="row align-items-baseline">
+                            <div class="col-auto pr-0">
+                                <span class="value"><i class="pi pi-indian-rupee"></i>7.77</span>
+                            </div>
+                            <div class="col pl-0">
+                                <span class="label">Crores</span>
+                            </div>
+                        </div>
+                </p-card>
+            </div>
+            <div class="col">
+                <p-card>
+                    <ng-template pTemplate="header">
+                        <img alt="Card" class="img-fluid" src="/assets/icons/dashboard_upcoming.png" /> Upcoming Payment
+                    </ng-template>
+                        <div class="row align-items-baseline">
+                            <div class="col-auto pr-0">
+                                <span class="value"><i class="pi pi-indian-rupee"></i>77</span>
+                            </div>
+                            <div class="col pl-0">
+                                <span class="label">Lakhs</span> <small class="small-label pl-4">Jan 30 2024</small>
+                            </div>
+                        </div>
+                </p-card>
+            </div>
+            <div class="col">
+                <p-card>
+                    <ng-template pTemplate="header">
+                        <img alt="Card" class="img-fluid" src="/assets/icons/dashboard_previous.png" /> Previous Payment
+                    </ng-template>
+                        <div class="row align-items-baseline">
+                            <div class="col-auto pr-0">
+                                <span class="value"><i class="pi pi-indian-rupee"></i>77</span>
+                            </div>
+                            <div class="col pl-0">
+                                <span class="label">Lakhs</span> <small class="small-label pl-4">Dec 31 2024</small>
+                            </div>
+                        </div>
+                </p-card>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <p-card>
+                    <ng-template pTemplate="header">
+                         Payment Summary
+                    </ng-template>
+                        <div class="row align-items-baseline">
+                            <p-chart type="doughnut" [data]="data" [options]="options" />
+                        </div>
+                </p-card>
+            </div>
+            <div class="col">
+                <p-card>
+                    <ng-template pTemplate="header">
+                        Utilization Summary
+                    </ng-template>
+                        <div class="row align-items-baseline">
+                            <p-chart type="pie" [data]="data1" [options]="options1" />
+                        </div>
+                </p-card>
+            </div>
+            <div class="col">
+                <p-card>
+                    <ng-template pTemplate="header">
+                         Payment History
+                    </ng-template>
+                        <div class="row align-items-baseline">
+                            <p-dataView #dv [value]="products">
+                                <ng-template pTemplate="list" let-products>
+                                        <div class="col-12" *ngFor="let item of products; let first = first" class="col-12">
+                                           <div class="row align-items-center">
+                                            <div class="col-auto">
+                                                <img alt="Card" class="img-fluid" src="/assets/icons/dashboard_payment_right.png" />
+                                            </div>
+                                            <div class="col">
+                                                <span class="small-label"><strong><i class="pi pi-indian-rupee"></i>77 Lakhs</strong><p class="mb-0">Seller Name</p></span>
+                                            </div>
+                                            <div class="col-auto">
+                                                <small class="small-label pl-4">Dec 31 2024</small>
+                                            </div>
+                                           </div>
+                                        </div>
+                                </ng-template>
+                            </p-dataView>
+                        </div>
+                </p-card>
+            </div>
+        </div>
+    </div>
+</div>

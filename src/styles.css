@@ -11,7 +11,7 @@
   --font-family: 'Montserrat', sans-serif;
   --base-font-size: 14px;
   --header-padding: 20px;
-  --bg-color: #FAFAFA;
+  --bg-color:#f7f2f2;
   --box-shadow: 0px 0px 8px 0px rgba(70, 128, 245, 0.16);
   --border: #dddddd;
   --white: #fff;
@@ -23,11 +23,15 @@
   --gray: #566a7f;
 }
 
+.app-container{
+padding: 10px 20px;
+}
+
 /* Apply variables throughout the CSS */
 body {
   font-family: var(--font-family);
   font-size: var(--base-font-size);
-  background-color: var(--bg-color);
+  background: var(--bg-color) !important;
   color: var(--secondary);
   font-weight: 400;
   overflow-x: hidden;
@@ -91,9 +95,12 @@ label {
 }
 
 .p-card {
-  border: 0;
+  border: 1;
   box-shadow: none;
   color: var(--secondary);
+  border: 1px solid var(--border);
+    padding: 5px;
+    background: var(--white);
 }
 
 p,
@@ -160,7 +167,7 @@ input::-webkit-input-placeholder {
   border: 1px solid var(--border);
   background-color: var(--white);
   border-radius: 0;
-  padding: 8px 16px;
+  padding: 5px 16px;
   width: 100%;
   color: var(--secondary);
   font-weight: 400;
@@ -216,13 +223,17 @@ button.p-element.btn-cirle {
   color: var(--white);
   background: var(--primary);
   border: 1px solid var(--primary);
-  padding: 8px 16px;
+  padding: 5px 16px;
   transition: background-color 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s;
   border-radius: 6px;
   outline-color: transparent;
   border-radius: 0;
   justify-content: center;
-  width: 100%
+  width: 100%;  
+}
+
+.p-button-label{
+    font-size: 15px;
 }
 
 .error-alignment {
@@ -278,7 +289,7 @@ button.p-element.btn-cirle {
 .p-card .p-card-body,
 .p-card .p-card-content,
 .p-multiselect-label.p-placeholder {
-  padding: 0;
+  /* padding: 0; */
 }
 
 .p-tabview-nav {

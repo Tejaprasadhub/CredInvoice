@@ -1,0 +1,47 @@
+::ng-deep {
+    .p-card {
+        padding: 10px 0px;
+        .p-card-header {
+            padding: 0px 20px;
+            color: var(--secondary);
+            font-family: Inter;
+            font-weight: 500;
+            font-size: 13px;
+            line-height: 140%;
+            letter-spacing: 0%;
+            img {
+                width: 20px;
+                height: 20px;
+                margin-right: 10px;
+            }
+        }
+
+        .p-card-body {
+            padding: 0px 20px;
+
+            .p-card-content {
+                padding: 0;
+
+                .value {
+                    font-family: Inter;
+                    font-weight: 600;
+                    font-size: 36px;
+                    line-height: 44px;
+                    letter-spacing: 0%;
+                    margin-right: 10px;
+                }
+
+                .label {
+                    font-family: Inter;
+                    font-weight: 400;
+                    font-size: 18px;
+                    line-height: 28px;
+                    letter-spacing: 0%;
+                }
+                .small-label{
+                   color: var(--sub-title);
+                }
+            }
+        }
+    }
+}
