@@ -1,0 +1,66 @@
+<div class="cred-invoice container text-center">
+    <div class="content-box">
+    <div class="row align-items-center">
+        <div class="col-md-6">
+            <div class="row">
+                <div class="col-12 platform-logo ">
+                    <div class="align-items-center d-flex justify-content-center">
+                        <img class="logo" alt="Logo Image" class="img-fluid w-50" src="assets/logo.png" /> 
+                    </div>                  
+                </div>
+                <div class="col-12 mt-2 heading">
+                    <div class="row">
+                        <span class="header-title"><h5>Sign In to Your Account</h5></span>
+                    </div>
+                    <div class="row">
+                        <span class="sub-title">Please enter your registered account credentials</span>
+                    </div>
+                </div>
+                <div class="col-12 inputs">
+                    <div class="row">
+                        <div class="col-2"></div>
+                        <div class="col-8">
+                            <div class="flex flex-column mb-2 text-left">
+                                <label for="username">Email</label>
+                                <input pInputText id="username" aria-describedby="username-help" />
+                                <!-- <small id="username-help">Enter your username.</small> -->
+                            </div>
+                            <div class="flex flex-column mb-2 text-left">
+                                <label for="username">Password</label>
+                                <input pInputText id="username" aria-describedby="username-help" />
+                                <!-- <small id="username-help">Enter your password.</small> -->
+                            </div>
+                            <div class="flex flex-column mb-2  text-left">
+                                <a href="javascript:void(0)" class="forgotPassword" (click)="forgotPassword()">Forgot Password?</a>
+                            </div>
+                            <div class="flex flex-column  text-left">
+                                <p-button label="Sign In" (click)="signin()"></p-button>
+                            </div>
+                        </div>
+                        <div class="col-2"></div>
+                    </div>                    
+                </div>     
+                <div class="col-12">
+                    <div class="row mt-4">
+                        <div class="col-2"></div>
+                        <div class="col-8">
+                            <div class="row">
+                                <span class="sub-title">New to Cred Invoice?<br/>
+                                    Sign up to unlock smarter financial solutions!</span>
+                            </div>
+                            <div class="row">
+                                <p-button class="btn-secondary" (click)="signup()" label="Sign Up Now!"></p-button>
+                            </div>
+                        </div>
+                        <div class="col-2"></div>
+                    </div>
+                    
+                </div>          
+            </div>
+        </div>
+        <div class="col-md-6">
+            <img alt="Login Image" class="img-fluid" src="assets/login-image.png" /> 
+        </div>
+    </div>
+</div>
+</div>

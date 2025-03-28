@@ -1,0 +1,658 @@
+/* You can add global styles to this file, and also import other style files */
+/* PrimeNG theme */
+
+
+/* :root selector to define CSS variables */
+:root {
+  --primary: #6986B0;
+  /* Blue */
+  --secondary: #0E0F12;
+  /* dark black */
+  --font-family: 'Montserrat', sans-serif;
+  --base-font-size: 14px;
+  --header-padding: 20px;
+  --bg-color: #FAFAFA;
+  --box-shadow: 0px 0px 8px 0px rgba(70, 128, 245, 0.16);
+  --border: #dddddd;
+  --white: #fff;
+  --link: #3A97CD;
+  --sub-title: #929496;
+  --danger: #ef4444;
+  --success: #22c55e;
+  --progress: #eab308;
+  --gray: #566a7f;
+}
+
+/* Apply variables throughout the CSS */
+body {
+  font-family: var(--font-family);
+  font-size: var(--base-font-size);
+  background-color: var(--bg-color);
+  color: var(--secondary);
+  font-weight: 400;
+  overflow-x: hidden;
+  overflow-y: hidden;
+}
+
+.pi {
+  font-family: 'primeicons' !important;
+  font-style: normal;
+  font-weight: normal;
+}
+
+.bg-white {
+  background-color: var(--white);
+}
+
+ul,
+.p-multiselect .p-multiselect-label {
+  padding: 0;
+}
+
+label {
+  font-family: var(--font-family);
+  font-size: var(--base-font-size);
+  color: var(--secondary);
+  font-weight: 400;
+}
+
+.required-label::after {
+  content: "* ";
+  color: var(--danger);
+  font-weight: bold;
+  padding-left: 3px;
+}
+
+.text-xs {
+  color: var(--gray-600);
+}
+
+.p-multiselect .p-multiselect-label.p-placeholder,
+.p-multiselect .p-multiselect-trigger,
+.p-dropdown .p-dropdown-trigger {
+  color: var(--secondary);
+}
+
+.p-dropdown-panel .p-dropdown-items .p-dropdown-item.p-highlight {
+  color: var(--white);
+}
+
+.p-dropdown-panel .p-dropdown-items .p-dropdown-item.p-highlight.p-focus {
+  background: var(--primary);
+}
+
+.p-dropdown-panel .p-dropdown-items .p-dropdown-item:not(.p-highlight):not(.p-disabled).p-focus {
+  color: var(--white);
+  background: var(--primary);
+}
+
+.p-dropdown-panel .p-dropdown-items .p-dropdown-item {
+  color: var(--secondary);
+}
+
+.p-card {
+  border: 0;
+  box-shadow: none;
+  color: var(--secondary);
+}
+
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  padding: 0;
+  margin: 0;
+}
+
+.field-checkbox,
+.field-radiobutton {
+  margin: 0;
+}
+
+.field>label {
+  margin-bottom: 0.2rem;
+}
+
+.field {
+  margin-bottom: 0.6rem;
+}
+
+.mgb-100 {
+  margin-bottom: 100px;
+}
+
+.container {
+  width: 1440px;
+}
+
+a,
+a:hover,
+a:active,
+a:focus {
+  color: var(--link);
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.card {
+  border: none;
+  border-radius: 0;
+}
+
+.flex-d-clm {
+  flex-direction: column;
+}
+
+.box-shadow {
+  box-shadow: var(--box-shadow);
+  background-color: var(--white);
+}
+
+input::-webkit-input-placeholder {
+  font: 1rem;
+}
+
+.p-inputtext,
+.p-multiselect {
+  border: 1px solid var(--border);
+  background-color: var(--white);
+  border-radius: 0;
+  padding: 8px 16px;
+  width: 100%;
+  color: var(--secondary);
+  font-weight: 400;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:focus {
+  transition: background-color 0s 600000s, color 0s 600000s !important;
+}
+
+.login-form h4 {
+  color: var(--secondry);
+  font-weight: 600;
+  font-size: 1.2rem;
+}
+
+.login-wrapper {
+  position: relative;
+}
+
+.login-img {
+  position: absolute;
+  top: -44px;
+  left: 0;
+  right: 0;
+}
+
+.login-form .p-button {
+  margin-top: 16px;
+  width: 100%;
+}
+
+.p-password.p-component {
+  width: 100%;
+}
+
+.p-button:focus {
+  box-shadow: 0 0 0 2px var(--white), 0 0 0 4px var(--link), 0 1px 2px 0 var(--secondary);
+}
+
+button.p-element.btn-cirle {
+  border-radius: 100%;
+  width: 24px;
+  height: 24px;
+  line-height: 0px;
+  padding: 0;
+  background: transparent;
+  color: var(--primary);
+  font-size: 0.5rem;
+}
+
+.p-button {
+  color: var(--white);
+  background: var(--primary);
+  border: 1px solid var(--primary);
+  padding: 8px 16px;
+  transition: background-color 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s;
+  border-radius: 6px;
+  outline-color: transparent;
+  border-radius: 0;
+  justify-content: center;
+  width: 100%
+}
+
+.error-alignment {
+  position: relative;
+}
+
+.error-alignment .p-error {
+  position: absolute;
+}
+
+.p-phrmacist .pi {
+  font-size: 0.8rem;
+}
+
+.footer-content {
+  padding: 16px;
+  vertical-align: middle;
+  background: var(--white);
+  font-size: 14px;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
+
+.border-left-1 {
+  border-left: 1px solid var(--border);
+}
+
+.reg-header-section {
+  padding: 16px 0 40px;
+}
+
+.header-title h5 {
+  font-weight: 700;
+  line-height: 26px;
+}
+
+.sub-title {
+  color: var(--sub-title);
+  font-size: 14px;
+  line-height: 26px;
+}
+
+.p-tabview .p-tabview-panels {
+  background: var(--white);
+  padding: 0;
+  border: 0 none;
+  color: var(--secondary);
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.p-card .p-card-body,
+.p-card .p-card-content,
+.p-multiselect-label.p-placeholder {
+  padding: 0;
+}
+
+.p-tabview-nav {
+  margin-bottom: 0;
+}
+
+.tab-body-inner {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.p-tabview .p-tabview-nav li.p-highlight .p-tabview-nav-link {
+  background: var(--white);
+  border-color: var(--primary);
+}
+
+.p-calendar.p-calendar-w-btn .p-button {
+  width: auto;
+  background: transparent;
+  border: 1px solid var(--border);
+  border-left: 0;
+  color: var(--secondary);
+}
+
+.p-datepicker table td.p-datepicker-today>span,
+.p-datepicker:not(.p-disabled) table td span:not(.p-highlight):not(.p-disabled):hover {
+  background: var(--primary);
+  color: var(--white);
+  border-color: transparent;
+}
+
+.p-calendar.p-calendar-w-btn {
+  width: 100%;
+}
+
+.custom-flex-d-clm {
+  display: flex;
+  flex-direction: column;
+}
+
+.p-dropdown-label.p-inputtext {
+  border: 0;
+  border-radius: 0;
+}
+
+.p-dropdown,
+.p-dropdown:not(.p-disabled).p-focus {
+  background: var(--white);
+  width: 100%;
+  border: 1px solid var(--border);
+  transition: background-color 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s;
+  border-radius: 0;
+}
+
+.int {
+  position: absolute;
+  display: block;
+}
+
+.justify-end {
+  justify-content: end;
+}
+
+.btn-secondary .p-button,
+.btn-secondary .p-button-label {
+  background: var(--white);
+  color: var(--primary);
+}
+
+.custom-gap-1 {
+  gap: 1.1rem !important
+}
+
+.p-tabview-panel {
+  padding: 16px;
+}
+
+.storehours-secttion {
+  display: flex;
+  justify-content: space-between;
+}
+
+.p-checkbox .p-checkbox-box {
+  border: 1px solid var(--border);
+  width: 22px;
+  height: 22px;
+  color: var(--secondary);
+  border-radius: 0;
+  transition: background-color 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s;
+  outline-color: transparent;
+}
+
+.p-button-label {
+  font-weight: 500;
+}
+
+.p-checkbox .p-checkbox-box.p-highlight,
+.p-radiobutton .p-radiobutton-box.p-highlight {
+  border-color: var(--primary);
+  background: var(--primary);
+}
+
+.p-checkbox:not(.p-checkbox-disabled) .p-checkbox-box.p-focus {
+  outline: 0 none;
+  outline-offset: 0;
+  box-shadow: 0 0 0 0.1rem var(--link);
+  border-color: var(--link);
+}
+
+.p-radiobutton .p-radiobutton-box:not(.p-disabled):not(.p-highlight):hover {
+  border: 1px solid var(--primary);
+}
+
+.p-datepicker {
+  padding: 0;
+  background: var(--white);
+  color: var(--primary);
+  border: 0;
+  border-radius: 0;
+}
+
+.p-datepicker .p-timepicker span {
+  font-size: 1rem;
+}
+
+.card-header {
+  background: transparent;
+  padding: 0 0 8px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 1rem;
+}
+
+.card-title h4 {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.p-error {
+  color: var(--danger);
+}
+
+.p-phrmacist {
+  border: 1px solid var(--border);
+  padding: 10px;
+}
+
+.p-button-rounded {
+  border-radius: 20px;
+  font-weight: bold;
+}
+
+label.int-text {
+  margin: 0;
+  font-size: smaller;
+  color: var(--gray-600);
+}
+
+label.int-text span {
+  font-weight: 600;
+}
+
+.p-radiobutton .p-radiobutton-box {
+  border: 1px solid var(--border);
+  background: var(--white);
+  width: 22px;
+  height: 22px;
+  color: var(--secondary);
+  border-radius: 50%;
+  transition: background-color 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s;
+  outline-color: transparent;
+}
+
+.border-solid {
+  background: transparent;
+  color: var(--border);
+}
+
+.border-solid span.p-button-icon.pi.pi-times {
+  color: var(--primary);
+}
+
+button.p-element.btn-cirle {
+  border-radius: 100%;
+  width: 24px;
+  height: 24px;
+  line-height: 0px;
+}
+
+small.p-error.pharmacy-error {
+  margin-top: 12px;
+  display: block;
+}
+
+.scuessicon {
+  color: var(--success);
+}
+
+.register-main-wrapper i.pi.pi-check-circle.success-icon:before {
+  font-size: 34px;
+}
+
+.right-space {
+  margin-right: 5px;
+}
+
+.router-link {
+  color: var(--link);
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+/*Dashboard*/
+.p-overlay-badge .p-badge {
+  position: absolute;
+  bottom: 0px;
+  right: 5px;
+  transform: translate(50%, -50%);
+  transform-origin: 100% 0;
+  margin: 0;
+}
+
+.p-badge.p-badge-danger {
+  background-color: var(--success);
+}
+
+.p-badge {
+  display: inline-block;
+  border-radius: 10px;
+  text-align: center;
+  padding: 5px;
+  min-width: 1px;
+  height: 1px;
+  line-height: 0;
+}
+
+.no-bdr {
+  border: none;
+}
+
+input:focus-visible {
+  outline: 0;
+}
+
+.search-bar .p-button {
+  color: var(--sub-title);
+  background: none;
+  border: none;
+  padding: 8px 0;
+}
+
+.search-bar .p-button.p-button-icon-only {
+  width: auto;
+}
+
+.border-bottom-2 {
+  border-bottom-width: 1px !important;
+  border-bottom: 1px solid var(--border);
+}
+
+.border-top-2 {
+  border-top-width: 1px !important;
+  border-top: 1px solid var(--border);
+}
+
+.overlay-head h6 {
+  font-weight: 600;
+}
+
+ul {
+  list-style-type: none;
+  margin: 0;
+}
+
+.danger-count {
+  color: var(--danger);
+}
+
+.success-count {
+  color: var(--success);
+}
+
+.progress-count {
+  color: var(--progress);
+}
+
+.card-section .p-card .p-card-title {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 0;
+  color: var(--primary);
+}
+
+.card-section .p-card .p-card-subtitle {
+  color: var(--gray);
+  font-size: 3rem;
+  line-height: 1;
+  font-weight: 600;
+}
+
+.icon-section i {
+  color: var(--white);
+  background-color: var(--primary);
+  border-radius: 100%;
+}
+
+/*SideMenu*/
+/* .menu-width{ width: 16.25rem;} */
+.p-tree {
+  border: 0;
+  background: transparent;
+  color: unset;
+  padding: 0;
+  border-radius: 0;
+}
+
+.p-tree .p-tree-container .p-treenode .p-treenode-content {
+  border-radius: 0;
+  transition: box-shadow 0.2s;
+  padding: 0;
+}
+
+.side-menu-inner ul li.active {
+  background-color: var(--primary);
+}
+
+.side-menu-inner li.active a span,
+.side-menu-inner li.active a i {
+  font-weight: 500;
+  color: var(--white);
+}
+
+.side-menu-inner li:hover,
+.side-menu-inner li:hover button,
+.side-menu-inner li:hover span {
+  background-color: var(--primary);
+  color: var(--white);
+}
+
+.sidebar {
+  background: var(--white);
+  min-height: 768px;
+}
+
+.btn-primary.p-button {
+  background: transparent;
+  border: 1px solid var(--primary);
+  margin-right: 5px;
+  color: var(--link);
+  border-radius: 4px;
+}
+
+.btn-border.p-button {
+  background: transparent;
+  border: 1px solid var(--border);
+  margin-right: 5px;
+  color: var(--gray);
+  border-radius: 4px;
+}
+
+.btn-primary.p-button:hover {
+  background: var(--primary);
+  color: var(--white);
+}
+
+.btn-border.p-button:hover {
+  background: var(--gray);
+  color: var(--white);
+}
+
+.message {
+  padding: 10px;
+  background-color: #4caf50;
+  color: white;
+  border-radius: 5px;
+  margin-top: 10px;
+}

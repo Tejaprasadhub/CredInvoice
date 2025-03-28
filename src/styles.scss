@@ -1,0 +1,41 @@
+// /* You can add global styles to this file, and also import other style files */
+// :root {
+//     --app-bg-color: #ffffff;
+//     --app-button-bg-color: #0EA5E9;
+//     --app-button-border-color: #0EA5E9;
+//     --font-family: system-ui;
+//     --app-page-header-color: #374151;
+//     --app-page-helptext-color: #6B7280;
+//     --app-text-color: #6B7280;
+//     --app-text-highlight-color: #374151;
+//     --app-input-border-color: #BAE6FD;
+// }
+
+html * {
+    font-family: system-ui !important;
+}
+
+
+
+.cred-invoice {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    .content-box {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        min-height: 100%;
+        .platform-logo {
+            .title {
+                font-weight: 700;
+                font-size: 20px;
+                line-height: 28px;
+            }
+        }
+    }
+}

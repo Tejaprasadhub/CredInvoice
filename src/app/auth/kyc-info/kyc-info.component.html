@@ -1,0 +1,162 @@
+<div class="cred-invoice container text-center">
+    <div class="content-box">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-12 platform-logo ">
+                        <div class="align-items-center d-flex justify-content-center">
+                            <img class="logo" alt="Logo Image" class="img-fluid w-20rem" src="assets/logo.png" /> 
+                        </div>                  
+                    </div>
+                    <div class="col-md-12 mt-2 heading">
+                        <div class="row">
+                            <span class="header-title">
+                                <h5>Complete Your KYC Verification</h5>
+                            </span>
+                        </div>
+                        <div class="row">
+                            <span class="sub-title">Please complete your KYC verification by providing the required
+                                details below. Accurate information helps us verify your identity and business
+                                credentials securely. Your data will be safely stored and used solely for verification
+                                purposes. To avoid delays in approval, ensure that all uploaded documents are clear and
+                                valid. Once verified, you will gain full access to our platform and its financial
+                                tools.</span>
+                        </div>
+                    </div>
+                    <div class="col-md-12 inputs">
+                        <div class="row text-left">
+                            <span class="header-title">
+                                <h6>Choose your account type</h6>
+                            </span>
+                        </div>
+                        <div class="row d-block text-left mt-2">
+                            <p-chip label="Buyer" class="active" />
+                            <p-chip label="Seller" />
+                            <p-chip label="Financier" />
+                        </div>
+                        <div class="row text-left mt-3">
+                            <span class="header-title">
+                                <h6>Company details</h6>
+                            </span>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="flex flex-column mb-2 text-left">
+                                    <label for="username">Company Name</label>
+                                    <input pInputText id="username" aria-describedby="username-help" />
+                                    <!-- <small id="username-help">Enter your username.</small> -->
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="flex flex-column mb-2 text-left">
+                                    <label for="username">Email</label>
+                                    <input pInputText id="username" aria-describedby="username-help" />
+                                    <!-- <small id="username-help">Enter your username.</small> -->
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="flex flex-column mb-2 text-left">
+                                    <label for="username">Phone Number</label>
+                                    <input pInputText id="username" aria-describedby="username-help" />
+                                    <!-- <small id="username-help">Enter your username.</small> -->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row text-left mt-3">
+                            <span class="header-title">
+                                <h6>Business & Tax details</h6>
+                            </span>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="flex flex-column mb-2 text-left">
+                                    <label for="username">Business PAN</label>
+                                    <input pInputText id="username" aria-describedby="username-help" />
+                                    <!-- <small id="username-help">Enter your username.</small> -->
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="flex flex-column mb-2 text-left">
+                                    <label for="username">GSTIN</label>
+                                    <input pInputText id="username" aria-describedby="username-help" />
+                                    <!-- <small id="username-help">Enter your username.</small> -->
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="flex flex-column mb-2 text-left">
+                                    <label for="username">Upload PAN Image</label>
+                                    <!-- <p-fileUpload mode="basic" chooseLabel="Choose" chooseIcon="pi pi-upload"
+                                        name="demo[]" url="https://www.primefaces.org/cdn/api/upload.php"
+                                        accept="image/*" maxFileSize="1000000"
+                                        (onUpload)="onUpload($event)"></p-fileUpload> -->
+                                        <p-inputGroup>
+                                            <input type="text" pInputText />
+                                            <button type="button" pButton label="Upload"></button>
+
+                                        </p-inputGroup>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row text-left mt-3">
+                            <span class="header-title">
+                                <h6>Bank details</h6>
+                            </span>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="flex flex-column mb-2 text-left">
+                                    <label for="username">Bank Account Number</label>
+                                    <input pInputText id="username" aria-describedby="username-help" />
+                                    <!-- <small id="username-help">Enter your username.</small> -->
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="flex flex-column mb-2 text-left">
+                                    <label for="username">Bank IFSC</label>
+                                    <input pInputText id="username" aria-describedby="username-help" />
+                                    <!-- <small id="username-help">Enter your username.</small> -->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row text-left mt-3">
+                            <span class="header-title">
+                                <h6>Address details</h6>
+                            </span>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-8">
+                                <div class="flex flex-column mb-2 text-left">
+                                    <label for="username">Communication Address</label>
+                                    <input pInputText id="username" aria-describedby="username-help" />
+                                    <!-- <small id="username-help">Enter your username.</small> -->
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="flex flex-column mb-2 text-left">
+                                    <label for="username">Upload Address Proof Image</label>
+                                    <!-- <p-fileUpload mode="basic" chooseLabel="Choose" chooseIcon="pi pi-upload"
+                                        name="demo[]" url="https://www.primefaces.org/cdn/api/upload.php"
+                                        accept="image/*" maxFileSize="1000000"
+                                        (onUpload)="onUpload($event)"></p-fileUpload> -->
+                                        <p-inputGroup>
+                                            <input type="text" pInputText />
+                                            <button type="button" pButton label="Upload"></button>
+
+                                        </p-inputGroup>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mt-6 mb-6">
+                            <div class="col-md-3"></div>
+                            <div class="col-md-6">
+                                <p-button  label="Submit KYC details" (click)="profieVerificaion()" ></p-button>
+                            </div>
+                            <div class="col-md-3"></div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
