@@ -117,18 +117,18 @@
                     <ng-template pTemplate="header">
                          Payment History
                     </ng-template>
-                        <div class="row align-items-baseline">
+                        <div class="row align-items-baseline payment-history-div">
                             <p-dataView #dv [value]="products">
                                 <ng-template pTemplate="list" let-products>
-                                        <div class="col-12" *ngFor="let item of products; let first = first" class="col-12">
-                                           <div class="row align-items-center">
-                                            <div class="col-auto">
+                                        <div class="col-12" style="padding: 3px 10px;" *ngFor="let item of products; let first = first" class="col-12">
+                                           <div class="row align-items-center p-0" style="font-size: 13px;">
+                                            <div class="col-auto p-0">
                                                 <img alt="Card" class="img-fluid" src="/assets/icons/dashboard_payment_right.png" />
                                             </div>
                                             <div class="col">
-                                                <span class="small-label"><strong><i class="pi pi-indian-rupee"></i>77 Lakhs</strong><p class="mb-0">Seller Name</p></span>
+                                                <span class=""><strong><i class="pi pi-indian-rupee"></i>77 Lakhs</strong><p class="mb-0">Seller Name</p></span>
                                             </div>
-                                            <div class="col-auto">
+                                            <div class="col-auto p-0">
                                                 <small class="small-label pl-4">Dec 31 2024</small>
                                             </div>
                                            </div>

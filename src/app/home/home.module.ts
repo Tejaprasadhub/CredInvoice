@@ -6,12 +6,22 @@ import { HomeComponent } from './home.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { PrimengModule } from '../primeng.module';
 import { FormsModule } from '@angular/forms';
+import { InvoicesComponent } from './invoices/invoices.component';
+import { ReportsComponent } from './reports/reports.component';
+import { VendorsComponent } from './vendors/vendors.component';
+import { NegotiateComponent } from './negotiate/negotiate.component';
+import { BiddingComponent } from './bidding/bidding.component';
 
 
 @NgModule({
   declarations: [
     HomeComponent,
-    DashboardComponent
+    DashboardComponent,
+    InvoicesComponent,
+    ReportsComponent,
+    VendorsComponent,
+    NegotiateComponent,
+    BiddingComponent
   ],
   imports: [
     CommonModule,

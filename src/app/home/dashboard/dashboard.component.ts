@@ -5,7 +5,7 @@ import { Component } from '@angular/core';
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss'
 })
-export class DashboardComponent {
+export class DashboardComponent {  
   cities: any[] =[];
   custom: any[] =[];
   date1: Date | undefined;
@@ -82,6 +82,21 @@ export class DashboardComponent {
     this.selectedCustom = this.custom[5];
 
     this.products=[
+      {
+        image:'dashboard_payment.png'
+      },
+      {
+        image:'dashboard_payment.png'
+      },
+      {
+        image:'dashboard_payment.png'
+      },
+      {
+        image:'dashboard_payment.png'
+      },
+      {
+        image:'dashboard_payment.png'
+      },
       {
         image:'dashboard_payment.png'
       },

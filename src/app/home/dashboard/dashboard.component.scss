@@ -41,6 +41,11 @@
                 .small-label{
                    color: var(--sub-title);
                 }
+                .payment-history-div{
+                    height:305px;
+                    overflow-y: auto;
+                    overflow-x: hidden;
+                }
             }
         }
     }
