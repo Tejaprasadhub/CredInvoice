@@ -18,15 +18,42 @@
   --link: #3A97CD;
   --sub-title: #929496;
   --danger: #ef4444;
-  --success: #22c55e;
+  /* --success: #22c55e; */
+  --success:#0D9488;
   --progress: #eab308;
   --gray: #566a7f;
 }
 
 .app-container {
-  padding: 10px 20px;
-  height: 100vh;
-  overflow-y: auto;
+  padding: 0px 20px;
+  height: 90vh;
+    overflow-y: auto;
+}
+
+.success{
+  color: var(--success);
+}
+.actions img{
+  height: 17px;
+  margin-right: 5px;
+}
+.p-datatable-table .p-datatable-thead th{
+  font-family: Inter;
+font-weight: 600;
+font-size: 13px;
+line-height: 140%;
+letter-spacing: 0%;
+text-align: left;
+padding: 0.6rem;
+}
+.p-datatable-table .p-datatable-tbody td{
+  font-family: Inter;
+font-weight: 400;
+font-size: 13px;
+line-height: 140%;
+letter-spacing: 0%;
+text-align: left;
+padding: 0.6rem;
 }
 
 /* width */
@@ -57,7 +84,7 @@ body {
   color: var(--secondary);
   font-weight: 400;
   overflow-x: hidden;
-  overflow-y: hidden;
+  overflow-y: hidden; 
 }
 
 .pi {
@@ -397,12 +424,21 @@ button.p-element.btn-cirle {
 
 .p-checkbox .p-checkbox-box {
   border: 1px solid var(--border);
-  width: 22px;
-  height: 22px;
+  width: 18px;
+  height: 18px;
   color: var(--secondary);
   border-radius: 0;
   transition: background-color 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s;
   outline-color: transparent;
+}
+
+.p-paginator-element{
+  min-width: 2rem;
+  height: 2rem;
+}
+
+.p-paginator .p-dropdown {
+  height: 2rem !important;
 }
 
 .p-button-label {
@@ -688,4 +724,17 @@ ul {
   color: white;
   border-radius: 5px;
   margin-top: 10px;
+}
+
+.p-paginator-rpp-options .p-dropdown-trigger {
+  width: 2rem !important;
+}
+.p-paginator-current{
+  font-size: 12px;
+  font-weight: 500;
+  position: absolute;
+  left: 0;
+}
+.p-datatable-thead > tr > th{
+  background: rgb(230 234 235) !important;
 }

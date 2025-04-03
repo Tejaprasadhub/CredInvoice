@@ -39,3 +39,15 @@ html * {
         }
     }
 }
+
+.p-overlay{
+    .p-dropdown-panel{
+        .p-dropdown-trigger {
+            width: 2rem !important;
+        }
+        .p-dropdown-items{
+                margin-bottom: 0 !important;
+                padding-left: 0 !important;
+        }
+    }
+}

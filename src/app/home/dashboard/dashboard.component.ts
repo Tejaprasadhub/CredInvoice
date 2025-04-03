@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-dashboard',
   standalone: false,
@@ -6,6 +7,9 @@ import { Component } from '@angular/core';
   styleUrl: './dashboard.component.scss'
 })
 export class DashboardComponent {  
+  constructor(private router: Router){
+    
+  }
   cities: any[] =[];
   custom: any[] =[];
   date1: Date | undefined;
@@ -113,5 +117,9 @@ export class DashboardComponent {
         image:'dashboard_payment.png'
       }
     ]
+  }
+
+  createNewInvoice(){
+        this.router.navigate(['/home/create-invoices']);  // define your component where you want to go
   }
 }

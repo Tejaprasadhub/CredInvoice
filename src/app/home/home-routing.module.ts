@@ -5,10 +5,12 @@ import { InvoicesComponent } from './invoices/invoices.component';
 import { ReportsComponent } from './reports/reports.component';
 import { VendorsComponent } from './vendors/vendors.component';
 import { NegotiateComponent } from './negotiate/negotiate.component';
+import { CreateInvoicesComponent } from './create-invoices/create-invoices.component';
 
 const routes: Routes = [
   { path: 'dashboard', component: DashboardComponent,data: { title: 'Dashboard' } },
   { path: 'invoices', component: InvoicesComponent,data: { title: 'Invoices' } },
+  { path: 'create-invoices', component: CreateInvoicesComponent,data: { title: 'Create Invoices' } },
   { path: 'reports', component: ReportsComponent,data: { title: 'Reports' } },
   { path: 'vendors', component: VendorsComponent,data: { title: 'My Vendors' } },
   { path: 'negotiate', component: NegotiateComponent,data: { title: 'Negotiate' } },
