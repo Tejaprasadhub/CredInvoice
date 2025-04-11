@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { ConfirmationService, MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-create-invoices',
@@ -13,6 +14,11 @@ export class CreateInvoicesComponent {
   rows = 10;
   products: any[]=[];
   selectedProducts!: any;
+  visible:boolean=false;
+  visible1:boolean=false;
+  visible2:boolean=false;
+  date1:any;
+  constructor(private confirmationService: ConfirmationService, private messageService: MessageService) {}
 
   ngOnInit(){
     this.cities = [
@@ -191,4 +197,19 @@ export class CreateInvoicesComponent {
 
 
   }
+
+  delete(event: Event) {
+    this.confirmationService.confirm({
+        target: event.target as EventTarget,
+        message: 'Do you want to delete this record?',
+        icon: 'pi pi-info-circle',
+        acceptButtonStyleClass: 'p-button-danger p-button-sm btn-delete',
+        accept: () => {
+            // this.messageService.add({ severity: 'info', summary: 'Confirmed', detail: 'Record deleted', life: 3000 });
+        },
+        reject: () => {
+            // this.messageService.add({ severity: 'error', summary: 'Rejected', detail: 'You have rejected', life: 3000 });
+        }
+    });
+}
 }

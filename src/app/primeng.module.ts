@@ -35,7 +35,7 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { ScrollerModule } from 'primeng/scroller';
 import { VirtualScrollerModule } from 'primeng/virtualscroller';
 import { MenuModule } from 'primeng/menu';
-import { MenuItem } from 'primeng/api';
+import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
 import { TreeModule } from 'primeng/tree';
 import { ChipModule } from 'primeng/chip';
 import { ListboxModule } from 'primeng/listbox';
@@ -115,6 +115,9 @@ import { PanelMenuModule } from 'primeng/panelmenu';
   ],
   imports:[
     FileUploadModule
+  ],
+  providers:[
+    ConfirmationService, MessageService
   ]
 })
 export class PrimengModule { }

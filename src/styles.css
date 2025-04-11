@@ -36,6 +36,15 @@
 .actions img{
   height: 17px;
   margin-right: 5px;
+  cursor: pointer;
+}
+.p-datatable-table .p-datatable-thead,.p-datatable-table .p-datatable-tbody{
+  border-left: 1px solid #dbdbe6;
+border-right: 1px solid #dbdbe6;
+}
+.p-datatable-table .p-datatable-thead{
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
 }
 .p-datatable-table .p-datatable-thead th{
   font-family: Inter;
@@ -44,7 +53,9 @@ font-size: 13px;
 line-height: 140%;
 letter-spacing: 0%;
 text-align: left;
-padding: 0.6rem;
+padding: 1rem 0.6rem;
+border-top: 1px solid #dbdbe6;
+border-bottom: 1px solid #dbdbe6;
 }
 .p-datatable-table .p-datatable-tbody td{
   font-family: Inter;
@@ -54,7 +65,19 @@ line-height: 140%;
 letter-spacing: 0%;
 text-align: left;
 padding: 0.6rem;
+border-top: 1px solid #dbdbe6;
+border-bottom: 1px solid #dbdbe6;
 }
+
+.p-datatable.p-datatable-striped .p-datatable-tbody > tr:nth-child(odd) {
+  background: #f8f8fa !important;
+
+}
+.p-datatable.p-datatable-striped .p-datatable-tbody > tr:nth-child(even) {
+  background: #ffffff !important;
+}
+
+
 
 /* width */
 ::-webkit-scrollbar {
@@ -409,9 +432,18 @@ button.p-element.btn-cirle {
 }
 
 .btn-secondary .p-button,
-.btn-secondary .p-button-label {
+.btn-secondary .p-button-label ,.p-button-text {
   background: var(--white);
   color: var(--primary);
+}
+
+.p-button-danger{
+  background: var(--danger);
+  color: var(--white);
+}
+
+.p-confirm-popup-footer{
+  display: flex;
 }
 
 .btn-success .p-button,
@@ -747,5 +779,5 @@ ul {
   left: 0;
 }
 .p-datatable-thead > tr > th{
-  background: rgb(230 234 235) !important;
+  background:#fff !important;
 }
