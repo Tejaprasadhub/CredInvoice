@@ -210,7 +210,12 @@ a:focus {
 input::-webkit-input-placeholder {
   font: 1rem;
 }
-
+.p-inputgroup-addon{
+  padding: 5px 10px;
+  background-color: var(--white);
+  border-radius: 0;
+  font-size: 12px;
+}
 .p-inputtext,
 .p-multiselect {
   border: 1px solid var(--border);
@@ -407,6 +412,12 @@ button.p-element.btn-cirle {
 .btn-secondary .p-button-label {
   background: var(--white);
   color: var(--primary);
+}
+
+.btn-success .p-button,
+.btn-success .p-button-label {
+  background: var(--success);
+  color: var(--white);
 }
 
 .custom-gap-1 {

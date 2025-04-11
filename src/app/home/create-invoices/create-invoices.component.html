@@ -5,33 +5,27 @@
                 <p-dropdown [options]="cities" [(ngModel)]="selectedCity" optionLabel="name"
                     placeholder="Select a City" />
             </div>
-            <div class="col-4"></div>
+            <div class="col-3"></div>
+            <div class="col-3">
+                <p-inputGroup>
+                    <p-inputGroupAddon>
+                        <i class="pi pi-search"></i>
+                    </p-inputGroupAddon>
+                    <input pInputText placeholder="Search..." />
+                </p-inputGroup>
+            </div>
             <div class="col-3">
                 <div class="card flex justify-content-center actions">
-                    <p-button [outlined]="true">
-                        <img alt="edit" class="img-fluid" src="/assets/table-icons/percent_white.png" /> <span class="font-medium">Add Discount for Selected</span>
+                    <p-button label="Create a New Invoice" icon="pi pi-plus">
                     </p-button>
-                    </div>
-            </div>
-            <div class="col-2">
-                <div class="card flex justify-content-center actions">
-                    <p-button label="Add an Invoice"  icon="pi pi-plus" class="btn-secondary" >                        
-                    </p-button>
-                    </div>
+                </div>
             </div>
         </div>
         <div class="row align-items-center">
-        <p-table
-        [value]="products"
-        [paginator]="true"
-        [rows]="10"
-        styleClass="p-datatable-striped" 
-        [first]="first"
-        [showCurrentPageReport]="true"
-        [tableStyle]="{ 'min-width': '50rem' }"
-        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-        [rowsPerPageOptions]="[10, 25, 50]"
-    >
+            <p-table [value]="products" [paginator]="true" [rows]="10" styleClass="p-datatable-striped" [first]="first"
+                [showCurrentPageReport]="true" [tableStyle]="{ 'min-width': '50rem' }"
+                currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                [rowsPerPageOptions]="[10, 25, 50]">
                 <ng-template pTemplate="header">
                     <tr>
                         <th style="width: 4rem"><p-tableHeaderCheckbox /></th>
@@ -56,19 +50,78 @@
                         <td>77Lakhs</td>
                         <td>01/04/2025</td>
                         <td>01/04/2025</td>
-                        <td class="invoice"><a href="javascript:void(0)"></a>{{product.invoice}}</td>                       
+                        <td class="invoice"><a href="javascript:void(0)"></a>{{product.invoice}}</td>
                         <td>3.75%</td>
                         <td>74.12Lakhs</td>
                         <td>01/04/2025</td>
                         <td class="invoice">18</td>
                         <td class="actions">
                             <img alt="trash" class="img-fluid" src="/assets/table-icons/Trash.png" />
-                                    <img alt="edit" class="img-fluid" src="/assets/table-icons/Pencil.png" />
-                                    <img alt="edit" class="img-fluid" src="/assets/table-icons/percent_green.png" /> <span class="success font-medium">Discount</span>
+                            <img alt="edit" class="img-fluid" src="/assets/table-icons/Pencil.png" />
+                            <img alt="edit" class="img-fluid" src="/assets/table-icons/percent_green.png" /> <span
+                                class="success font-medium">Discount</span>
                         </td>
                     </tr>
                 </ng-template>
-        </p-table>
+            </p-table>
+        </div>
+
+        <div class="row invoice-bottom-div align-items-center mt-2">
+            <div class="col-1"></div>
+            <div class="col-10">
+                <p-card>
+                    <div class="row align-items-center">
+                        <div class="col-2">
+                            <div class="row">
+                                <label>selected</label>
+                            </div>
+                            <div class="row align-items-baseline">
+                                <div class="col-auto pr-0">
+                                    <span class="value">3</span>
+                                    <span class="label">Invoices</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-2">
+                            <div class="row">
+                                <label>Total Amount</label>
+                            </div>
+                            <div class="row align-items-baseline">
+                                <div class="col-auto pr-0">
+                                    <span class="pi pi-indiarupee value">2.31</span>
+                                    <span class="label">Crores</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="row">
+                                <label>Total Discounted Amount</label>
+                            </div>
+                            <div class="row align-items-baseline">
+                                <div class="col-auto pr-0">
+                                    <span class="pi pi-indiarupee value">2.92</span>
+                                    <span class="label">Crores</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-5">
+                            <div class="row align-items-baseline">
+                                <div class="col">
+                                    <p-button class="btn-success" label="Apply Discount">
+                                        <img alt="edit" class="img-fluid" src="/assets/table-icons/percent_white.png" /> 
+                                    </p-button>
+                                </div>
+                                <div class="col-auto">
+                                    <p-button label="Send to Seller" icon="pi pi-send">
+                                        
+                                    </p-button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </p-card>
             </div>
+            <div class="col-1"></div>
+        </div>
     </div>
 </div>
