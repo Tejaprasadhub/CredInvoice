@@ -13,6 +13,7 @@ import { NegotiateComponent } from './negotiate/negotiate.component';
 import { BiddingComponent } from './bidding/bidding.component';
 import { CreateInvoicesComponent } from './create-invoices/create-invoices.component';
 import { CreateInvoiceComponent } from './create-invoice/create-invoice.component';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 
 
 @NgModule({
@@ -31,7 +32,9 @@ import { CreateInvoiceComponent } from './create-invoice/create-invoice.componen
     CommonModule,
     FormsModule,
     PrimengModule,
-    HomeRoutingModule
-  ]
+    HomeRoutingModule,
+    HttpClientModule
+  ],
+  providers:[HttpClient]
 })
 export class HomeModule { }
