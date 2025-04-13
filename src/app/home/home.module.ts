@@ -12,6 +12,7 @@ import { VendorsComponent } from './vendors/vendors.component';
 import { NegotiateComponent } from './negotiate/negotiate.component';
 import { BiddingComponent } from './bidding/bidding.component';
 import { CreateInvoicesComponent } from './create-invoices/create-invoices.component';
+import { CreateInvoiceComponent } from './create-invoice/create-invoice.component';
 
 
 @NgModule({
@@ -23,7 +24,8 @@ import { CreateInvoicesComponent } from './create-invoices/create-invoices.compo
     VendorsComponent,
     NegotiateComponent,
     BiddingComponent,
-    CreateInvoicesComponent
+    CreateInvoicesComponent,
+    CreateInvoiceComponent
   ],
   imports: [
     CommonModule,

@@ -7,7 +7,7 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "component:create": "ng g component createInvoices --module=home/home.module.ts",
+    "component:create": "ng g component createInvoice --module=home/home.module.ts",
     "module:create": "ng g m --module app.module --route home-shell"
   },
   "private": true,

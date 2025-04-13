@@ -1,0 +1,72 @@
+<div class="row app-container">
+    <div class="col-md-12">
+        <div class="row align-items-center">
+            <div class="col-3">
+                <p-dropdown [options]="cities" [(ngModel)]="selectedCity" optionLabel="name"
+                    placeholder="Select Seller" />
+            </div>
+        </div>       
+            <p-card>
+                <div class="row">
+                <div class="col-md-3">
+                    <div class="flex flex-column mb-2 text-left">
+                        <label for="username">Inovice Number</label>
+                        <input pInputText id="username" aria-describedby="username-help" />
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="flex flex-column mb-2 text-left">
+                        <label for="username">Invoice Amount</label>
+                        <input pInputText id="username" aria-describedby="username-help" />
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="flex flex-column mb-2 text-left">
+                        <label for="username">Create Date</label>
+                        <p-calendar [(ngModel)]="date1" [showIcon]="true" append="body" [showOnFocus]="false" inputId="buttondisplay"
+                         />
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="flex flex-column mb-2 text-left">
+                        <label for="username">Disbursement Date</label>
+                        <p-calendar [(ngModel)]="date1" [showIcon]="true" append="body" [showOnFocus]="false" inputId="buttondisplay"
+                         />
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="flex flex-column mb-2 text-left">
+                        <label for="username">Fund By</label>
+                        <div class="row d-block text-left mt-2">
+                            <p-chip label="Self" class="active" />
+                            <p-chip label="Financier" />
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="flex flex-column mb-2 text-left">
+                        <label for="username">Upload Pdf</label>
+                        <div class="card flex justify-content-center">
+                            <p-toast />
+                            <p-fileUpload 
+                                name="demo[]" 
+                                url="https://www.primefaces.org/cdn/api/upload.php" 
+                                (onUpload)="onUpload($event)" 
+                                [multiple]="true" 
+                                accept="image/*" 
+                                maxFileSize="1000000">
+                                    <ng-template pTemplate="content">
+                                        <ul *ngIf="uploadedFiles.length">
+                                            <li *ngFor="let file of uploadedFiles">
+                                                {{ file.name }} - {{ file.size }} bytes
+                                            </li>
+                                        </ul>
+                                    </ng-template>
+                            </p-fileUpload>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </p-card>      
+    </div>
+</div>

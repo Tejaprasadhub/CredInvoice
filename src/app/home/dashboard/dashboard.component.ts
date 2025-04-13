@@ -120,6 +120,6 @@ export class DashboardComponent {
   }
 
   createNewInvoice(){
-        this.router.navigate(['/home/create-invoices']);  // define your component where you want to go
+        this.router.navigate(['/home/create-invoice']);  // define your component where you want to go
   }
 }
