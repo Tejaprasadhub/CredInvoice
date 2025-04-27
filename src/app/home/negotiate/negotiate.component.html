@@ -1,1 +1,76 @@
-<p>negotiate works!</p>
+<p-toast />
+    <p-confirmPopup />
+<div class="row app-container">
+    <div class="col-md-12">
+        <div class="row align-items-center">
+            <div class="col-3">
+                <p-dropdown [options]="cities" [(ngModel)]="selectedCity" optionLabel="name"
+                    placeholder="Selected Sellers" />
+            </div>
+            <div class="col-3">
+                <p-dropdown [options]="status" [(ngModel)]="selectedStatus" optionLabel="name"
+                    placeholder="Select Status" />
+            </div>
+            <div class="col-3"></div>
+            <div class="col-3">
+                <p-inputGroup>
+                    <p-inputGroupAddon>
+                        <i class="pi pi-search"></i>
+                    </p-inputGroupAddon>
+                    <input pInputText placeholder="Search..." />
+                </p-inputGroup>
+            </div>
+        </div>
+        <div class="row align-items-center">
+            <div class="col-auto">
+                <label class="font-medium">Selected Sellelrs: </label>
+            </div>
+            <div class="col">
+                <div class="flex align-items-center gap-2 flex-wrap pt-1 pb-1">
+                    <p-chip label="Apple" [removable]="true" />
+                    <p-chip label="Facebook" [removable]="true" />
+                    <p-chip label="Google" [removable]="true"/>
+                    <p-chip label="Microsoft" [removable]="true" />
+                </div>
+            </div>         
+        </div>
+        <div class="row align-items-center">
+            <p-table [value]="products" [paginator]="true" [rows]="10" styleClass="p-datatable-striped" [first]="first"
+                [showCurrentPageReport]="true" [tableStyle]="{ 'min-width': '50rem' }"
+                currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                [rowsPerPageOptions]="[10, 25, 50]">
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th>Number</th>
+                        <th>Seller</th>    
+                        <th>Discount</th>                    
+                        <th>Discounted Amount</th>
+                        <th>Disbursement Date</th>
+                        <th>Items</th>
+                        <th>Status</th>                             
+                        <th>Actions</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-product>
+                    <tr class="cursor-pointer" (click)="invoiceDetais()">
+                        <td>77779777</td>
+                        <td><a href="javascript:void(0)" class="invoice"><img alt="seller" class="img-fluid" title="Seller" src="/assets/table-icons/seller.png" />Moh Labs </a></td>
+                        <td>3.75%</td>
+                        <td>77Lakhs</td>
+                        <td>01/04/2025</td>
+                        <td class="invoice cursor-pointer" (click)="visible2 = true">18</td>
+                        <td class="status">Sent to Seller </td>
+                        <td class="actions">
+                            <img alt="trash" class="img-fluid"  (click)="delete($event)"  title="Delete" src="/assets/table-icons/Trash.png" />
+                            <img alt="edit" class="img-fluid" title="Edit" src="/assets/table-icons/Pencil.png" />
+                            <img alt="discount" (click)="visible = true" class="img-fluid" title="Discount" src="/assets/table-icons/percent_green.png" /> 
+                            <img alt="view" (click)="visible = true" class="img-fluid" title="view" src="/assets/table-icons/view.png" /> 
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+
+    </div>
+</div>
+

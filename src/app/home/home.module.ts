@@ -14,6 +14,7 @@ import { BiddingComponent } from './bidding/bidding.component';
 import { CreateInvoicesComponent } from './create-invoices/create-invoices.component';
 import { CreateInvoiceComponent } from './create-invoice/create-invoice.component';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { InvoiceDetailsComponent } from './invoice-details/invoice-details.component';
 
 
 @NgModule({
@@ -26,7 +27,8 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
     NegotiateComponent,
     BiddingComponent,
     CreateInvoicesComponent,
-    CreateInvoiceComponent
+    CreateInvoiceComponent,
+    InvoiceDetailsComponent
   ],
   imports: [
     CommonModule,

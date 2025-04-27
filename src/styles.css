@@ -437,6 +437,13 @@ button.p-element.btn-cirle {
   color: var(--primary);
 }
 
+.btn-danger .p-button
+{
+  background: var(--white);
+  color: var(--danger);
+  border: 1px solid var(--danger);
+}
+
 .p-button-danger{
   background: var(--danger);
   color: var(--white);

@@ -1,27 +1,24 @@
 import { Component } from '@angular/core';
-import { ConfirmationService, MessageService } from 'primeng/api';
+import { MessageService } from 'primeng/api';
 
 @Component({
-  selector: 'app-create-invoices',
+  selector: 'app-invoice-details',
   standalone: false,
-  templateUrl: './create-invoices.component.html',
-  styleUrl: './create-invoices.component.scss'
+  templateUrl: './invoice-details.component.html',
+  styleUrl: './invoice-details.component.scss'
 })
-export class CreateInvoicesComponent {
+export class InvoiceDetailsComponent {
   cities: any[] =[];
   selectedCity: any;
-  first = 0;
-  rows = 10;
-  products: any[]=[];
-  selectedProducts!: any;
+  date1:any;
+  uploadedFiles: any[] = [];
   visible:boolean=false;
   visible1:boolean=false;
   visible2:boolean=false;
   visible3:boolean=false;
-  visible4:boolean=false;
-  date1:any;
-  constructor(private confirmationService: ConfirmationService, private messageService: MessageService) {}
-
+  products: any[]=[];
+  first = 0;
+  rows = 5;
   ngOnInit(){
     this.cities = [
       { name: 'Select Seller', code: '' },
@@ -195,23 +192,16 @@ export class CreateInvoicesComponent {
       invoice:"invoice1.pdf"
     }
   ]
+}
 
 
+constructor(private messageService: MessageService) {}
 
-  }
+onUpload(event:any) {
+    for(let file of event.files) {
+        this.uploadedFiles.push(file);
+    }
 
-  delete(event: Event) {
-    this.confirmationService.confirm({
-        target: event.target as EventTarget,
-        message: 'Do you want to delete this record?',
-        icon: 'pi pi-info-circle',
-        acceptButtonStyleClass: 'p-button-danger p-button-sm btn-delete',
-        accept: () => {
-            // this.messageService.add({ severity: 'info', summary: 'Confirmed', detail: 'Record deleted', life: 3000 });
-        },
-        reject: () => {
-            // this.messageService.add({ severity: 'error', summary: 'Rejected', detail: 'You have rejected', life: 3000 });
-        }
-    });
+    this.messageService.add({severity: 'info', summary: 'File Uploaded', detail: ''});
 }
 }

@@ -1,0 +1,288 @@
+<div class="row app-container">
+    <div class="col-md-12 form-details">
+        <!-- <p-card styleClass="mb-2">
+            <div class="row">
+                <strong>Reason for rejecting</strong>
+                <small>Unfortunately, we can't proceed with the requested discount/date as it doesn’t align with our terms. Please review and adjust your offer accordingly, and feel free to resend the details for reconsideration.</small>
+            </div>
+        </p-card> -->
+        <p-card>
+            <div class="row align-items-center">
+                <div class="col">
+                    <div class="row align-items-center">
+                        <div class="col-auto">
+                            <img alt="seller" class="img-fluid" title="Seller" src="/assets/icons/seller_large.png" />
+                        </div>
+                        <div class="col-auto d-grid">
+                            <span class="invoice">Moh Labs</span>
+                            <span style="font-size: 14px;">PAN: 123654789</span>
+                        </div>
+                        <!-- <div class="col-auto">
+                            <span class="status reject">Rejected by Seller</span>
+                        </div> -->
+                        <!-- <div class="col-auto">
+                            <span class="status sent">Sent to Seller</span>
+                        </div> -->
+                        <!-- <div class="col-auto">
+                            <span class="status accept">Accepted by Seller</span>
+                        </div> -->
+                        <div class="col-auto">
+                            <span class="status approve">Approved by Buyer(Fund by Self)</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-auto">
+                    <!-- <p-button label="Delete" (click)="visible1 = true" class="btn-danger" icon="pi pi-trash" /> -->
+                    <!-- <p-button label="Edit Details & Resend" (click)="visible2 = true"  icon="pi pi-send" /> -->
+                    <!-- <p-button label="Authorize Payment" (click)="visible3 = true"  icon="pi pi-key" /> -->
+                    <!-- <label class="label">Payment Status :  <span class="status sent">Disbursement Pending by Buyer</span></label> -->
+                    <label class="label">Payment Status :  <span class="status approve">Disbursed by Buyer</span></label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="flex flex-column mb-2 text-left">
+                        <label class="label" for="username">Inovice Number</label>
+                        <span class="value">777777777</span>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="flex flex-column mb-2 text-left">
+                        <label class="label" for="username">Discout </label>
+                        <span class="value">3.75%</span>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="flex flex-column mb-2 text-left">
+                        <label class="label" for="username">Discounted Amount</label>
+                        <span class="value">75 Lakhs</span>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="flex flex-column mb-2 text-left">
+                        <label class="label" for="username">Disbursement Date</label>
+                        <span class="value">July 1st 2012</span>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="flex flex-column mb-2 text-left">
+                        <label class="label" for="username">Fund by</label>
+                        <span class="value">Self/Financier</span>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="flex flex-column mb-2 text-left">
+                        <label class="label" for="username">Inovice Amount</label>
+                        <span class="value">80 Lakhs</span>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="flex flex-column mb-2 text-left">
+                        <label class="label" for="username">Inovice Date</label>
+                        <span class="value">July 7th 2012</span>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="flex flex-column mb-2 text-left">
+                        <label class="label" for="username">Inovice Due Date</label>
+                        <span class="value">July 15th 2012</span>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="flex flex-column mb-2 text-left">
+                        <label class="label" for="username">Inovice Pdf's</label>
+                        <span class="value">777777777</span>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="flex flex-column mb-2 text-left">
+                        <label class="label" for="username">Goods Description</label>
+                        <span class="value">wheat flour</span>
+                    </div>
+                </div>
+            </div>
+        </p-card>
+        <div class="row mt-3 align-items-center">
+            <div class="col-md-12">
+                <span class="mr-4"><strong>Items</strong>(27)</span>  
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-md-12">
+                <p-table [value]="products" [paginator]="true" [rows]="5" styleClass="p-datatable-striped" [first]="first"
+                [showCurrentPageReport]="true" [tableStyle]="{ 'min-width': '50rem' }"
+                currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                [rowsPerPageOptions]="[5,10, 25, 50]">
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th>item Number</th>
+                            <th>item Name</th>
+                            <th>Price</th>
+                            <th>Quantity</th>
+                            <th>Total Amount</th>
+                            <th>Actions</th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-product>
+                        <tr>
+                            <td>7121</td>
+                            <td>Wheat Flour</td>
+                            <td>7 Lakhs</td>
+                            <td>2</td>
+                            <td>14 Lakhs</td>
+                            <td class="actions">
+                                <img alt="trash" class="img-fluid"    title="Delete" src="/assets/table-icons/Trash.png" />
+                                <img alt="edit" class="img-fluid" title="Edit" src="/assets/table-icons/Pencil.png" />
+                            </td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </div>  
+        </div>
+    </div>
+</div>
+
+<p-dialog header="Add an Item" [modal]="true" [(visible)]="visible" [style]="{ width: '40rem' }">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="flex flex-column mb-2 text-left">
+                <label class="label" for="username">Item Number</label>
+                <input pInputText id="username" aria-describedby="username-help" />
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="flex flex-column mb-2 text-left">
+                <label class="label" for="username">Item Name</label>
+                <input pInputText id="username" aria-describedby="username-help" />
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="flex flex-column mb-2 text-left">
+                <label class="label" for="username">Price </label>
+                <input pInputText id="username" aria-describedby="username-help" />
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="flex flex-column mb-2 text-left">
+                <label class="label" for="username">Disbursement Date</label>
+                <input pInputText id="username" aria-describedby="username-help" />
+            </div>
+        </div>  
+        <div class="col-md-6">
+            <div class="flex flex-column mb-2 text-left">
+                <label class="label" for="username">Total Amount</label>
+                <input pInputText id="username" aria-describedby="username-help" />
+            </div>
+        </div>        
+    </div>
+    <ng-template pTemplate="footer">
+        <div class="row">
+            <div class="col-3"></div>
+            <div class="col-3">
+                <p-button  label="Add Item" (onClick)="visible = false" />
+            </div>
+            <div class="col-3">
+                <p-button label="Cancel" class="btn-secondary"  (onClick)="visible = false" />
+            </div>
+            <div class="col-3"></div>
+
+        </div>
+
+    </ng-template>
+</p-dialog>
+
+<p-dialog header="Delete"  [(visible)]="visible1" [modal]="true" [style]="{ width: '25rem' }">
+    <span class="">Are you sure you want to delete this sent Invoice? This action can’t be undone.</span>
+    <ng-template pTemplate="footer">
+        <div class="row">
+            <div class="col-3"></div>
+            <div class="col-3">
+                <p-button label="Delete" class="btn-danger" (click)="visible1 = false" />
+            </div>
+            <div class="col-3">
+                <p-button label="Close" class="btn-secondary" (click)="visible1 = false" />
+            </div>
+            <div class="col-3"></div>
+        </div>
+    </ng-template>
+</p-dialog>
+
+<p-dialog header="Edit Details and Resend"  [(visible)]="visible2" [modal]="true" [style]="{ width: '35rem' }">
+   <div class="row">
+    <div class="col-md-6">
+        <div class="flex flex-column mb-2 text-left">
+            <label for="username">Total Amount</label>
+            <input pInputText id="username" aria-describedby="username-help" />
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="flex flex-column mb-2 text-left">
+            <label for="username">Discount Value</label>
+            <input pInputText id="username" aria-describedby="username-help" />
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="flex flex-column mb-2 text-left">
+            <label for="username">Amount after Discount</label>
+            <input pInputText id="username" aria-describedby="username-help" />
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="flex flex-column mb-2 text-left">
+            <label for="username">Requesting Due Date</label>
+            <p-calendar [(ngModel)]="date1" [showIcon]="true" append="body" [showOnFocus]="false"
+                inputId="buttondisplay" />
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="flex flex-column mb-2 text-left">
+            <label for="username">Fund By</label>
+            <div class="row d-block text-left mt-2">
+                <p-chip label="Self" class="active" />
+                <p-chip label="Financier" />
+            </div>
+        </div>
+    </div>
+</div>
+    <ng-template pTemplate="footer">
+        <div class="row">
+            <div class="col-2"></div>
+            <div class="col-4">
+                <p-button label="Save & Resend"  (click)="visible2 = false" />
+            </div>
+            <div class="col-4">
+                <p-button label="Cancel" class="btn-secondary" (click)="visible2 = false" />
+            </div>
+            <div class="col-2"></div>
+        </div>
+    </ng-template>
+</p-dialog>
+
+<p-dialog header="Authorize Payment"  [(visible)]="visible3" [modal]="true" [style]="{ width: '35rem' }">
+    <div class="row">
+        <div class="col-md-12">
+            <small>Authorise by confirming whether the invoice is fund by you or by a financier</small>
+        </div>
+        <div class="col-md-6">
+            <div class="flex flex-column mb-2 text-left">
+                <label for="username">Fund By</label>
+                <div class="row d-block text-left mt-2">
+                    <p-chip label="Self" class="active" />
+                    <p-chip label="Financier" />
+                </div>
+            </div>
+        </div>
+ </div>
+     <ng-template pTemplate="footer">
+         <div class="row">
+             <div class="col-2"></div>
+             <div class="col-4">
+                 <p-button label="Authorize"  (click)="visible3 = false" />
+             </div>
+             <div class="col-4">
+                 <p-button label="Cancel" class="btn-secondary" (click)="visible3 = false" />
+             </div>
+             <div class="col-2"></div>
+         </div>
+     </ng-template>
+ </p-dialog>

@@ -16,13 +16,41 @@ html * {
 }
 
 
-
+.invoice {
+    color: #0EA5E9;
+    text-decoration: underline;
+    font-weight: 600 !important;
+    cursor: pointer;
+}
+.status{
+    font-weight: 600 !important;
+    padding: 5px 20px;
+    font-size: 14px;
+    border-radius: 10px;
+    &.sent{
+        background:#FFFBEB;
+        color:#D97706;
+    }
+    &.reject{
+        background: #FFF1F2;
+        color:#F43F5E;
+    }
+    &.accept{
+        background:#F0F9FF;
+        color: #0EA5E9;
+    }
+    &.approve{
+        background:#F0FDFA;
+        color:#0D9488;
+    }
+}
 .cred-invoice {
     position: absolute;
     top: 0;
     bottom: 0;
     left: 0;
     right: 0;
+
     .content-box {
         display: flex;
         flex-direction: column;
@@ -30,6 +58,7 @@ html * {
         align-items: center;
         width: 100%;
         min-height: 100%;
+
         .platform-logo {
             .title {
                 font-weight: 700;
@@ -40,28 +69,55 @@ html * {
     }
 }
 
-.p-overlay{
-    .p-dropdown-panel{
+.p-overlay {
+    .p-dropdown-panel {
         .p-dropdown-trigger {
             width: 2rem !important;
         }
-        .p-dropdown-items{
-                margin-bottom: 0 !important;
-                padding-left: 0 !important;
+
+        .p-dropdown-items {
+            margin-bottom: 0 !important;
+            padding-left: 0 !important;
         }
     }
 }
 
-.p-chip{
-    padding: 5px 30px;
-    .p-chip-text{
+.p-chip {
+    padding: 0px 30px;
+
+    .p-chip-text {
         font-size: 14px;
-        margin: 0 !important;
+        // margin: 0 !important;
     }
 }
-.active{
-    .p-chip{
+
+.active {
+    .p-chip {
         background-color: var(--primary);
-        color:var(--white);
+        color: var(--white);
+    }
+}
+
+.form-details{
+    .p-card {
+        .p-card-body{
+            padding: 0px 15px;
+        }
+    }  
+    .label {
+        font-weight: 600;
+        font-size: 12px;
+        color: var(--sub-title) !important;
+    }
+    .value {
+        font-weight: 600;
+        font-size: 14px;
+        margin-top: 5px;
+    }
+}
+
+.p-dialog{
+    .p-dialog-header-close{
+        display: none;
     }
 }

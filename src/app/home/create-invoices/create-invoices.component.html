@@ -69,7 +69,7 @@
                         <td>01/04/2025</td>
                         <td>01/04/2025</td>
                         <td class="invoice"><a href="javascript:void(0)"></a>{{product.invoice}}</td>
-                        <td class="status">Applied </td>
+                        <td class="status sent">Applied </td>
                         <td>3.75%</td>
                         <td>74.12Lakhs</td>
                         <td>01/04/2025</td>
@@ -130,7 +130,7 @@
                                     </p-button>
                                 </div>
                                 <div class="col-auto">
-                                    <p-button label="Send to Seller" icon="pi pi-send">
+                                    <p-button label="Send to Seller" (click)="visible3 = true" icon="pi pi-send">
                                         
                                     </p-button>
                                 </div>
@@ -272,6 +272,80 @@
             </div>
             <div class="col-3">
                 <p-button label="Cancel" class="btn-secondary"  (onClick)="visible2 = false" />
+            </div>
+            <div class="col-3"></div>
+
+        </div>
+
+    </ng-template>
+</p-dialog>
+
+<p-dialog header="Send to Seller" [modal]="true" [(visible)]="visible3" [style]="{ width: '60rem' }">
+    <div class="row">    
+        <div class="col-md-12 mt-2 mb-2">
+            <span class="">Are you sure you want to send these invoices to the seller? Please ensure that the data entered is correct.</span>
+        </div>
+        <div class="col-md-12">
+            <p-table [value]="products" [rows]="10" styleClass="p-datatable-striped" [first]="first"
+                >
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th>Invoice Number</th>
+                        <th>Invoice Amount</th>
+                        <th>Discount</th>
+                        <th>Discounted Amount</th>
+                        <th>Disbursement Date</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-product>
+                    <tr>
+                        <td>7121</td>
+                        <td>7 Lakhs</td>
+                        <td>3.75%</td>                        
+                        <td>6.2 Lakhs</td>
+                        <td>14/07/2024</td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>  
+    </div>
+    <ng-template pTemplate="footer">
+        <div class="row">
+            <div class="col-3"></div>
+            <div class="col-3">
+                <p-button class="btn-success" label="Apply" (onClick)="visible4 = true" />
+            </div>
+            <div class="col-3">
+                <p-button label="Cancel" class="btn-secondary"  (onClick)="visible3 = false" />
+            </div>
+            <div class="col-3"></div>
+
+        </div>
+
+    </ng-template>
+</p-dialog>
+<p-dialog header="" [modal]="true" [(visible)]="visible4" [style]="{ width: '40rem' }">
+    <div class="row">    
+        <div class="col-md-12 text-center">
+            <img src="assets/SealCheck.png" class="img-fluid" alt="Seal Check" >
+        </div>
+        <div class="col-md-12 text-center">
+            <h4>Invoices Sent Successfully!</h4>
+        </div>  
+        <div class="col-md-12 text-center">
+            <span class="">
+                The selected invoices has been sent to the seller successfully.
+            </span>
+        </div>      
+    </div>
+    <ng-template pTemplate="footer">
+        <div class="row">
+            <div class="col-3"></div>
+            <div class="col-3">
+                <p-button class="btn-success" label="Apply" (onClick)="visible4 = false" />
+            </div>
+            <div class="col-3">
+                <p-button label="Cancel" class="btn-secondary"  (onClick)="visible4 = false" />
             </div>
             <div class="col-3"></div>
 
