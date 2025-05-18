@@ -45,55 +45,73 @@ export class NegotiateComponent {
       name:"7896",
       category:"1258",
       quantity:"9632",
-      invoice:"invoice1.pdf"
+      invoice:"invoice1.pdf",
+      statusId:"sent",
+      status:"Awaiting Bid Acceptance"
     },{
       code:"2",
       name:"7896",
       category:"1258",
       quantity:"9632",
-      invoice:"invoice1.pdf"
+      invoice:"invoice1.pdf",      
+      statusId:"accept",
+      status:"Accepted Bid"
     },{
       code:"3",
       name:"7896",
       category:"1258",
       quantity:"9632",
-      invoice:"invoice1.pdf"
+      invoice:"invoice1.pdf",
+      statusId:"approve",
+      status:"Disbursed by Financier"
     },{
       code:"1236",
       name:"7896",
       category:"1258",
       quantity:"9632",
-      invoice:"invoice1.pdf"
+      invoice:"invoice1.pdf",
+      statusId:"reject",
+      status:"Expired without Bid"
     },{
       code:"1236",
       name:"7896",
       category:"1258",
       quantity:"9632",
-      invoice:"invoice1.pdf"
+      invoice:"invoice1.pdf",
+      statusId:"reject",
+      status:"Expired Bid"
     },{
       code:"1236",
       name:"7896",
       category:"1258",
       quantity:"9632",
-      invoice:"invoice1.pdf"
+      invoice:"invoice1.pdf",
+      statusId:"sent",
+      status:"Awaiting Bid Acceptance"
     },{
       code:"1236",
       name:"7896",
       category:"1258",
       quantity:"9632",
-      invoice:"invoice1.pdf"
+      invoice:"invoice1.pdf",
+      statusId:"accept",
+      status:"Accepted Bid"
     },{
       code:"1236",
       name:"7896",
       category:"1258",
       quantity:"9632",
-      invoice:"invoice1.pdf"
+      invoice:"invoice1.pdf",
+      statusId:"reject",
+      status:"Expired without Bid"
     },{
       code:"1236",
       name:"7896",
       category:"1258",
       quantity:"9632",
-      invoice:"invoice1.pdf"
+      invoice:"invoice1.pdf",
+      statusId:"approve",
+      status:"Disbursed by Financier"
     },{
       code:"1",
       name:"7896",

@@ -16,6 +16,7 @@ export class InvoiceDetailsComponent {
   visible1:boolean=false;
   visible2:boolean=false;
   visible3:boolean=false;
+  visible4:boolean=false;
   products: any[]=[];
   first = 0;
   rows = 5;

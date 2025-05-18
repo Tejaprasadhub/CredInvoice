@@ -6,6 +6,67 @@
                 <small>Unfortunately, we can't proceed with the requested discount/date as it doesn’t align with our terms. Please review and adjust your offer accordingly, and feel free to resend the details for reconsideration.</small>
             </div>
         </p-card> -->
+        <p-card styleClass="mb-2">
+            <div class="row">
+                <div class="col-md-12 mb-2 text-left">
+                    <div class="row">
+                        <div class="row col">
+                            <div class="col-auto"><strong>Bid Details</strong></div>
+                            <!-- <div class="col-auto"> <span class="status sent">Awaiting Bid Acceptance</span></div> -->
+                            <div class="col-auto">
+                                <span class="status reject">Expired without Bid</span>
+                            </div>
+                        </div>
+                       
+                        <div class="col-auto">
+                            <p-button  label="Resend for Bidding" icon="pi pi-refresh" />
+                        </div>
+                    </div>
+                </div>                
+                <div class="col-md-3">
+                    <div class="flex flex-column mb-2 text-left">
+                        <label class="label" for="username">Financier</label>
+                        <span class="value">777777777</span>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="flex flex-column mb-2 text-left">
+                        <label class="label" for="username">Interest Rate </label>
+                        <span class="value">3.75%</span>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="flex flex-column mb-2 text-left">
+                        <label class="label" for="username">Cose of Funds</label>
+                        <span class="value">75 Lakhs</span>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="flex flex-column mb-2 text-left">
+                        <label class="label" for="username">Payment Amount</label>
+                        <span class="value">75 Lakhs</span>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="flex flex-column mb-2 text-left">
+                        <label class="label" for="username">Tenure</label>
+                        <span class="value">60 Days</span>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="flex flex-column mb-2 text-left">
+                        <label class="label" for="username">Disbursement Date</label>
+                        <span class="value">July 7th 2012</span>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="flex flex-column mb-2 text-left">
+                        <label class="label" for="username">Repayment Date</label>
+                        <span class="value">July 7th 2013</span>
+                    </div>
+                </div>
+            </div>
+        </p-card>
         <p-card>
             <div class="row align-items-center">
                 <div class="col">
@@ -28,7 +89,7 @@
                         </div> -->
                         <div class="col-auto">
                             <span class="status approve">Approved by Buyer(Fund by Self)</span>
-                        </div>
+                        </div>                        
                     </div>
                 </div>
                 <div class="col-auto">
@@ -37,6 +98,7 @@
                     <!-- <p-button label="Authorize Payment" (click)="visible3 = true"  icon="pi pi-key" /> -->
                     <!-- <label class="label">Payment Status :  <span class="status sent">Disbursement Pending by Buyer</span></label> -->
                     <label class="label">Payment Status :  <span class="status approve">Disbursed by Buyer</span></label>
+                    <!-- <p-button label="Resend for Bidding"  icon="pi pi-refresh" /> -->
                 </div>
             </div>
             <div class="row">
@@ -103,13 +165,40 @@
             </div>
         </p-card>
         <div class="row mt-3 align-items-center">
-            <div class="col-md-12">
+            <!-- <div class="col-md-12">
                 <span class="mr-4"><strong>Items</strong>(27)</span>  
-            </div>
-        </div>
-        <div class="row mt-3">
-            <div class="col-md-12">
-                <p-table [value]="products" [paginator]="true" [rows]="5" styleClass="p-datatable-striped" [first]="first"
+            </div> -->
+                <p-tabView>
+                    <p-tabPanel header="Bids">
+                        <p-table [value]="products" [paginator]="true" [rows]="5" styleClass="p-datatable-striped" [first]="first"
+                        [showCurrentPageReport]="true" [tableStyle]="{ 'min-width': '50rem' }"
+                        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                        [rowsPerPageOptions]="[5,10, 25, 50]">
+                            <ng-template pTemplate="header">
+                                <tr>
+                                    <th>Bid Time</th>
+                                    <th>Financier</th>
+                                    <th>Interest Rate</th>
+                                    <th>Cost of Funds</th>
+                                    <th style="width: 10rem;">Accept Bid</th>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="body" let-product>
+                                <tr>
+                                    <td>July 7th 2025</td>
+                                    <td>MHS Bank</td>
+                                    <td>3.75%</td>
+                                    <td>7 Lakhs</td>
+                                    <td> <p-button class="btn-success" (click)="visible4 = true"  label="Accept">
+                                        <img alt="edit" class="img-fluid" src="/assets/table-icons/percent_white.png" /> 
+                                    </p-button>
+                                </td>
+                                </tr>
+                            </ng-template>
+                        </p-table>
+                    </p-tabPanel>
+                    <p-tabPanel header="Invoice Items(27)">
+                        <p-table [value]="products" [paginator]="true" [rows]="5" styleClass="p-datatable-striped" [first]="first"
                 [showCurrentPageReport]="true" [tableStyle]="{ 'min-width': '50rem' }"
                 currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
                 [rowsPerPageOptions]="[5,10, 25, 50]">
@@ -137,7 +226,8 @@
                         </tr>
                     </ng-template>
                 </p-table>
-            </div>  
+                    </p-tabPanel>
+                </p-tabView>
         </div>
     </div>
 </div>
@@ -281,6 +371,74 @@
              </div>
              <div class="col-4">
                  <p-button label="Cancel" class="btn-secondary" (click)="visible3 = false" />
+             </div>
+             <div class="col-2"></div>
+         </div>
+     </ng-template>
+ </p-dialog>
+
+ <p-dialog header="Accept Bid"  [(visible)]="visible4" [modal]="true" [style]="{ width: '45rem' }">
+    <div class="row">
+        <div class="col-md-12 mb-2 text-center">
+            <small>Are you sure you want to accept this bid from MHS Bank</small>
+        </div>
+        <div class="col-md-12 form-details">
+            <p-card styleClass="mb-2">
+                <div class="row ">           
+                    <div class="col-md-3">
+                        <div class="flex flex-column mb-2 text-left">
+                            <label class="label" for="username">Financier</label>
+                            <span class="value">777777777</span>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="flex flex-column mb-2 text-left">
+                            <label class="label" for="username">Interest Rate </label>
+                            <span class="value">3.75%</span>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="flex flex-column mb-2 text-left">
+                            <label class="label" for="username">Cose of Funds</label>
+                            <span class="value">75 Lakhs</span>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="flex flex-column mb-2 text-left">
+                            <label class="label" for="username">Payment Amount</label>
+                            <span class="value">75 Lakhs</span>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="flex flex-column mb-2 text-left">
+                            <label class="label" for="username">Tenure</label>
+                            <span class="value">60 Days</span>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="flex flex-column mb-2 text-left">
+                            <label class="label" for="username">Disbursement Date</label>
+                            <span class="value">July 7th 2012</span>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="flex flex-column mb-2 text-left">
+                            <label class="label" for="username">Repayment Date</label>
+                            <span class="value">July 7th 2013</span>
+                        </div>
+                    </div>
+                </div>
+            </p-card>
+        </div>
+ </div>
+     <ng-template pTemplate="footer">
+         <div class="row">
+             <div class="col-2"></div>
+             <div class="col-4">
+                 <p-button label="Accept Bid"  class="btn-success" (click)="visible4 = false" />
+             </div>
+             <div class="col-4">
+                 <p-button label="Cancel" class="btn-secondary" (click)="visible4 = false" />
              </div>
              <div class="col-2"></div>
          </div>

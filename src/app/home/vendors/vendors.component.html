@@ -1,1 +1,315 @@
-<p>vendors works!</p>
+<p-toast />
+    <p-confirmPopup />
+<div class="row app-container">
+    <div class="col-md-12">
+        <div class="row align-items-center">
+            <div class="col-3">
+                <p-inputGroup>
+                    <p-inputGroupAddon>
+                        <i class="pi pi-search"></i>
+                    </p-inputGroupAddon>
+                    <input pInputText placeholder="Search..." />
+                </p-inputGroup>
+            </div>
+        </div>
+        <div class="row align-items-center">
+            <p-table [value]="products" [paginator]="true" [rows]="10" styleClass="p-datatable-striped" [first]="first"
+                [showCurrentPageReport]="true" [tableStyle]="{ 'min-width': '50rem' }"
+                currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                [rowsPerPageOptions]="[10, 25, 50]">
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th>Seller</th>                        
+                        <th>PAN</th>                        
+                        <th>GST IN</th>                        
+                        <th>Phone</th>
+                        <th>Active Invoices</th>
+                        <th>Upcoming Payment</th>
+                        <th>Quick View</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-product>
+                    <tr>
+                        <td><a href="javascript:void(0)" class="invoice"><img alt="seller" class="img-fluid" title="Seller" src="/assets/table-icons/seller.png" />Moh Labs </a></td>
+                        <td>ABCDE1234F</td>
+                        <td>29AAAAOOOOO12</td>
+                        <td>080-12345678</td>
+                        <td>17</td>
+                        <td>77 Lakhs</td>
+                        <td class="actions">
+                            <img alt="trash" class="img-fluid"    title="View" src="/assets/table-icons/view.png" />
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+
+        <div class="row invoice-bottom-div align-items-center mt-2">
+            <div class="col-1"></div>
+            <div class="col-10">
+                <p-card>
+                    <div class="row align-items-center">
+                        <div class="col-2">
+                            <div class="row">
+                                <label>selected</label>
+                            </div>
+                            <div class="row align-items-baseline">
+                                <div class="col-auto pr-0">
+                                    <span class="value">3</span>
+                                    <span class="label">Invoices</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-2">
+                            <div class="row">
+                                <label>Total Amount</label>
+                            </div>
+                            <div class="row align-items-baseline">
+                                <div class="col-auto pr-0">
+                                    <span class="pi pi-indiarupee value">2.31</span>
+                                    <span class="label">Crores</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="row">
+                                <label>Total Discounted Amount</label>
+                            </div>
+                            <div class="row align-items-baseline">
+                                <div class="col-auto pr-0">
+                                    <span class="pi pi-indiarupee value">2.92</span>
+                                    <span class="label">Crores</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-5">
+                            <div class="row align-items-baseline">
+                                <div class="col">
+                                    <p-button class="btn-success" (onClick)="visible1 = true" label="Apply Discount">
+                                        <img alt="edit" class="img-fluid" src="/assets/table-icons/percent_white.png" /> 
+                                    </p-button>
+                                </div>
+                                <div class="col-auto">
+                                    <p-button label="Send to Seller" (click)="visible3 = true" icon="pi pi-send">
+                                        
+                                    </p-button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </p-card>
+            </div>
+            <div class="col-1"></div>
+        </div>
+    </div>
+</div>
+<p-dialog header="Apply Discount" [modal]="true" [(visible)]="visible" [style]="{ width: '40rem' }">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="flex flex-column mb-2 text-left">
+                <label for="username">Total Amount</label>
+                <input pInputText id="username" aria-describedby="username-help" />
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="flex flex-column mb-2 text-left">
+                <label for="username">Discount</label>
+                <input pInputText id="username" aria-describedby="username-help" />
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="flex flex-column mb-2 text-left">
+                <label for="username">Amount After Discount</label>
+                <input pInputText id="username" aria-describedby="username-help" />
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="flex flex-column mb-2 text-left">
+                <label for="username">Disbursement Date</label>
+                <p-calendar [(ngModel)]="date1" [showIcon]="true" append="body" [showOnFocus]="false" inputId="buttondisplay"
+                 />
+            </div>
+        </div>        
+    </div>
+    <ng-template pTemplate="footer">
+        <div class="row">
+            <div class="col-3"></div>
+            <div class="col-3">
+                <p-button class="btn-success" label="Apply" (onClick)="visible = false" />
+            </div>
+            <div class="col-3">
+                <p-button label="Cancel" class="btn-secondary"  (onClick)="visible = false" />
+            </div>
+            <div class="col-3"></div>
+
+        </div>
+
+    </ng-template>
+</p-dialog>
+
+<p-dialog header="Apply discount for selected invoices" [modal]="true" [(visible)]="visible1" [style]="{ width: '40rem' }">
+    <div class="row">       
+        <div class="col-md-6">
+            <div class="flex flex-column mb-2 text-left">
+                <label for="username">Discount</label>
+                <input pInputText id="username" aria-describedby="username-help" />
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="flex flex-column mb-2 text-left">
+                <label for="username">Disbursement Date</label>
+                <p-calendar [(ngModel)]="date1" [showIcon]="true" append="body" [showOnFocus]="false" inputId="buttondisplay"
+                 />
+            </div>
+        </div>      
+        <div class="col-md-12">
+            <p-table [value]="products" [rows]="10" styleClass="p-datatable-striped" [first]="first"
+                >
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th>Invoice Number</th>
+                        <th>Invoice Amount</th>
+                        <th>Discounted Amount</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-product>
+                    <tr>
+                        <td>77779777</td>
+                        <td>77Lakhs</td>
+                        <td>01/04/2025</td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>  
+    </div>
+    <ng-template pTemplate="footer">
+        <div class="row">
+            <div class="col-3"></div>
+            <div class="col-3">
+                <p-button class="btn-success" label="Apply" (onClick)="visible1 = false" />
+            </div>
+            <div class="col-3">
+                <p-button label="Cancel" class="btn-secondary"  (onClick)="visible1 = false" />
+            </div>
+            <div class="col-3"></div>
+
+        </div>
+
+    </ng-template>
+</p-dialog>
+
+<p-dialog header="Items" [modal]="true" [(visible)]="visible2" [style]="{ width: '40rem' }">
+    <div class="row">    
+        <div class="col-md-12">
+            <p-table [value]="products" [rows]="10" styleClass="p-datatable-striped" [first]="first"
+                >
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th>item Number</th>
+                        <th>item Name</th>
+                        <th>Price</th>
+                        <th>Quantity</th>
+                        <th>Total Amount</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-product>
+                    <tr>
+                        <td>7121</td>
+                        <td>Wheat Flour</td>
+                        <td>7 Lakhs</td>
+                        <td>2</td>
+                        <td>14 Lakhs</td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>  
+    </div>
+    <ng-template pTemplate="footer">
+        <div class="row">
+            <div class="col-3"></div>
+            <div class="col-3">
+                <p-button class="btn-success" label="Apply" (onClick)="visible2 = false" />
+            </div>
+            <div class="col-3">
+                <p-button label="Cancel" class="btn-secondary"  (onClick)="visible2 = false" />
+            </div>
+            <div class="col-3"></div>
+
+        </div>
+
+    </ng-template>
+</p-dialog>
+
+<p-dialog header="Send to Seller" [modal]="true" [(visible)]="visible3" [style]="{ width: '60rem' }">
+    <div class="row">    
+        <div class="col-md-12 mt-2 mb-2">
+            <span class="">Are you sure you want to send these invoices to the seller? Please ensure that the data entered is correct.</span>
+        </div>
+        <div class="col-md-12">
+            <p-table [value]="products" [rows]="10" styleClass="p-datatable-striped" [first]="first"
+                >
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th>Invoice Number</th>
+                        <th>Invoice Amount</th>
+                        <th>Discount</th>
+                        <th>Discounted Amount</th>
+                        <th>Disbursement Date</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-product>
+                    <tr>
+                        <td>7121</td>
+                        <td>7 Lakhs</td>
+                        <td>3.75%</td>                        
+                        <td>6.2 Lakhs</td>
+                        <td>14/07/2024</td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>  
+    </div>
+    <ng-template pTemplate="footer">
+        <div class="row">
+            <div class="col-3"></div>
+            <div class="col-3">
+                <p-button class="btn-success" label="Apply" (onClick)="visible4 = true" />
+            </div>
+            <div class="col-3">
+                <p-button label="Cancel" class="btn-secondary"  (onClick)="visible3 = false" />
+            </div>
+            <div class="col-3"></div>
+
+        </div>
+
+    </ng-template>
+</p-dialog>
+<p-dialog header="" [modal]="true" [(visible)]="visible4" [style]="{ width: '40rem' }">
+    <div class="row">    
+        <div class="col-md-12 text-center">
+            <img src="assets/SealCheck.png" class="img-fluid" alt="Seal Check" >
+        </div>
+        <div class="col-md-12 text-center">
+            <h4>Invoices Sent Successfully!</h4>
+        </div>  
+        <div class="col-md-12 text-center">
+            <span class="">
+                The selected invoices has been sent to the seller successfully.
+            </span>
+        </div>      
+    </div>
+    <ng-template pTemplate="footer">
+        <div class="row">
+            <div class="col-3"></div>
+            <div class="col-3">
+                <p-button class="btn-success" label="Apply" (onClick)="visible4 = false" />
+            </div>
+            <div class="col-3">
+                <p-button label="Cancel" class="btn-secondary"  (onClick)="visible4 = false" />
+            </div>
+            <div class="col-3"></div>
+
+        </div>
+
+    </ng-template>
+</p-dialog>

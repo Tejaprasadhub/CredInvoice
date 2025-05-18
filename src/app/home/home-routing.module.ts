@@ -8,6 +8,7 @@ import { NegotiateComponent } from './negotiate/negotiate.component';
 import { CreateInvoicesComponent } from './create-invoices/create-invoices.component';
 import { CreateInvoiceComponent } from './create-invoice/create-invoice.component';
 import { InvoiceDetailsComponent } from './invoice-details/invoice-details.component';
+import { BiddingComponent } from './bidding/bidding.component';
 
 const routes: Routes = [
   { path: 'dashboard', component: DashboardComponent,data: { title: 'Dashboard' } },
@@ -17,7 +18,7 @@ const routes: Routes = [
   { path: 'reports', component: ReportsComponent,data: { title: 'Reports' } },
   { path: 'vendors', component: VendorsComponent,data: { title: 'My Vendors' } },
   { path: 'negotiate', component: NegotiateComponent,data: { title: 'Negotiate' } },
-  { path: 'bidding', component: VendorsComponent,data: { title: 'Bidding Management' } }
+  { path: 'bidding', component: BiddingComponent,data: { title: 'Bidding Management' } }
 ];
 
 @NgModule({

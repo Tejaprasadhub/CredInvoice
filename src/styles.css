@@ -788,3 +788,9 @@ ul {
 .p-datatable-thead > tr > th{
   background:#fff !important;
 }
+
+
+
+.p-tabview-nav-container .p-tabview-nav-content ul{
+  padding-left: 0 !important;
+}
