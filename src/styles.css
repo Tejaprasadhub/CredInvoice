@@ -38,6 +38,13 @@
   margin-right: 5px;
   cursor: pointer;
 }
+.error-div {
+  p {
+    color: red;
+    text-align: left;
+    font-size: 12px;
+  }
+}
 .p-datatable-table .p-datatable-thead,.p-datatable-table .p-datatable-tbody{
   border-left: 1px solid #dbdbe6;
 border-right: 1px solid #dbdbe6;

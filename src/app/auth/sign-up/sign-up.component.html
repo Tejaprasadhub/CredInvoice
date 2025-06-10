@@ -1,89 +1,202 @@
 <div class="cred-invoice container text-center">
     <div class="content-box">
-    <div class="row">
-        <div class="col-md-6">
-            <div class="row">
-                <div class="col-12 platform-logo ">
-                    <div class="align-items-center d-flex justify-content-center">
-                        <img class="logo" alt="Logo Image" class="img-fluid w-50" src="assets/logo.png" /> 
-                    </div>                  
-                </div>
-                <div class="col-12 mt-2 heading">
-                    <div class="row">
-                        <span class="header-title"><h5>Create Your Account</h5></span>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="row">
+                    <div class="col-12 platform-logo ">
+                        <div class="align-items-center d-flex justify-content-center">
+                            <img class="logo" alt="Logo Image" class="img-fluid w-50" src="assets/logo.png" />
+                        </div>
                     </div>
-                    <div class="row">
-                        <span class="sub-title">Join Cred Invoice and streamline your invoice financing.</span>
-                    </div>
-                </div>
-                <div class="col-12 inputs">
-                    <div class="row">
-                        <div class="col-6">
-                            <div class="flex flex-column mb-2 text-left">
-                                <label for="username">First Name</label>
-                                <input pInputText id="username" aria-describedby="username-help" />
-                                <!-- <small id="username-help">Enter your username.</small> -->
-                            </div>
-                            <div class="flex flex-column mb-2 text-left">
-                                <label for="username">Email</label>
-                                <input pInputText id="username" aria-describedby="username-help" />
-                                <!-- <small id="username-help">Enter your password.</small> -->
-                            </div>
-                            <div class="flex flex-column mb-2 text-left">
-                                <label for="username">Password</label>
-                                <input pInputText id="username" aria-describedby="username-help" />
-                                <!-- <small id="username-help">Enter your password.</small> -->
-                            </div>
-                        </div>
-                         <div class="col-6">
-                            <div class="flex flex-column mb-2 text-left">
-                                <label for="username">Last Name</label>
-                                <input pInputText id="username" aria-describedby="username-help" />
-                                <!-- <small id="username-help">Enter your username.</small> -->
-                            </div>
-                            <div class="flex flex-column mb-2 text-left">
-                                <label for="username">Business PAN</label>
-                                <input pInputText id="username" aria-describedby="username-help" />
-                                <!-- <small id="username-help">Enter your password.</small> -->
-                            </div>
-                            <div class="flex flex-column mb-2 text-left">
-                                <label for="username">Confirm Password</label>
-                                <input pInputText id="username" aria-describedby="username-help" />
-                                <!-- <small id="username-help">Enter your password.</small> -->
-                            </div>
-                        </div>
-                        <div class="col-2"></div>
-                        <div class="col-8">                            
-                            <div class="flex flex-column  text-left">
-                                <p-button label="Create My Account" (click)="kyc()"></p-button>
-                            </div>
-                        </div>
-                        <div class="col-2"></div>
-                    </div>                    
-                </div>     
-                <div class="col-12">
-                    <div class="row mt-4">
+                    <div class="col-12 mt-2 heading">
                         <div class="row">
-                            <span class="sub-title">By signing up you will be agreeing to our <b>Privacy policy</b> and <b>terms and conditions.</b></span>
+                            <span class="header-title">
+                                <h5>Create Your Account</h5>
+                            </span>
                         </div>
-                        <div class="col-2"></div>
-                        <div class="col-8">                            
-                            <div class="row">
-                                <span class="sub-title">Already have an account?</span>
-                            </div>
-                            <div class="row">
-                                <p-button class="btn-secondary" (click)="login()" label="Sign In to your account"></p-button>
-                            </div>
+                        <div class="row">
+                            <span class="sub-title">Join Cred Invoice and streamline your invoice financing.</span>
                         </div>
-                        <div class="col-2"></div>
                     </div>
-                    
-                </div>          
+                    <div class="col-12 inputs">
+                        <form [formGroup]="signUpForm" class="col-md-12" (ngSubmit)="signUpFormFormSubmit()">
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="flex flex-column mb-2 text-left">
+                                        <span class="header-title">
+                                            <h6>Choose your account type</h6>
+                                        </span>
+                                        <div class="row d-block text-left mt-2">
+                                            <p-chip label="Buyer" (click)="changeUserType('BUYER')" [ngClass]="userType == 'BUYER' ? 'active' : ''" />
+                                            <p-chip label="Seller" (click)="changeUserType('SELLER')"  [ngClass]="userType == 'SELLER' ? 'active' : ''"/>
+                                            <p-chip label="Financier" (click)="changeUserType('FINANCIER')" [ngClass]="userType == 'FINANCIER' ? 'active' : ''" />
+                                        </div>
+                                    </div>
+                                    <div class="flex flex-column mb-2 text-left">
+                                        <label for="username">First Name</label>
+                                        <input class="p-input-sm" formControlName="firstname" type="text" maxlength="50"
+                                            pInputText
+                                            [ngClass]="{'error':((!signUpForm.controls['firstname'].valid && signUpForm.controls['firstname'].touched) || (!signUpForm.controls['firstname'].valid && signUpForm.controls['firstname'].untouched && registerSubmitAttempt))}">
+                                        <!-- <small id="username-help">Enter your username.</small> -->
+                                        <span class="error-div" *ngIf="(!signUpForm.valid && registerSubmitAttempt)">
+                                            <p class="validation-label mb-0"
+                                                *ngIf="signUpForm.controls['firstname'].errors?.['required']">
+                                                First name is required</p>
+                                            <p class="validation-label mb-0"
+                                                *ngIf="!signUpForm.controls['firstname'].errors?.['required'] && signUpForm.controls['firstname'].errors?.['pattern']">
+                                                Please Enter Valid First Name</p>
+                                        </span>
+                                    </div>
+                                    <div class="flex flex-column mb-2 text-left">
+                                        <label for="username">Email</label>
+                                        <input formControlName="email" type="email" maxlength="45" pInputText
+                                            [ngClass]="{'error':((!signUpForm.controls['email'].valid && signUpForm.controls['email'].touched) || (!signUpForm.controls['email'].valid && signUpForm.controls['email'].untouched && registerSubmitAttempt))}">
+                                        <span class="error-div" *ngIf="(!signUpForm.valid && registerSubmitAttempt)">
+                                            <p class="validation-label mb-0"
+                                                *ngIf="signUpForm.controls['email'].errors?.['required']">
+                                                Email is required</p>
+                                            <p class="validation-label mb-0"
+                                                *ngIf="!signUpForm.controls['email'].errors?.['required'] && signUpForm.controls['email'].errors?.['email']">
+                                                Please Enter Valid Email</p>
+                                        </span>
+                                    </div>
+                                    <div class="flex flex-column mb-2 text-left">
+                                        <label for="username">Password <i
+                                                style="margin-top: 10px;font-size: 10px;cursor: pointer;"
+                                                title="Password Instructions" class="pi pi-info-circle"
+                                                (click)="showPasswordInfoPopup=!showPasswordInfoPopup"></i></label>
+                                        <p-password formControlName="password" maxlength="45"
+                                            [ngClass]="{'error':((!signUpForm.controls['password'].valid && signUpForm.controls['password'].touched) || (!signUpForm.controls['password'].valid && signUpForm.controls['password'].untouched && registerSubmitAttempt))}"
+                                            [toggleMask]="true"></p-password>
+
+                                        <span class="error-div" *ngIf="(!signUpForm.valid && registerSubmitAttempt)">
+                                            <p class="validation-label mb-0"
+                                                *ngIf="signUpForm.controls['password'].errors?.['required']">
+                                                Password is required</p>
+                                            <p class="validation-label mb-0"
+                                                *ngIf="!signUpForm.controls['password'].errors?.['required'] && signUpForm.controls['password'].errors?.['pattern']">
+                                                Please Enter Valid Password</p>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="flex flex-column mb-2 text-left">
+                                        <label for="username">Comapny Name</label>
+                                        <input formControlName="company" type="text" maxlength="100" pInputText
+                                            [ngClass]="{'error':((!signUpForm.controls['company'].valid && signUpForm.controls['company'].touched) || (!signUpForm.controls['company'].valid && signUpForm.controls['company'].untouched && registerSubmitAttempt))}">
+                                        <span class="error-div" *ngIf="(!signUpForm.valid && registerSubmitAttempt)">
+                                            <p class="validation-label mb-0"
+                                                *ngIf="signUpForm.controls['company'].errors?.['required']">
+                                                Company name is required</p>
+                                            <p class="validation-label mb-0"
+                                                *ngIf="!signUpForm.controls['company'].errors?.['required'] && signUpForm.controls['company'].errors?.['pattern']">
+                                                Please Enter Valid Company Name</p>
+                                        </span>
+                                    </div>
+                                    <div class="flex flex-column mb-2 text-left">
+                                        <label for="username">Last Name</label>
+                                        <input formControlName="lastname" type="text" maxlength="50" pInputText
+                                            [ngClass]="{'error':((!signUpForm.controls['lastname'].valid && signUpForm.controls['lastname'].touched) || (!signUpForm.controls['lastname'].valid && signUpForm.controls['lastname'].untouched && registerSubmitAttempt))}">
+                                        <span class="error-div" *ngIf="(!signUpForm.valid && registerSubmitAttempt)">
+                                            <p class="validation-label mb-0"
+                                                *ngIf="signUpForm.controls['lastname'].errors?.['required']">
+                                                Last name is required</p>
+                                            <p class="validation-label mb-0"
+                                                *ngIf="!signUpForm.controls['lastname'].errors?.['required'] && signUpForm.controls['lastname'].errors?.['pattern']">
+                                                Please Enter Valid Last Name</p>
+                                        </span>
+                                    </div>
+                                    <div class="flex flex-column mb-2 text-left">
+                                        <label for="username">Business PAN</label>
+                                        <input formControlName="pan" type="text" maxlength="10" pInputText
+                                        [ngClass]="{'error':((!signUpForm.controls['pan'].valid && signUpForm.controls['pan'].touched) || (!signUpForm.controls['pan'].valid && signUpForm.controls['pan'].untouched && registerSubmitAttempt))}">
+                                     <span class="error-div" *ngIf="(!signUpForm.valid && registerSubmitAttempt)">
+                                            <p class="validation-label mb-0"
+                                                *ngIf="signUpForm.controls['pan'].errors?.['required']">
+                                                Business PAN is required</p>
+                                            <p class="validation-label mb-0"
+                                                *ngIf="!signUpForm.controls['pan'].errors?.['required'] && signUpForm.controls['pan'].errors?.['pattern']">
+                                                Please Enter Valid Business PAN</p>
+                                        </span>
+                                    </div>
+                                    <div class="flex flex-column mb-2 text-left">
+                                        <label for="username">Confirm Password</label>
+                                        <p-password formControlName="confirmpassword" maxlength="45"
+                                            [ngClass]="{'error':((!signUpForm.controls['confirmpassword'].valid && signUpForm.controls['confirmpassword'].touched) || (!signUpForm.controls['confirmpassword'].valid && signUpForm.controls['confirmpassword'].untouched && registerSubmitAttempt))}"
+                                            [toggleMask]="true" />
+
+                                        <span class="error-div" *ngIf="(!signUpForm.valid && registerSubmitAttempt)">
+                                            <p class="validation-label mb-0"
+                                                *ngIf="signUpForm.controls['confirmpassword'].errors?.['required']">
+                                                Confirm Password is required</p>
+                                            <p class="validation-label mb-0"
+                                                *ngIf="!signUpForm.controls['confirmpassword'].errors?.['required'] && signUpForm.controls['confirmpassword'].errors?.['pattern']">
+                                                Please Enter Valid Confirm Password</p>
+                                            <p class="validation-label mb-0"
+                                                *ngIf="signUpForm.controls['confirmpassword'].errors?.['notSame'] && signUpForm.controls['confirmpassword'].touched">
+                                                Password and confirm password didn't match.
+                                            </p>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="col-2"></div>
+                                <div class="col-8">
+                                    <div class="flex flex-column  text-left">
+                                        <p-button label="Create My Account" type="submit"></p-button>
+                                    </div>
+                                </div>
+                                <div class="col-2"></div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="col-12">
+                        <div class="row mt-4">
+                            <div class="row">
+                                <span class="sub-title">By signing up you will be agreeing to our <b>Privacy policy</b>
+                                    and <b>terms and conditions.</b></span>
+                            </div>
+                            <div class="col-2"></div>
+                            <div class="col-8">
+                                <div class="row">
+                                    <span class="sub-title">Already have an account?</span>
+                                </div>
+                                <div class="row">
+                                    <p-button class="btn-secondary" (click)="login()"
+                                        label="Sign In to your account"></p-button>
+                                </div>
+                            </div>
+                            <div class="col-2"></div>
+                        </div>
+
+                    </div>
+                </div>
             </div>
-        </div>
-        <div class="col-md-6">
-            <img alt="Login Image" class="img-fluid" src="assets/login-image.png" /> 
+            <div class="col-md-6">
+                <img alt="Login Image" class="img-fluid" src="assets/login-image.png" />
+            </div>
         </div>
     </div>
 </div>
+
+
+<div class="success-popup">
+    <p-dialog [modal]="true" [(visible)]="showPasswordInfoPopup" [breakpoints]="{'960px': '90vw'}"
+        [style]="{width: '50vw'}">
+        <div class="row align-items-center p-3">
+            <h6>Password Information:</h6>
+            <div class="col-12 mt-2" style="line-height:20px;font-weight: initial;text-align: justify;">
+                <p>Password must contain a minimum of eight(8) characters AND include each of the following :</p>
+                <ul>
+                    <li>An upper case letter (A)</li>
+                    <li>A lower case letter (a)</li>
+                    <li>A number (0-9)</li>
+                    <li>A special character !#$%^&*()_+</li>
+                </ul>
+            </div>
+            <div class="col-12 text-center mt-3">
+                <button pButton type="button" label="Cancel" (click)="showPasswordInfoPopup=!showPasswordInfoPopup"
+                    class="p-button-raised p-button-help  p-button-rounded w-100"></button>
+            </div>
+        </div>
+    </p-dialog>
 </div>

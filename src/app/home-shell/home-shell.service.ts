@@ -1,5 +1,6 @@
 import { Routes, Route } from '@angular/router';
 import { HomeShellComponent } from './home-shell.component';
+import { AuthenticationGuard } from '../auth/authentication.guard';
 
 /**
  * Provides helper methods to create routes.
@@ -14,7 +15,8 @@ export class HomeShell {
     return {
       path: '',
       component: HomeShellComponent,
-      children: routes
+      children: routes,
+      canActivate: [AuthenticationGuard]
     };
   }
 }

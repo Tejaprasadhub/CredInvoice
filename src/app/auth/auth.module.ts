@@ -33,7 +33,6 @@ import { ProfileVerificationComponent } from './profile-verification/profile-ver
     CommonModule,    
     ReactiveFormsModule,   
     FormsModule,    
-    HttpClientModule,
     PrimengModule,
     // BrowserAnimationsModule    
   ]

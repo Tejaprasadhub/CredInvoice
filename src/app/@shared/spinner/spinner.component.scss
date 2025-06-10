@@ -1,0 +1,21 @@
+::ng-deep {
+    .spinner-profile {  
+      .p-element {
+        z-index: 99999999 !important;
+      }
+      .p-dialog-header,
+      .p-dialog-footer {
+        display: none !important;
+      }  
+      .p-dialog-content {
+        padding: 0 !important;
+        border-bottom-right-radius: 0 !important;
+        border-bottom-left-radius: 0 !important;
+        overflow: hidden !important;
+        box-shadow: 0 2px 12px 0 rgb(0 0 0 / 10%)
+      }  
+      .p-progressbar .p-progressbar-value {
+        background: var(--genie-primary-color) !important;
+      }
+    }
+  }
