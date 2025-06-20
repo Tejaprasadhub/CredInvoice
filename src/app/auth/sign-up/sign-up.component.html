@@ -20,9 +20,9 @@
                     </div>
                     <div class="col-12 inputs">
                         <form [formGroup]="signUpForm" class="col-md-12" (ngSubmit)="signUpFormFormSubmit()">
-                            <div class="row">
+                            <div class="row">                                
                                 <div class="col-6">
-                                    <div class="flex flex-column mb-2 text-left">
+                                    <div class="flex flex-column  text-left">
                                         <span class="header-title">
                                             <h6>Choose your account type</h6>
                                         </span>
@@ -32,7 +32,24 @@
                                             <p-chip label="Financier" (click)="changeUserType('FINANCIER')" [ngClass]="userType == 'FINANCIER' ? 'active' : ''" />
                                         </div>
                                     </div>
-                                    <div class="flex flex-column mb-2 text-left">
+                                </div>
+                                <div class="col-6">
+                                    <div class="flex flex-column  text-left">
+                                        <label for="username">Comapny Name</label>
+                                        <input formControlName="company" type="text" maxlength="100" pInputText
+                                            [ngClass]="{'error':((!signUpForm.controls['company'].valid && signUpForm.controls['company'].touched) || (!signUpForm.controls['company'].valid && signUpForm.controls['company'].untouched && registerSubmitAttempt))}">
+                                        <span class="error-div" *ngIf="(!signUpForm.valid && registerSubmitAttempt)">
+                                            <p class="validation-label mb-0"
+                                                *ngIf="signUpForm.controls['company'].errors?.['required']">
+                                                Company name is required</p>
+                                            <p class="validation-label mb-0"
+                                                *ngIf="!signUpForm.controls['company'].errors?.['required'] && signUpForm.controls['company'].errors?.['pattern']">
+                                                Please Enter Valid Company Name</p>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="flex flex-column  text-left">
                                         <label for="username">First Name</label>
                                         <input class="p-input-sm" formControlName="firstname" type="text" maxlength="50"
                                             pInputText
@@ -47,7 +64,24 @@
                                                 Please Enter Valid First Name</p>
                                         </span>
                                     </div>
-                                    <div class="flex flex-column mb-2 text-left">
+                                </div>
+                                <div class="col-6">
+                                    <div class="flex flex-column  text-left">
+                                        <label for="username">Last Name</label>
+                                        <input formControlName="lastname" type="text" maxlength="50" pInputText
+                                            [ngClass]="{'error':((!signUpForm.controls['lastname'].valid && signUpForm.controls['lastname'].touched) || (!signUpForm.controls['lastname'].valid && signUpForm.controls['lastname'].untouched && registerSubmitAttempt))}">
+                                        <span class="error-div" *ngIf="(!signUpForm.valid && registerSubmitAttempt)">
+                                            <p class="validation-label mb-0"
+                                                *ngIf="signUpForm.controls['lastname'].errors?.['required']">
+                                                Last name is required</p>
+                                            <p class="validation-label mb-0"
+                                                *ngIf="!signUpForm.controls['lastname'].errors?.['required'] && signUpForm.controls['lastname'].errors?.['pattern']">
+                                                Please Enter Valid Last Name</p>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="flex flex-column  text-left">
                                         <label for="username">Email</label>
                                         <input formControlName="email" type="email" maxlength="45" pInputText
                                             [ngClass]="{'error':((!signUpForm.controls['email'].valid && signUpForm.controls['email'].touched) || (!signUpForm.controls['email'].valid && signUpForm.controls['email'].untouched && registerSubmitAttempt))}">
@@ -60,9 +94,26 @@
                                                 Please Enter Valid Email</p>
                                         </span>
                                     </div>
-                                    <div class="flex flex-column mb-2 text-left">
+                                </div>
+                                <div class="col-6">
+                                    <div class="flex flex-column  text-left">
+                                        <label for="username">Business PAN</label>
+                                        <input formControlName="pan" type="text" maxlength="10" pInputText
+                                        [ngClass]="{'error':((!signUpForm.controls['pan'].valid && signUpForm.controls['pan'].touched) || (!signUpForm.controls['pan'].valid && signUpForm.controls['pan'].untouched && registerSubmitAttempt))}">
+                                     <span class="error-div" *ngIf="(!signUpForm.valid && registerSubmitAttempt)">
+                                            <p class="validation-label mb-0"
+                                                *ngIf="signUpForm.controls['pan'].errors?.['required']">
+                                                Business PAN is required</p>
+                                            <p class="validation-label mb-0"
+                                                *ngIf="!signUpForm.controls['pan'].errors?.['required'] && signUpForm.controls['pan'].errors?.['pattern']">
+                                                Please Enter Valid Business PAN</p>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="flex flex-column  text-left">
                                         <label for="username">Password <i
-                                                style="margin-top: 10px;font-size: 10px;cursor: pointer;"
+                                                style="font-size: 10px;cursor: pointer;"
                                                 title="Password Instructions" class="pi pi-info-circle"
                                                 (click)="showPasswordInfoPopup=!showPasswordInfoPopup"></i></label>
                                         <p-password formControlName="password" maxlength="45"
@@ -79,47 +130,11 @@
                                         </span>
                                     </div>
                                 </div>
+                                
+                                
+                                
                                 <div class="col-6">
-                                    <div class="flex flex-column mb-2 text-left">
-                                        <label for="username">Comapny Name</label>
-                                        <input formControlName="company" type="text" maxlength="100" pInputText
-                                            [ngClass]="{'error':((!signUpForm.controls['company'].valid && signUpForm.controls['company'].touched) || (!signUpForm.controls['company'].valid && signUpForm.controls['company'].untouched && registerSubmitAttempt))}">
-                                        <span class="error-div" *ngIf="(!signUpForm.valid && registerSubmitAttempt)">
-                                            <p class="validation-label mb-0"
-                                                *ngIf="signUpForm.controls['company'].errors?.['required']">
-                                                Company name is required</p>
-                                            <p class="validation-label mb-0"
-                                                *ngIf="!signUpForm.controls['company'].errors?.['required'] && signUpForm.controls['company'].errors?.['pattern']">
-                                                Please Enter Valid Company Name</p>
-                                        </span>
-                                    </div>
-                                    <div class="flex flex-column mb-2 text-left">
-                                        <label for="username">Last Name</label>
-                                        <input formControlName="lastname" type="text" maxlength="50" pInputText
-                                            [ngClass]="{'error':((!signUpForm.controls['lastname'].valid && signUpForm.controls['lastname'].touched) || (!signUpForm.controls['lastname'].valid && signUpForm.controls['lastname'].untouched && registerSubmitAttempt))}">
-                                        <span class="error-div" *ngIf="(!signUpForm.valid && registerSubmitAttempt)">
-                                            <p class="validation-label mb-0"
-                                                *ngIf="signUpForm.controls['lastname'].errors?.['required']">
-                                                Last name is required</p>
-                                            <p class="validation-label mb-0"
-                                                *ngIf="!signUpForm.controls['lastname'].errors?.['required'] && signUpForm.controls['lastname'].errors?.['pattern']">
-                                                Please Enter Valid Last Name</p>
-                                        </span>
-                                    </div>
-                                    <div class="flex flex-column mb-2 text-left">
-                                        <label for="username">Business PAN</label>
-                                        <input formControlName="pan" type="text" maxlength="10" pInputText
-                                        [ngClass]="{'error':((!signUpForm.controls['pan'].valid && signUpForm.controls['pan'].touched) || (!signUpForm.controls['pan'].valid && signUpForm.controls['pan'].untouched && registerSubmitAttempt))}">
-                                     <span class="error-div" *ngIf="(!signUpForm.valid && registerSubmitAttempt)">
-                                            <p class="validation-label mb-0"
-                                                *ngIf="signUpForm.controls['pan'].errors?.['required']">
-                                                Business PAN is required</p>
-                                            <p class="validation-label mb-0"
-                                                *ngIf="!signUpForm.controls['pan'].errors?.['required'] && signUpForm.controls['pan'].errors?.['pattern']">
-                                                Please Enter Valid Business PAN</p>
-                                        </span>
-                                    </div>
-                                    <div class="flex flex-column mb-2 text-left">
+                                    <div class="flex flex-column  text-left">
                                         <label for="username">Confirm Password</label>
                                         <p-password formControlName="confirmpassword" maxlength="45"
                                             [ngClass]="{'error':((!signUpForm.controls['confirmpassword'].valid && signUpForm.controls['confirmpassword'].touched) || (!signUpForm.controls['confirmpassword'].valid && signUpForm.controls['confirmpassword'].untouched && registerSubmitAttempt))}"

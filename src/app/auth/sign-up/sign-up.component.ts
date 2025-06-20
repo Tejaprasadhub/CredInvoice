@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../../@shared/services/auth.service';
 import { Subject, takeUntil } from 'rxjs';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
@@ -18,7 +18,8 @@ export class SignUpComponent {
 
   userType:string="BUYER";
 
-  constructor(private router: Router,private authService : AuthService,private fb: FormBuilder) {}
+  constructor( private router: Router,
+    private route: ActivatedRoute,private authService : AuthService,private fb: FormBuilder) {}
 
   forgotPassword(){
         this.router.navigate(['/forgot-password']);  // define your component where you want to go
@@ -35,18 +36,16 @@ export class SignUpComponent {
     if (this.signUpForm.valid) {
       this.registerSubmitAttempt = false;
       this.authService.register(this.signUpForm.value,this.userType)
-      .pipe(takeUntil(this.ngUnsubscribe)).subscribe(
-        {
-          next: data => {
-            localStorage.setItem("userEmail",this.signUpForm.value.email);
-            this.router.navigate(['/verify']);
-          },
-          error: err => {
-          }
+      .pipe(takeUntil(this.ngUnsubscribe)).subscribe((result: any) => {
+        if (result.status) {
+          localStorage.setItem("userEmail",result.data.email)
+          this.router.navigate(['/verify'], { relativeTo: this.route });
+        }else{
+
+        }
         }
       )
     }
-    //   // define your component where you want to go
   }
 
   ngOnInit(): void {

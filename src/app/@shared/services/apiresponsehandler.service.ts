@@ -18,46 +18,43 @@ export class ApiResponseHandlerService {
   ) { }
 
   handleError(e: any) {
-    debugger
     this.messageService.clear();
     if (e.status === 401) {
-      this.messageService.add({ severity: 'error', summary: 'Error', detail: e?.error?.detail, sticky: true });
+      this.messageService.add({ severity: 'error', summary: 'Error', detail: e?.error?.message, sticky: true });
       this.token.removeToken();
       this.router.navigate(['/login'], { replaceUrl: true });
-
     }
     else if (e.status === 403) {
-      this.messageService.add({ severity: 'error', summary: 'Error', detail: e?.error?.detail, sticky: true });
+      this.messageService.add({ severity: 'error', summary: 'Error', detail: e?.error?.message, sticky: true });
     }
     else if (e.status === 500) {
-      this.messageService.add({ severity: 'error', summary: 'Error', detail: e?.error?.detail, sticky: true });
+      this.messageService.add({ severity: 'error', summary: 'Error', detail: e?.error?.message, sticky: true });
     }
     else if (e.status === 422) {
-      this.messageService.add({ severity: 'error', summary: 'Error', detail: e?.error?.detail, sticky: true });
+      this.messageService.add({ severity: 'error', summary: 'Error', detail: e?.error?.message, sticky: true });
     }
     else if (e.status === 400) {
-      this.messageService.add({ severity: 'error', summary: 'Error', detail: e?.error?.detail, sticky: true });
+      this.messageService.add({ severity: 'error', summary: 'Error', detail: e?.error?.message, sticky: true });
     }
     else if (e.status === 404) {
-      this.messageService.add({ severity: 'error', summary: 'Error', detail: e?.error?.detail, sticky: true });
+      this.messageService.add({ severity: 'error', summary: 'Error', detail: e?.error?.message, sticky: true });
     }
     else {
-      this.messageService.add({ severity: 'error', summary: 'Error', detail: e?.error?.detail, sticky: true });
+      this.messageService.add({ severity: 'error', summary: 'Error', detail: e?.error?.message, sticky: true });
     }
 
     setTimeout(() => {
       this.messageService.clear()
-    }, 2000);
-    return throwError(() => new Error(e?.error?.detail || 'Something went wrong.'));
+    }, 10000);
+    return throwError(() => new Error(e?.error?.message || 'Something went wrong.'));
     return of({});
   }
   handleSuccess(message: string) {
-    debugger
     this.messageService.clear();
     this.messageService.add({ severity: 'success', summary: 'Success', detail: message, sticky: true });
     setTimeout(() => {
       this.messageService.clear()
-    }, 2000);
+    }, 10000);
   }
 
 }

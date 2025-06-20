@@ -42,14 +42,19 @@ export class AuthService {
     });
     return this.httpClient.post("auth/signup", data).pipe(
       map((response: any) => {
-        this.apiResponseHandler.handleSuccess("Registration completed successfully");
+        this.apiResponseHandler.handleSuccess(response?.message);
         return response;
       }), catchError(e => this.apiResponseHandler.handleError(e)));
   } 
   
-  validateOTP(validateData: any) {
-    return this.httpClient.post("Register/phone/validate", validateData).pipe(
+  validateOTP(formData: any) {
+    let data = JSON.stringify({
+      email: localStorage.getItem("userEmail"),
+      otp: formData.otp,
+    });
+    return this.httpClient.post("auth/verify-otp", data).pipe(
       map((response: any) => {
+        this.apiResponseHandler.handleSuccess(response?.message);
         return response;
       }), catchError(e => this.apiResponseHandler.handleError(e)));
   }

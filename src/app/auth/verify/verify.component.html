@@ -19,20 +19,31 @@
                     </div>
                 </div>
                 <div class="col-md-12 inputs">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="flex flex-column mb-4 mt-4 text-left">
-                                <p-inputOtp [length]="6"></p-inputOtp>
-                                <!-- <small id="username-help">Enter your username.</small> -->
+                    <form [formGroup]="verifyForm" class="col-md-12" (ngSubmit)="verifyFormSubmit()">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="flex flex-column mb-4 mt-4 text-left">
+                                    <p-inputOtp formControlName="otp" [length]="6"
+                                    [ngClass]="{'error':((!verifyForm.controls['otp'].valid && verifyForm.controls['otp'].touched) || (!verifyForm.controls['otp'].valid && verifyForm.controls['otp'].untouched && verifySubmitAttempt))}"></p-inputOtp>
+                                    <span class="error-div" *ngIf="(!verifyForm.valid && verifySubmitAttempt)">
+                                        <p class="validation-label mb-0"
+                                            *ngIf="verifyForm.controls['otp'].errors?.['required']">
+                                            OTP is required</p>
+                                        <p class="validation-label mb-0"
+                                            *ngIf="!verifyForm.controls['otp'].errors?.['required'] && verifyForm.controls['otp'].errors?.['pattern']">
+                                            Please Enter Valid OTP</p>
+                                    </span>                                </div>
+                                <div class="flex flex-column mb-2 text-left">
+                                    <p-button label="Verify" type="submit"></p-button>
+                                </div>
+                                <div class="flex flex-column mb-2  text-left">
+                                     <label for="username">Didn't receive code? <strong>Resend Code</strong></label>
+                                </div>
                             </div>
-                            <div class="flex flex-column mb-2 text-left">
-                                <p-button label="Verify" (click)="verify()"></p-button>
-                            </div>
-                            <div class="flex flex-column mb-2  text-left">
-                                 <label for="username">Didn't receive code? <strong>Resend Code</strong></label>
-                            </div>
-                        </div>
-                    </div>                    
+                        </div>     
+                    </form>
+
+                                   
                 </div>     
                 <div class="col-md-12">
                     <div class="row mt-8">
