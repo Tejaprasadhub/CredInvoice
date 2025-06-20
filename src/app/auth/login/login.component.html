@@ -17,28 +17,48 @@
                     </div>
                 </div>
                 <div class="col-12 inputs">
+                    <form [formGroup]="loginForm" class="col-md-12" (ngSubmit)="loginFormSubmit()">
                     <div class="row">
                         <div class="col-2"></div>
                         <div class="col-8">
                             <div class="flex flex-column mb-2 text-left">
                                 <label for="username">Email</label>
-                                <input pInputText id="username" aria-describedby="username-help" />
-                                <!-- <small id="username-help">Enter your username.</small> -->
+                                        <input formControlName="email" type="email" maxlength="45" pInputText
+                                            [ngClass]="{'error':((!loginForm.controls['email'].valid && loginForm.controls['email'].touched) || (!loginForm.controls['email'].valid && loginForm.controls['email'].untouched && loginSubmitAttempt))}">
+                                        <span class="error-div" *ngIf="(!loginForm.valid && loginSubmitAttempt)">
+                                            <p class="validation-label mb-0"
+                                                *ngIf="loginForm.controls['email'].errors?.['required']">
+                                                Email is required</p>
+                                            <p class="validation-label mb-0"
+                                                *ngIf="!loginForm.controls['email'].errors?.['required'] && loginForm.controls['email'].errors?.['email']">
+                                                Please Enter Valid Email</p>
+                                        </span>
                             </div>
                             <div class="flex flex-column mb-2 text-left">
-                                <label for="username">Password</label>
-                                <input pInputText id="username" aria-describedby="username-help" />
-                                <!-- <small id="username-help">Enter your password.</small> -->
+                                <label for="username">Password </label>
+                            <p-password formControlName="password" maxlength="45"
+                                [ngClass]="{'error':((!loginForm.controls['password'].valid && loginForm.controls['password'].touched) || (!loginForm.controls['password'].valid && loginForm.controls['password'].untouched && loginSubmitAttempt))}"
+                                [toggleMask]="true"></p-password>
+
+                            <span class="error-div" *ngIf="(!loginForm.valid && loginSubmitAttempt)">
+                                <p class="validation-label mb-0"
+                                    *ngIf="loginForm.controls['password'].errors?.['required']">
+                                    Password is required</p>
+                                <p class="validation-label mb-0"
+                                    *ngIf="!loginForm.controls['password'].errors?.['required'] && loginForm.controls['password'].errors?.['pattern']">
+                                    Please Enter Valid Password</p>
+                            </span>
                             </div>
                             <div class="flex flex-column mb-2  text-left">
                                 <a href="javascript:void(0)" class="forgotPassword" (click)="forgotPassword()">Forgot Password?</a>
                             </div>
                             <div class="flex flex-column  text-left">
-                                <p-button label="Sign In" (click)="signin()"></p-button>
+                                <p-button label="Sign In" type="submit"></p-button>
                             </div>
                         </div>
                         <div class="col-2"></div>
-                    </div>                    
+                    </div>   
+                </form>                 
                 </div>     
                 <div class="col-12">
                     <div class="row mt-4">

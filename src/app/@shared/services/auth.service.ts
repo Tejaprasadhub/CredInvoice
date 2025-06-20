@@ -16,16 +16,15 @@ export class AuthService {
 
   login(loginUserData: any) {
     let data = JSON.stringify({
-        phoneNumber: loginUserData.phonenumber,
-        userPassword: loginUserData.password
+        email: loginUserData.email,
+        password: loginUserData.password
     });
-    return this.httpClient.post("Login", data).pipe(
+    return this.httpClient.post("auth/login", data).pipe(
       map((response: any) => {
         if (response.token) {
-          this.tokenProvider.setUserName(response.user);
+          this.tokenProvider.setUserName(response.data);
           this.tokenProvider.setToken({ token: response.token });
-        }
-        
+        }        
         return response;
       }), catchError(e => this.apiResponseHandler.handleError(e)));
   }
