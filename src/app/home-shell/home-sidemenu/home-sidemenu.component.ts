@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { MenuItem } from 'primeng/api';
+import { SessionStorageTokenService } from '../../@shared/services/session-storage-token.service';
 
 @Component({
   selector: 'app-home-sidemenu',
@@ -9,7 +10,7 @@ import { MenuItem } from 'primeng/api';
 })
 export class HomeSidemenuComponent {
   menuItems: MenuItem[] = [];
-
+constructor(private sessionStorageService:SessionStorageTokenService) { }
   ngOnInit() {
     this.menuItems = [
       { label: 'Dashboard', icon: 'pi pi-th-large', routerLink: ['/home/dashboard'], styleClass: 'active-item', url:'assets/icons/dashboard.png' },
@@ -19,5 +20,10 @@ export class HomeSidemenuComponent {
       { label: 'Negotiate', icon: 'pi pi-comments', routerLink: ['/home/negotiate'],url:'assets/icons/Handshake.png' },
       { label: 'Bidding Management', icon: 'pi pi-gavel', routerLink: ['/home/bidding'],url:'assets/icons/Scales.png' }
     ];
+  }
+
+  SignOut(){
+    this.sessionStorageService.removeToken();
+    window.location.href = '/login'; // Redirect to login page
   }
 }

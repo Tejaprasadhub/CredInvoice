@@ -36,8 +36,8 @@ export class LoginComponent {
       this.loginSubmitAttempt = false;
       this.authService.login(this.loginForm.value)
       .pipe(takeUntil(this.ngUnsubscribe)).subscribe((result: any) => {
-        if (result.token) {
-          this.router.navigate(['/home'], { relativeTo: this.route });
+        if (result.status) {
+          this.router.navigate(['/home/dashboard'], { relativeTo: this.route });
         }
         else{
           this.router.navigate(['/login'], {relativeTo: this.route})

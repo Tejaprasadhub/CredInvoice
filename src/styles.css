@@ -45,6 +45,10 @@
     font-size: 12px;
   }
 }
+
+.cursor-pointer{
+  cursor: pointer;
+}
 .p-datatable-table .p-datatable-thead,.p-datatable-table .p-datatable-tbody{
   border-left: 1px solid #dbdbe6;
 border-right: 1px solid #dbdbe6;

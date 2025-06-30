@@ -5,7 +5,7 @@ import { HomeRoutingModule } from './home-routing.module';
 import { HomeComponent } from './home.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { PrimengModule } from '../primeng.module';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { InvoicesComponent } from './invoices/invoices.component';
 import { ReportsComponent } from './reports/reports.component';
 import { VendorsComponent } from './vendors/vendors.component';
@@ -31,11 +31,11 @@ import { InvoiceDetailsComponent } from './invoice-details/invoice-details.compo
     InvoiceDetailsComponent
   ],
   imports: [
-    CommonModule,
+    ReactiveFormsModule,  
+    CommonModule,     
     FormsModule,
     PrimengModule,
-    HomeRoutingModule,
-    HttpClientModule
+    HomeRoutingModule
   ],
   providers:[HttpClient]
 })

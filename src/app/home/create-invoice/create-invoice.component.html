@@ -1,86 +1,142 @@
 <div class="row app-container">
     <div class="col-md-12 form-details">
-        <div class="row align-items-center">
-            <div class="col-3">
-                <p-dropdown [options]="cities" [(ngModel)]="selectedCity" optionLabel="name"
-                    placeholder="Select Seller" />
+        <form [formGroup]="invoiceForm" class="col-md-12" (ngSubmit)="invoiceFormFormSubmit()">
+            <div class="row align-items-center">
+                <div class="col-3">
+                    <p-dropdown formControlName="seller" [options]="sellers" optionLabel="label"
+                        placeholder="Select Seller"
+                        [ngClass]="{'error':((!invoiceForm.controls['seller'].valid && invoiceForm.controls['seller'].touched) || (!invoiceForm.controls['seller'].valid && invoiceForm.controls['seller'].untouched && invoiceFormSubmitAttempt))}" />
+                    <span class="error-div" *ngIf="(!invoiceForm.valid && invoiceFormSubmitAttempt)">
+                        <p class="validation-label mb-0" *ngIf="invoiceForm.controls['seller'].errors?.['required']">
+                            Seller is required</p>
+                    </span>
+                </div>
             </div>
-        </div>
-        <p-card>
-            <div class="row">
-                <div class="col-md-3">
-                    <div class="flex flex-column mb-2 text-left">
-                        <label for="username">Inovice Number</label>
-                        <input pInputText id="username" aria-describedby="username-help" />
+            <p-card>
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="flex flex-column mb-2 text-left">
+                            <label for="username">Inovice Number</label>
+                            <input formControlName="number" type="text" maxlength="50" pInputText
+                                [ngClass]="{'error':((!invoiceForm.controls['number'].valid && invoiceForm.controls['number'].touched) || (!invoiceForm.controls['number'].valid && invoiceForm.controls['number'].untouched && invoiceFormSubmitAttempt))}">
+                            <span class="error-div" *ngIf="(!invoiceForm.valid && invoiceFormSubmitAttempt)">
+                                <p class="validation-label mb-0"
+                                    *ngIf="invoiceForm.controls['number'].errors?.['required']">
+                                    Invoice number is required</p>
+                                <p class="validation-label mb-0"
+                                    *ngIf="!invoiceForm.controls['number'].errors?.['required'] && invoiceForm.controls['number'].errors?.['pattern']">
+                                    Please Enter Valid Invoice Number</p>
+                            </span>
+                        </div>
                     </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="flex flex-column mb-2 text-left">
-                        <label for="username">Invoice Amount</label>
-                        <input pInputText id="username" aria-describedby="username-help" />
+                    <div class="col-md-3">
+                        <div class="flex flex-column mb-2 text-left">
+                            <label for="username">Invoice Amount</label>
+                            <input formControlName="amount" type="text" maxlength="50" pInputText
+                                [ngClass]="{'error':((!invoiceForm.controls['amount'].valid && invoiceForm.controls['amount'].touched) || (!invoiceForm.controls['amount'].valid && invoiceForm.controls['amount'].untouched && invoiceFormSubmitAttempt))}">
+                            <span class="error-div" *ngIf="(!invoiceForm.valid && invoiceFormSubmitAttempt)">
+                                <p class="validation-label mb-0"
+                                    *ngIf="invoiceForm.controls['amount'].errors?.['required']">
+                                    Invoice amount is required</p>
+                                <p class="validation-label mb-0"
+                                    *ngIf="!invoiceForm.controls['amount'].errors?.['required'] && invoiceForm.controls['amount'].errors?.['pattern']">
+                                    Please Enter Valid Invoice Amount</p>
+                            </span>
+                        </div>
                     </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="flex flex-column mb-2 text-left">
-                        <label for="username">Create Date</label>
-                        <p-calendar [(ngModel)]="date1" [showIcon]="true" append="body" [showOnFocus]="false"
-                            inputId="buttondisplay" />
+                    <div class="col-md-3">
+                        <div class="flex flex-column mb-2 text-left">
+                            <label for="username">Create Date</label>
+                            <p-calendar formControlName="invoiceDate" [showIcon]="true" append="body"
+                                [showOnFocus]="false" inputId="buttondisplay"
+                                [ngClass]="{'error':((!invoiceForm.controls['invoiceDate'].valid && invoiceForm.controls['invoiceDate'].touched) || (!invoiceForm.controls['invoiceDate'].valid && invoiceForm.controls['invoiceDate'].untouched && invoiceFormSubmitAttempt))}" />
+                            <span class="error-div" *ngIf="(!invoiceForm.valid && invoiceFormSubmitAttempt)">
+                                <p class="validation-label mb-0"
+                                    *ngIf="invoiceForm.controls['invoiceDate'].errors?.['required']">
+                                    Create date is required</p>
+                                <p class="validation-label mb-0"
+                                    *ngIf="!invoiceForm.controls['invoiceDate'].errors?.['required'] && invoiceForm.controls['invoiceDate'].errors?.['pattern']">
+                                    Please Enter Valid Created Date</p>
+                            </span>
+                        </div>
                     </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="flex flex-column mb-2 text-left">
-                        <label for="username">Disbursement Date</label>
-                        <p-calendar [(ngModel)]="date1" [showIcon]="true" append="body" [showOnFocus]="false"
-                            inputId="buttondisplay" />
+                    <div class="col-md-3">
+                        <div class="flex flex-column mb-2 text-left">
+                            <label for="username">Disbursement Date</label>
+                            <p-calendar formControlName="disbursementDate" [showIcon]="true" append="body"
+                                [showOnFocus]="false" inputId="buttondisplay"
+                                [ngClass]="{'error':((!invoiceForm.controls['disbursementDate'].valid && invoiceForm.controls['disbursementDate'].touched) || (!invoiceForm.controls['disbursementDate'].valid && invoiceForm.controls['disbursementDate'].untouched && invoiceFormSubmitAttempt))}" />
+                            <span class="error-div" *ngIf="(!invoiceForm.valid && invoiceFormSubmitAttempt)">
+                                <p class="validation-label mb-0"
+                                    *ngIf="invoiceForm.controls['disbursementDate'].errors?.['required']">
+                                    Disbursement date is required</p>
+                                <p class="validation-label mb-0"
+                                    *ngIf="!invoiceForm.controls['disbursementDate'].errors?.['required'] && invoiceForm.controls['disbursementDate'].errors?.['pattern']">
+                                    Please Enter Valid Disbursement Date</p>
+                            </span>
+                        </div>
                     </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="flex flex-column mb-2 text-left">
-                        <label for="username">Fund By</label>
-                        <div class="row d-block text-left mt-2">
-                            <p-chip label="Self" class="active" />
-                            <p-chip label="Financier" />
+                    <div class="col-md-3">
+                        <div class="flex flex-column mb-2 text-left">
+                            <label for="username">Fund By</label>
+                            <p-dropdown formControlName="fundBy" [options]="fundBy" optionLabel="label"
+                                placeholder="Select Fund By"
+                                [ngClass]="{'error':((!invoiceForm.controls['fundBy'].valid && invoiceForm.controls['fundBy'].touched) || (!invoiceForm.controls['fundBy'].valid && invoiceForm.controls['fundBy'].untouched && invoiceFormSubmitAttempt))}" />
+                            <span class="error-div" *ngIf="(!invoiceForm.valid && invoiceFormSubmitAttempt)">
+                                <p class="validation-label mb-0"
+                                    *ngIf="invoiceForm.controls['fundBy'].errors?.['required']">
+                                    Fund by is required</p>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="flex flex-column mb-2 text-left">
+                            <label for="username">Upload Pdf</label>
+                            <div class="card flex justify-content-center">
+                                <p-fileUpload mode="basic" chooseLabel="Upload" chooseIcon="pi pi-cloud-upload"
+                                    name="demo[]" accept=".pdf" maxFileSize="1000000"
+                                    (onSelect)="onSelectedFiles($event)" (onUpload)="onUpload($event)" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="flex flex-column mb-2 text-left">
+                            <label for="username">Description</label>
+                            <textarea rows="3" cols="30" formControlName="description" pInputTextarea></textarea>
+                            <span class="error-div" *ngIf="(!invoiceForm.valid && invoiceFormSubmitAttempt)">
+                                <p class="validation-label mb-0"
+                                    *ngIf="invoiceForm.controls['description'].errors?.['required']">
+                                    Description is required</p>
+                                <p class="validation-label mb-0"
+                                    *ngIf="!invoiceForm.controls['description'].errors?.['required'] && invoiceForm.controls['description'].errors?.['pattern']">
+                                    Please Enter Valid Description</p>
+                            </span>
                         </div>
                     </div>
                 </div>
+            </p-card>
+            <div class="row mt-3 align-items-center">
+                <div class="col-md-2">
+                    <p-button label="Add an item" (click)="visible = true" icon="pi pi-plus" class="btn-secondary" />
+                </div>
                 <div class="col-md-3">
-                    <div class="flex flex-column mb-2 text-left">
-                        <label for="username">Upload Pdf</label>
-                        <div class="card flex justify-content-center">
-                            <p-fileUpload mode="basic" chooseLabel="Upload" chooseIcon="pi pi-cloud-upload" name="demo[]"
-                                accept="image/*" maxFileSize="1000000" (onUpload)="onUpload($event)" />
-                        </div>
-                    </div>
+                    <p-button label="Import items from .csv" icon="pi pi-plus" class="btn-secondary" />
                 </div>
-                <div class="col-md-6">
-                    <div class="flex flex-column mb-2 text-left">
-                        <label for="username">Description</label>
-                        <textarea rows="3" cols="30" pInputTextarea>
-</textarea>
-                    </div>
+                <div class="col-md-3">
+                    <span class="mr-4">Download this sample file for reference</span> <span class="invoice"> <i
+                            class="pi pi-download mr-2"></i>Sampleitems.csv</span>
+                </div>
+                <div class="col-md-3">
+                    <p-button label="Save Invoice" icon="pi pi-plus" type="submit" />
                 </div>
             </div>
-        </p-card>
-        <div class="row mt-3 align-items-center">
-            <div class="col-md-2">
-                <p-button label="Add an item" (click)="visible = true" icon="pi pi-plus" class="btn-secondary" />
-            </div>
-            <div class="col-md-3">
-                <p-button label="Import items from .csv" icon="pi pi-plus" class="btn-secondary" />
-            </div>
-            <div class="col-md-3">
-                <span class="mr-4">Download this sample file for reference</span>  <span class="invoice"> <i class="pi pi-download mr-2"></i>Sampleitems.csv</span>
-            </div>
-            <div class="col-md-3">
-                <p-button label="Save Invoice"icon="pi pi-plus"  />
-            </div>
-        </div>
+        </form>
         <div class="row mt-3">
             <div class="col-md-12">
-                <p-table [value]="products" [paginator]="true" [rows]="5" styleClass="p-datatable-striped" [first]="first"
-                [showCurrentPageReport]="true" [tableStyle]="{ 'min-width': '50rem' }"
-                currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-                [rowsPerPageOptions]="[5,10, 25, 50]">
+                <p-table [value]="itemsList" [paginator]="true" [rows]="5" styleClass="p-datatable-striped"
+                    [first]="first" [showCurrentPageReport]="true" [tableStyle]="{ 'min-width': '50rem' }"
+                    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                    [rowsPerPageOptions]="[5,10, 25, 50]">
                     <ng-template pTemplate="header">
                         <tr>
                             <th>item Number</th>
@@ -91,70 +147,115 @@
                             <th>Actions</th>
                         </tr>
                     </ng-template>
-                    <ng-template pTemplate="body" let-product>
+                    <ng-template pTemplate="body" let-item>
                         <tr>
-                            <td>7121</td>
-                            <td>Wheat Flour</td>
-                            <td>7 Lakhs</td>
-                            <td>2</td>
-                            <td>14 Lakhs</td>
+                            <td>{{item.item_number}}</td>
+                            <td>{{item.item_name}}</td>
+                            <td>{{item.unit_price}}</td>
+                            <td>{{item.quantity}}</td>
+                            <td>{{item.total_amount}}</td>
                             <td class="actions">
-                                <img alt="trash" class="img-fluid"    title="Delete" src="/assets/table-icons/Trash.png" />
-                                <img alt="edit" class="img-fluid" title="Edit" src="/assets/table-icons/Pencil.png" />
+                                <img alt="edit" (click)="edit(item)"  class="img-fluid" title="Edit" src="/assets/table-icons/Pencil.png" />
+                                <img alt="trash" class="img-fluid" title="Delete" src="/assets/table-icons/Trash.png" />
                             </td>
                         </tr>
                     </ng-template>
                 </p-table>
-            </div>  
+            </div>
         </div>
     </div>
 </div>
 
 <p-dialog header="Add an Item" [modal]="true" [(visible)]="visible" [style]="{ width: '40rem' }">
+<form [formGroup]="itemForm" class="col-md-12" (ngSubmit)="itemFormSubmit()">
     <div class="row">
         <div class="col-md-6">
             <div class="flex flex-column mb-2 text-left">
                 <label for="username">Item Number</label>
-                <input pInputText id="username" aria-describedby="username-help" />
+                <input formControlName="item_number" type="text" maxlength="50" pInputText
+                                [ngClass]="{'error':((!itemForm.controls['item_number'].valid && itemForm.controls['item_number'].touched) || (!itemForm.controls['item_number'].valid && itemForm.controls['item_number'].untouched && itemFormSubmitAttempt))}">
+                            <span class="error-div" *ngIf="(!itemForm.valid && itemFormSubmitAttempt)">
+                                <p class="validation-label mb-0"
+                                    *ngIf="itemForm.controls['item_number'].errors?.['required']">
+                                    Item Number is required</p>
+                                <p class="validation-label mb-0"
+                                    *ngIf="!itemForm.controls['item_number'].errors?.['required'] && itemForm.controls['item_number'].errors?.['pattern']">
+                                    Please Enter Valid Item Number</p>
+                            </span>
             </div>
         </div>
         <div class="col-md-6">
             <div class="flex flex-column mb-2 text-left">
                 <label for="username">Item Name</label>
-                <input pInputText id="username" aria-describedby="username-help" />
+                <input formControlName="item_name" type="text" maxlength="50" pInputText
+                                [ngClass]="{'error':((!itemForm.controls['item_name'].valid && itemForm.controls['item_name'].touched) || (!itemForm.controls['item_name'].valid && itemForm.controls['item_name'].untouched && itemFormSubmitAttempt))}">
+                            <span class="error-div" *ngIf="(!itemForm.valid && itemFormSubmitAttempt)">
+                                <p class="validation-label mb-0"
+                                    *ngIf="itemForm.controls['item_name'].errors?.['required']">
+                                    Item Name is required</p>
+                                <p class="validation-label mb-0"
+                                    *ngIf="!itemForm.controls['item_name'].errors?.['required'] && itemForm.controls['item_name'].errors?.['pattern']">
+                                    Please Enter Valid Item Name</p>
+                            </span>
             </div>
         </div>
         <div class="col-md-6">
             <div class="flex flex-column mb-2 text-left">
                 <label for="username">Price </label>
-                <input pInputText id="username" aria-describedby="username-help" />
+                <input formControlName="unit_price" type="text" maxlength="50" pInputText
+                                [ngClass]="{'error':((!itemForm.controls['unit_price'].valid && itemForm.controls['unit_price'].touched) || (!itemForm.controls['unit_price'].valid && itemForm.controls['unit_price'].untouched && itemFormSubmitAttempt))}">
+                            <span class="error-div" *ngIf="(!itemForm.valid && itemFormSubmitAttempt)">
+                                <p class="validation-label mb-0"
+                                    *ngIf="itemForm.controls['unit_price'].errors?.['required']">
+                                    Item Price is required</p>
+                                <p class="validation-label mb-0"
+                                    *ngIf="!itemForm.controls['unit_price'].errors?.['required'] && itemForm.controls['unit_price'].errors?.['pattern']">
+                                    Please Enter Valid Item Price</p>
+                            </span>
             </div>
         </div>
         <div class="col-md-6">
             <div class="flex flex-column mb-2 text-left">
-                <label for="username">Disbursement Date</label>
-                <input pInputText id="username" aria-describedby="username-help" />
+                <label for="username">Quantity</label>
+                 <input formControlName="quantity" type="text" maxlength="50" pInputText
+                                [ngClass]="{'error':((!itemForm.controls['quantity'].valid && itemForm.controls['quantity'].touched) || (!itemForm.controls['quantity'].valid && itemForm.controls['quantity'].untouched && itemFormSubmitAttempt))}">
+                            <span class="error-div" *ngIf="(!itemForm.valid && itemFormSubmitAttempt)">
+                                <p class="validation-label mb-0"
+                                    *ngIf="itemForm.controls['quantity'].errors?.['required']">
+                                    Item Quantity is required</p>
+                                <p class="validation-label mb-0"
+                                    *ngIf="!itemForm.controls['quantity'].errors?.['required'] && itemForm.controls['quantity'].errors?.['pattern']">
+                                    Please Enter Valid Item Quantity</p>
+                            </span>
             </div>
-        </div>  
+        </div>
         <div class="col-md-6">
             <div class="flex flex-column mb-2 text-left">
                 <label for="username">Total Amount</label>
-                <input pInputText id="username" aria-describedby="username-help" />
+                <input formControlName="total_amount" readonly type="text" maxlength="50" pInputText
+                                [ngClass]="{'error':((!itemForm.controls['total_amount'].valid && itemForm.controls['total_amount'].touched) || (!itemForm.controls['total_amount'].valid && itemForm.controls['total_amount'].untouched && itemFormSubmitAttempt))}">
+                            <span class="error-div" *ngIf="(!itemForm.valid && itemFormSubmitAttempt)">
+                                <p class="validation-label mb-0"
+                                    *ngIf="itemForm.controls['total_amount'].errors?.['required']">
+                                    Item Total is required</p>
+                                <p class="validation-label mb-0"
+                                    *ngIf="!itemForm.controls['total_amount'].errors?.['required'] && itemForm.controls['total_amount'].errors?.['pattern']">
+                                    Please Enter Valid Item Total</p>
+                            </span>
             </div>
-        </div>        
+        </div>
     </div>
-    <ng-template pTemplate="footer">
+    
         <div class="row">
             <div class="col-3"></div>
             <div class="col-3">
-                <p-button  label="Add Item" (onClick)="visible = false" />
+                <p-button type="submit"  label="Add Item" />
             </div>
             <div class="col-3">
-                <p-button label="Cancel" class="btn-secondary"  (onClick)="visible = false" />
+                <p-button label="Cancel" class="btn-secondary" (click)="closePopup()" />
             </div>
             <div class="col-3"></div>
 
         </div>
-
-    </ng-template>
+</form>
 </p-dialog>

@@ -45,7 +45,7 @@ export class ApiResponseHandlerService {
 
     setTimeout(() => {
       this.messageService.clear()
-    }, 10000);
+    }, 3000);
     return throwError(() => new Error(e?.error?.message || 'Something went wrong.'));
     return of({});
   }
@@ -54,7 +54,7 @@ export class ApiResponseHandlerService {
     this.messageService.add({ severity: 'success', summary: 'Success', detail: message, sticky: true });
     setTimeout(() => {
       this.messageService.clear()
-    }, 10000);
+    }, 3000);
   }
 
 }
