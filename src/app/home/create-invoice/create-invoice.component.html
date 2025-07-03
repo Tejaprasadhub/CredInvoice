@@ -1,19 +1,21 @@
 <div class="row app-container">
     <div class="col-md-12 form-details">
         <form [formGroup]="invoiceForm" class="col-md-12" (ngSubmit)="invoiceFormFormSubmit()">
-            <div class="row align-items-center">
-                <div class="col-3">
-                    <p-dropdown formControlName="seller" [options]="sellers" optionLabel="label"
-                        placeholder="Select Seller"
-                        [ngClass]="{'error':((!invoiceForm.controls['seller'].valid && invoiceForm.controls['seller'].touched) || (!invoiceForm.controls['seller'].valid && invoiceForm.controls['seller'].untouched && invoiceFormSubmitAttempt))}" />
-                    <span class="error-div" *ngIf="(!invoiceForm.valid && invoiceFormSubmitAttempt)">
-                        <p class="validation-label mb-0" *ngIf="invoiceForm.controls['seller'].errors?.['required']">
-                            Seller is required</p>
-                    </span>
-                </div>
-            </div>
+            <div class="row align-items-center">               
             <p-card>
                 <div class="row">
+                    <div class="col-md-3">
+                        <div class="flex flex-column mb-2 text-left">
+                            <label for="username">Seller</label>
+                              <p-dropdown formControlName="invoiceseller" [options]="sellers" optionLabel="label"
+                        placeholder="Select Seller"
+                        [ngClass]="{'error':((!invoiceForm.controls['invoiceseller'].valid && invoiceForm.controls['invoiceseller'].touched) || (!invoiceForm.controls['invoiceseller'].valid && invoiceForm.controls['invoiceseller'].untouched && invoiceFormSubmitAttempt))}" />
+                    <span class="error-div" *ngIf="(!invoiceForm.valid && invoiceFormSubmitAttempt)">
+                        <p class="validation-label mb-0" *ngIf="invoiceForm.controls['invoiceseller'].errors?.['required']">
+                            Seller is required</p>
+                    </span>
+                        </div>
+                    </div>
                     <div class="col-md-3">
                         <div class="flex flex-column mb-2 text-left">
                             <label for="username">Inovice Number</label>
@@ -99,7 +101,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-12">
                         <div class="flex flex-column mb-2 text-left">
                             <label for="username">Description</label>
                             <textarea rows="3" cols="30" formControlName="description" pInputTextarea></textarea>
@@ -129,6 +131,13 @@
                 <div class="col-md-3">
                     <p-button label="Save Invoice" icon="pi pi-plus" type="submit" />
                 </div>
+            </div>
+            <div class="row mt-3">
+                 <span class="error-div" *ngIf="(invoiceFormSubmitAttempt && this.itemsList.length === 0)">
+                                <p class="validation-label mb-0">
+                                   Please add items to create invoice</p>
+                            </span>                
+            </div>
             </div>
         </form>
         <div class="row mt-3">

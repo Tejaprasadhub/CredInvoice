@@ -4,8 +4,8 @@
     <div class="col-md-12">
         <div class="row align-items-center">
             <div class="col-3">
-                <p-dropdown [options]="cities" [(ngModel)]="selectedCity" optionLabel="name"
-                    placeholder="Select a City" />
+                <p-dropdown [options]="sellers" [(ngModel)]="selectedCity" optionLabel="label"
+                    placeholder="Select Seller" />
             </div>
             <div class="col-3"></div>
             <div class="col-3">
@@ -29,15 +29,14 @@
             </div>
             <div class="col">
                 <div class="flex align-items-center gap-2 flex-wrap pt-1 pb-1">
-                    <p-chip label="Apple" [removable]="true" />
-                    <p-chip label="Facebook" [removable]="true" />
-                    <p-chip label="Google" [removable]="true"/>
-                    <p-chip label="Microsoft" [removable]="true" />
+                    <ng-template ngFor let-seller [ngForOf]="sellers" let-i="index">
+                        <p-chip [label]="seller.label" [removable]="true" />
+                    </ng-template>
                 </div>
             </div>         
         </div>
         <div class="row align-items-center">
-            <p-table [value]="products" [paginator]="true" [rows]="10" styleClass="p-datatable-striped" [first]="first"
+            <p-table [value]="invoices" [(selection)]="selectedInvoices" dataKey="id" [paginator]="true" [rows]="10" styleClass="p-datatable-striped" [first]="first"
                 [showCurrentPageReport]="true" [tableStyle]="{ 'min-width': '50rem' }"
                 currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
                 [rowsPerPageOptions]="[10, 25, 50]">
@@ -51,33 +50,35 @@
                         <th>Due Date</th>
                         <th>Invoice pdf's</th>
                         <th>Status</th>
-                        <th>Discount</th>
+                        <!-- <th>Discount</th>
                         <th>After Discount</th>
-                        <th>Disbursement On</th>
+                        <th>Disbursement On</th> -->
+                        <th>Fund By</th>
                         <th>Items</th>
                         <th>Actions</th>
                     </tr>
                 </ng-template>
-                <ng-template pTemplate="body" let-product>
+                <ng-template pTemplate="body" let-invoice let-rowIndex="rowIndex">
                     <tr>
                         <td>
-                            <p-tableCheckbox [value]="product" />
+                            <p-tableCheckbox [value]="invoice" />
                         </td>
-                        <td><a href="javascript:void(0)" class="invoice"><img alt="seller" class="img-fluid" title="Seller" src="/assets/table-icons/seller.png" />Moh Labs </a></td>
-                        <td>77779777</td>
-                        <td>77Lakhs</td>
-                        <td>01/04/2025</td>
-                        <td>01/04/2025</td>
-                        <td class="invoice"><a href="javascript:void(0)"></a>{{product.invoice}}</td>
-                        <td> <span class="status sent">Applied</span> </td>
-                        <td>3.75%</td>
-                        <td>74.12Lakhs</td>
-                        <td>01/04/2025</td>
-                        <td class="invoice cursor-pointer" (click)="visible2 = true">18</td>
-                        <td class="actions">
-                            <img alt="trash" class="img-fluid"  (click)="delete($event)"  title="Delete" src="/assets/table-icons/Trash.png" />
-                            <img alt="edit" class="img-fluid" title="Edit" src="/assets/table-icons/Pencil.png" />
-                            <img alt="discount" (click)="visible = true" class="img-fluid" title="Discount" src="/assets/table-icons/percent_green.png" /> 
+                        <td><a href="javascript:void(0)" class="invoice"><img alt="seller" class="img-fluid" title="Seller" src="/assets/table-icons/seller.png" />{{getSellerName(invoice)}}</a></td>
+                        <td>{{invoice?.invoice_number}}</td>
+                        <td>{{invoice?.invoice_amount}}</td>
+                        <td>{{invoice?.invoice_date | date:'dd-MM-yyyy' }}</td>
+                        <td>{{invoice?.invoice_due_date | date:'dd-MM-yyyy'}}</td>
+                        <td class="invoice"><a href="javascript:void(0)"></a>File {{rowIndex + 1}}</td>
+                        <td> <span class="status {{invoice.status}}">{{invoice?.status}}</span> </td>
+                        <!-- <td></td>
+                        <td></td>
+                        <td></td> -->
+                        <td>{{invoice?.fund_by}}</td>
+                        <td class="invoice cursor-pointer" (click)="showItems(invoice)">{{invoice?.items?.length}}</td>
+                        <td class="actions" [ngClass]="this.selectedInvoices.length > 0 ? 'actions-disabled' : ''">
+                            <img alt="trash"  class="img-fluid"   (click)="delete(invoice)"  title="Delete" src="/assets/table-icons/Trash.png" />
+                            <img alt="edit" class="img-fluid"  (click)="edit(invoice)" title="Edit" src="/assets/table-icons/Pencil.png" />
+                            <img alt="discount" (click)="visible = true" class="img-fluid"  title="Discount" src="/assets/table-icons/percent_green.png" /> 
                         </td>
                     </tr>
                 </ng-template>
@@ -95,7 +96,7 @@
                             </div>
                             <div class="row align-items-baseline">
                                 <div class="col-auto pr-0">
-                                    <span class="value">3</span>
+                                    <span class="value">{{this.selectedInvoices.length}}</span>
                                     <span class="label">Invoices</span>
                                 </div>
                             </div>
@@ -106,8 +107,8 @@
                             </div>
                             <div class="row align-items-baseline">
                                 <div class="col-auto pr-0">
-                                    <span class="pi pi-indiarupee value">2.31</span>
-                                    <span class="label">Crores</span>
+                                    <span class="pi pi-indiarupee value">{{getTotalAmount(this.selectedInvoices)}}</span>
+                                    <span class="label">{{transformText(getTotalAmount(this.selectedInvoices))}}</span>
                                 </div>
                             </div>
                         </div>
@@ -117,7 +118,7 @@
                             </div>
                             <div class="row align-items-baseline">
                                 <div class="col-auto pr-0">
-                                    <span class="pi pi-indiarupee value">2.92</span>
+                                    <span class="pi pi-indiarupee value">0</span>
                                     <span class="label">Crores</span>
                                 </div>
                             </div>
@@ -125,12 +126,12 @@
                         <div class="col-5">
                             <div class="row align-items-baseline">
                                 <div class="col">
-                                    <p-button class="btn-success" (onClick)="visible1 = true" label="Apply Discount">
+                                    <p-button class="btn-success" [disabled]="this.selectedInvoices.length == 0" (onClick)="applyDiscountOnSelectedInvoices(this.selectedInvoices)" label="Apply Discount">
                                         <img alt="edit" class="img-fluid" src="/assets/table-icons/percent_white.png" /> 
                                     </p-button>
                                 </div>
                                 <div class="col-auto">
-                                    <p-button label="Send to Seller" (click)="visible3 = true" icon="pi pi-send">
+                                    <p-button label="Send to Seller" [disabled]="this.selectedInvoices.length == 0" (click)="visible3 = true" icon="pi pi-send">
                                         
                                     </p-button>
                                 </div>
@@ -188,22 +189,43 @@
 </p-dialog>
 
 <p-dialog header="Apply discount for selected invoices" [modal]="true" [(visible)]="visible1" [style]="{ width: '40rem' }">
+<form [formGroup]="applyDiscountSelectedForm" class="col-md-12" (ngSubmit)="applyDiscountSelectedFormSubmit()">
     <div class="row">       
         <div class="col-md-6">
-            <div class="flex flex-column mb-2 text-left">
-                <label for="username">Discount</label>
-                <input pInputText id="username" aria-describedby="username-help" />
-            </div>
+             <div class="flex flex-column mb-2 text-left">
+                            <label for="username">Discount (calculated in %)</label>
+                            <input formControlName="discount" type="text" maxlength="50" pInputText
+                                [ngClass]="{'error':((!applyDiscountSelectedForm.controls['discount'].valid && applyDiscountSelectedForm.controls['discount'].touched) || (!applyDiscountSelectedForm.controls['discount'].valid && applyDiscountSelectedForm.controls['discount'].untouched && applyDiscountSelectedFormSubmitAttempt))}">
+                            <span class="error-div" *ngIf="(!applyDiscountSelectedForm.valid && applyDiscountSelectedFormSubmitAttempt)">
+                                <p class="validation-label mb-0"
+                                    *ngIf="applyDiscountSelectedForm.controls['discount'].errors?.['required']">
+                                    Discount is required</p>
+                                <p class="validation-label mb-0"
+                                    *ngIf="!applyDiscountSelectedForm.controls['discount'].errors?.['required'] && applyDiscountSelectedForm.controls['discount'].errors?.['pattern']">
+                                    Please Enter Valid Discount</p>
+                            </span>
+                        </div>
         </div>
         <div class="col-md-6">
             <div class="flex flex-column mb-2 text-left">
-                <label for="username">Disbursement Date</label>
-                <p-calendar [(ngModel)]="date1" [showIcon]="true" append="body" [showOnFocus]="false" inputId="buttondisplay"
-                 />
+                <div class="flex flex-column mb-2 text-left">
+                            <label for="username">Disbursement Date</label>
+                            <p-calendar formControlName="disbursementDate" [showIcon]="true" append="body"
+                                [showOnFocus]="false" inputId="buttondisplay"
+                                [ngClass]="{'error':((!applyDiscountSelectedForm.controls['disbursementDate'].valid && applyDiscountSelectedForm.controls['disbursementDate'].touched) || (!applyDiscountSelectedForm.controls['disbursementDate'].valid && applyDiscountSelectedForm.controls['disbursementDate'].untouched && applyDiscountSelectedFormSubmitAttempt))}" />
+                            <span class="error-div" *ngIf="(!applyDiscountSelectedForm.valid && applyDiscountSelectedFormSubmitAttempt)">
+                                <p class="validation-label mb-0"
+                                    *ngIf="applyDiscountSelectedForm.controls['disbursementDate'].errors?.['required']">
+                                    Disbursement date is required</p>
+                                <p class="validation-label mb-0"
+                                    *ngIf="!applyDiscountSelectedForm.controls['disbursementDate'].errors?.['required'] && applyDiscountSelectedForm.controls['disbursementDate'].errors?.['pattern']">
+                                    Please Enter Valid Disbursement Date</p>
+                            </span>
+                        </div>
             </div>
         </div>      
         <div class="col-md-12">
-            <p-table [value]="products" [rows]="10" styleClass="p-datatable-striped" [first]="first"
+            <p-table [value]="selectedInvoices" [rows]="10" styleClass="p-datatable-striped" [first]="first"
                 >
                 <ng-template pTemplate="header">
                     <tr>
@@ -212,36 +234,35 @@
                         <th>Discounted Amount</th>
                     </tr>
                 </ng-template>
-                <ng-template pTemplate="body" let-product>
+                <ng-template pTemplate="body" let-invoice>
                     <tr>
-                        <td>77779777</td>
-                        <td>77Lakhs</td>
-                        <td>01/04/2025</td>
+                        <td>{{invoice?.invoice_number}}</td>
+                        <td>{{invoice?.invoice_amount}}</td>
+                        <td></td>
                     </tr>
                 </ng-template>
             </p-table>
         </div>  
-    </div>
-    <ng-template pTemplate="footer">
-        <div class="row">
-            <div class="col-3"></div>
+        </div>
+
+        <div class="row mt-2">       
+        <div class="col-3"></div>
             <div class="col-3">
-                <p-button class="btn-success" label="Apply" (onClick)="visible1 = false" />
+                <p-button class="btn-success" type="submit" label="Apply"/>
             </div>
             <div class="col-3">
                 <p-button label="Cancel" class="btn-secondary"  (onClick)="visible1 = false" />
             </div>
             <div class="col-3"></div>
-
-        </div>
-
-    </ng-template>
+    </div>
+   
+</form>
 </p-dialog>
 
 <p-dialog header="Items" [modal]="true" [(visible)]="visible2" [style]="{ width: '40rem' }">
     <div class="row">    
         <div class="col-md-12">
-            <p-table [value]="products" [rows]="10" styleClass="p-datatable-striped" [first]="first"
+            <p-table [value]="invoiceItems" [rows]="10" styleClass="p-datatable-striped" [first]="first"
                 >
                 <ng-template pTemplate="header">
                     <tr>
@@ -252,13 +273,13 @@
                         <th>Total Amount</th>
                     </tr>
                 </ng-template>
-                <ng-template pTemplate="body" let-product>
+                <ng-template pTemplate="body" let-invoiceItem>
                     <tr>
-                        <td>7121</td>
-                        <td>Wheat Flour</td>
-                        <td>7 Lakhs</td>
-                        <td>2</td>
-                        <td>14 Lakhs</td>
+                        <td>{{invoiceItem?.item_number}}</td>
+                        <td>{{invoiceItem?.item_name}}</td>
+                        <td>{{invoiceItem?.unit_price}}</td>
+                        <td>{{invoiceItem?.quantity}}</td>
+                        <td>{{invoiceItem?.total_amount}}</td>
                     </tr>
                 </ng-template>
             </p-table>
@@ -286,8 +307,7 @@
             <span class="">Are you sure you want to send these invoices to the seller? Please ensure that the data entered is correct.</span>
         </div>
         <div class="col-md-12">
-            <p-table [value]="products" [rows]="10" styleClass="p-datatable-striped" [first]="first"
-                >
+            <p-table [value]="selectedInvoices" [rows]="10" styleClass="p-datatable-striped" [first]="first">
                 <ng-template pTemplate="header">
                     <tr>
                         <th>Invoice Number</th>
@@ -297,13 +317,13 @@
                         <th>Disbursement Date</th>
                     </tr>
                 </ng-template>
-                <ng-template pTemplate="body" let-product>
+                <ng-template pTemplate="body" let-invoice>
                     <tr>
-                        <td>7121</td>
-                        <td>7 Lakhs</td>
-                        <td>3.75%</td>                        
-                        <td>6.2 Lakhs</td>
-                        <td>14/07/2024</td>
+                        <td>{{invoice?.invoice_number}}</td>
+                        <td>{{invoice?.invoice_amount}}</td>
+                        <td></td>                        
+                        <td></td>
+                        <td>{{invoice?.invoice_due_date}}</td>
                     </tr>
                 </ng-template>
             </p-table>
@@ -313,7 +333,7 @@
         <div class="row">
             <div class="col-3"></div>
             <div class="col-3">
-                <p-button class="btn-success" label="Apply" (onClick)="visible4 = true" />
+                <p-button class="btn-success" label="Send" (onClick)="sendtoSeller()" />
             </div>
             <div class="col-3">
                 <p-button label="Cancel" class="btn-secondary"  (onClick)="visible3 = false" />
@@ -341,14 +361,10 @@
     <ng-template pTemplate="footer">
         <div class="row">
             <div class="col-3"></div>
-            <div class="col-3">
-                <p-button class="btn-success" label="Apply" (onClick)="visible4 = false" />
-            </div>
-            <div class="col-3">
-                <p-button label="Cancel" class="btn-secondary"  (onClick)="visible4 = false" />
+            <div class="col-6">
+                <p-button class="btn-success" label="Okay" (onClick)="visible4 = false" />
             </div>
             <div class="col-3"></div>
-
         </div>
 
     </ng-template>

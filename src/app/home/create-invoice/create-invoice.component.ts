@@ -5,6 +5,7 @@ import { Subject } from 'rxjs/internal/Subject';
 import { takeUntil } from 'rxjs';
 import { AuthService } from '../../@shared/services/auth.service';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { InvoiceService } from '../../@shared/services/invoice.service';
 
 @Component({
   selector: 'app-create-invoice',
@@ -20,16 +21,11 @@ export class CreateInvoiceComponent {
   itemFormSubmitAttempt: boolean=false;
   itemsList:any[]=[];
   sellers: any[] = [
-    { label: 'Select Seller', value: '' },
-    { label: 'Seller 1', value: 'seller1' },
-    { label: 'Seller 2', value: 'seller2' },
-    { label: 'Seller 3', value: 'seller3' },
-    { label: 'Seller 4', value: 'seller4' }
   ]
 
   fundBy: any[] = [
-    { label: 'Self', value: 'self' },
-    { label: 'Financier', value: 'financier' }
+    { label: 'Self', value: 'SELF' },
+    { label: 'Financier', value: 'FINANCIER' }
   ]
   date1: any;
   uploadedFiles: any[] = [];
@@ -39,7 +35,7 @@ export class CreateInvoiceComponent {
   totalRecords: number = 0;
   ngOnInit() {
     this.totalRecords = this.itemsList.length;
-   // this.getSellers();
+    this.getSellers();
     this.createInvoiceForm();
     this.createItemForm();
   }
@@ -47,9 +43,9 @@ export class CreateInvoiceComponent {
   
   createInvoiceForm() {
     this.invoiceForm = this.fb.group({
-      'seller': new FormControl('', { validators: [Validators.required] }),
-      'number': new FormControl('', { validators: [Validators.required, Validators.pattern('^[a-zA-Z0-9]*$')] }),
-      'amount': new FormControl('', { validators: [Validators.required, Validators.pattern('^[a-z A-Z0-9]*$')] }),
+      'invoiceseller': new FormControl('', { validators: [Validators.required] }),
+      'number': new FormControl('', { validators: [Validators.required, Validators.pattern('^[a-zA-Z0-9-]*$')] }),
+      'amount': new FormControl('', { validators: [Validators.required, Validators.pattern('^[0-9]*$')] }),
       'invoiceDate': new FormControl('', { validators: [Validators.required] }),
       'disbursementDate': new FormControl('', { validators: [Validators.required] }),
       'fundBy': new FormControl('', { validators: [Validators.required] }),
@@ -85,6 +81,7 @@ export class CreateInvoiceComponent {
   constructor(private messageService: MessageService,
     private sellerService: SellerService,
     private authService:AuthService,
+    private invoiceService:InvoiceService,
     private fb: FormBuilder
   ) { }
 
@@ -119,19 +116,18 @@ export class CreateInvoiceComponent {
 
   invoiceFormFormSubmit(){
     this.invoiceFormSubmitAttempt = true;    
-    if (this.invoiceForm.valid) {
-      console.log(this.invoiceForm.value);
+    if (this.invoiceForm.valid && this.itemsList.length > 0) {
       this.invoiceFormSubmitAttempt = false;
-      // this.in.createInvoice(this.invoiceForm.value, this.uploadedFiles)
-      //   .pipe(takeUntil(this.ngUnsubscribe)).subscribe((result: any) => {
-      //     if (result.status) {
-      //       this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Invoice created successfully' });
-      //       this.invoiceForm.reset();
-      //       this.uploadedFiles = [];
-      //     } else {
-      //       this.messageService.add({ severity: 'error', summary: 'Error', detail: result.message });
-      //     }
-      //   })
+      this.invoiceService.createInovice(this.invoiceForm.value, this.itemsList)
+        .pipe(takeUntil(this.ngUnsubscribe)).subscribe((result: any) => {
+          if (result.status) {
+            this.invoiceForm.reset();
+            this.itemsList = [];
+            this.invoiceFormSubmitAttempt = false;
+          } else {
+            this.messageService.add({ severity: 'error', summary: 'Error', detail: result.message });
+          }
+        })
     }
   }
   itemFormSubmit(){
@@ -154,7 +150,6 @@ edit(item:any) {
     total_amount: item.total_amount
   });
   this.visible = true;
-
 }
 closePopup() {
   this.visible = false;
