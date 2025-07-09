@@ -1,4 +1,9 @@
-<div class="topbar">
-    <span class="title">{{pageTitle}}</span>
-  </div>
+<div class="topbar"  >
+    <button (click)="toggleSideMenu()" class="menu-toggle">
+      <span *ngIf="showMenu" title="Toggle">&#9776; <!-- Hamburger --></span>
+      <span *ngIf="!showMenu" title="Close ">&#10005; <!-- X / Close --></span>
+    </button>
+    <!-- <p-button (click)="toggleSideMenu()" severity="secondary" [rounded]="true" [outlined]="true"  title="Toggle Sidemenu">☰</p-button> -->
+    <span class="title ml-2">{{pageTitle}}</span>
+</div>
   

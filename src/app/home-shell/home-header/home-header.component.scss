@@ -7,6 +7,9 @@
     display: flex;
     align-items: center;
     padding: 10px 20px;
+    .p-button{
+      cursor: pointer;
+    }
   }
   
   .title {
@@ -14,4 +17,6 @@
     font-weight: bold;
     color: #374151;
   }
+
+
   

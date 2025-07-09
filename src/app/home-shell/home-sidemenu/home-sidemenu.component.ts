@@ -1,6 +1,10 @@
 import { Component } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { SessionStorageTokenService } from '../../@shared/services/session-storage-token.service';
+import { animate, state, style, transition, trigger } from '@angular/animations';
+import { ToggleService } from '../../@shared/services/ToggleService.service';
+import { RouteDataService } from '../../shared/RouteData.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-home-sidemenu',
@@ -10,7 +14,10 @@ import { SessionStorageTokenService } from '../../@shared/services/session-stora
 })
 export class HomeSidemenuComponent {
   menuItems: MenuItem[] = [];
-constructor(private sessionStorageService:SessionStorageTokenService) { }
+
+constructor(private sessionStorageService:SessionStorageTokenService,
+  private toggleService: ToggleService,private routeDataService: RouteDataService
+) { }
   ngOnInit() {
     this.menuItems = [
       { label: 'Dashboard', icon: 'pi pi-th-large', routerLink: ['/home/dashboard'], styleClass: 'active-item', url:'assets/icons/dashboard.png' },
@@ -20,6 +27,8 @@ constructor(private sessionStorageService:SessionStorageTokenService) { }
       { label: 'Negotiate', icon: 'pi pi-comments', routerLink: ['/home/negotiate'],url:'assets/icons/Handshake.png' },
       { label: 'Bidding Management', icon: 'pi pi-gavel', routerLink: ['/home/bidding'],url:'assets/icons/Scales.png' }
     ];
+
+   
   }
 
   SignOut(){

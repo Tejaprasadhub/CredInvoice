@@ -7,6 +7,7 @@ import { HomeHeaderComponent } from './home-header/home-header.component';
 import { PrimengModule } from '../primeng.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HomeSidemenuComponent } from './home-sidemenu/home-sidemenu.component';
+import { BrowserModule } from '@angular/platform-browser';
 
 
 @NgModule({
@@ -18,6 +19,7 @@ import { HomeSidemenuComponent } from './home-sidemenu/home-sidemenu.component';
   imports: [
     CommonModule,
     PrimengModule,
+     BrowserModule,
     BrowserAnimationsModule,
     HomeShellRoutingModule
   ],
