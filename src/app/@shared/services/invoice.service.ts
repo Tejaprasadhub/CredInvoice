@@ -16,13 +16,27 @@ export class InvoiceService {
   ) { }
   
   getInvoicesList() {
-    return this.httpClient.get("invoices").pipe(
+    const isSeller = sessionStorage.getItem("role")  === 'seller';
+    let url = "";
+    if (isSeller) {
+      url = "seller-invoices";
+    }else{
+      url = "invoices";
+    }
+    return this.httpClient.get(url).pipe(
       map((response: any) => {
         return response;
       }), catchError(e => this.apiResponseHandler.handleError(e)));
   }
   getInvoiceDetails(id: string) {
-    return this.httpClient.get("invoices/"+id).pipe(
+    const isSeller = sessionStorage.getItem("role")  === 'seller';
+    let url = "";
+    if (isSeller) {
+      url = "seller-invoices";
+    }else{
+      url = "invoices";
+    }
+    return this.httpClient.get(url+"/"+id).pipe(
       map((response: any) => {
         return response;
       }), catchError(e => this.apiResponseHandler.handleError(e)));
@@ -70,6 +84,33 @@ export class InvoiceService {
     return this.httpClient.post("invoices/send-to-seller", data).pipe(
       map((response: any) => {
         this.apiResponseHandler.handleSuccess("Send to seller successfully");
+        return response;
+      }), catchError(e => this.apiResponseHandler.handleError(e)));
+  }
+
+
+  acceptWithDiscount(invoiceId:string) {
+    let data = JSON.stringify({
+      invoice_id: invoiceId,
+      action: "accept",
+      message: "Invoice accepted. Will process payment as per terms."
+    });
+    return this.httpClient.post("seller-invoices/action", data).pipe(
+      map((response: any) => {
+        this.apiResponseHandler.handleSuccess("Invoice accepted");
+        return response;
+      }), catchError(e => this.apiResponseHandler.handleError(e)));
+  }
+
+  rejectWithReasoning(invoiceId:string,reasonMessage:string) {
+    let data = JSON.stringify({
+      invoice_id: invoiceId,
+      action: "reject",
+      message: reasonMessage
+    });
+    return this.httpClient.post("seller-invoices/action", data).pipe(
+      map((response: any) => {
+        this.apiResponseHandler.handleSuccess("Invoice rejected");
         return response;
       }), catchError(e => this.apiResponseHandler.handleError(e)));
   }

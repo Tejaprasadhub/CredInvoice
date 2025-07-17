@@ -16,6 +16,12 @@ html * {
 }
 
 
+textarea:focus-visible {
+    outline: 0px !important;
+}
+.p-button:focus {
+    box-shadow: none !important;
+}
 .invoice {
     color: #0EA5E9;
     text-decoration: underline;
@@ -35,11 +41,11 @@ html * {
         background:#FFFBEB;
         color:#D97706;
     }
-    &.REJECT{
+    &.REJECTED_BY_SELLER{
         background: #FFF1F2;
         color:#F43F5E;
     }
-    &.ACCEPT,&.APPLIED_DISCOUNT{
+    &.ACCEPTED_BY_SELLER,&.APPLIED_DISCOUNT{
         background:#F0F9FF;
         color: #0EA5E9;
     }

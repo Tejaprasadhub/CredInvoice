@@ -1,0 +1,187 @@
+<p-toast />
+    <p-confirmPopup />
+<div class="row app-container">
+    <div class="col-md-12">
+        <div class="row align-items-center">
+            <div class="col-3">
+                <p-dropdown [options]="sellers"  optionLabel="label"
+                    placeholder="Select Buyers" />
+            </div>
+            <div class="col-3">
+                <p-dropdown [options]="sellers"  optionLabel="label"
+                    placeholder="Select Status" />
+            </div>
+            <div class="col-4">
+                <!-- <p-inputGroup>
+                    <p-inputGroupAddon>
+                        <i class="pi pi-search"></i>
+                    </p-inputGroupAddon>
+                    <input pInputText placeholder="Search..." />
+                </p-inputGroup> -->
+            </div>
+            <div class="col-2">
+                <div class="card flex justify-content-center actions">
+                    <p-button label="View Reports"  icon="pi pi-chart-bar">
+                    </p-button>
+                </div>
+            </div>
+        </div>
+        <div class="row align-items-center">
+            <div class="col-auto">
+                <label class="font-medium">Selected Buyers: </label>
+            </div>
+            <div class="col">
+                <div class="flex align-items-center gap-2 flex-wrap pt-1 pb-1">
+                    <ng-template ngFor let-seller [ngForOf]="sellers" let-i="index">
+                        <p-chip [label]="seller.label" [removable]="true" />
+                    </ng-template>
+                </div>
+            </div>         
+        </div>
+        <div class="row align-items-center">
+            <p-table [value]="invoices"  dataKey="id" [paginator]="true" [rows]="10" styleClass="p-datatable-striped" [first]="first"
+                [showCurrentPageReport]="true" [tableStyle]="{ 'min-width': '50rem' }"
+                currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                [rowsPerPageOptions]="[10, 25, 50]">
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th>Invoice Number</th>
+                        <th>Buyer</th>                        
+                        <th>Invoice Amount</th>
+                        <th>Discount</th>
+                        <th>Discounted Amount</th>
+                        <th>Disbursement Date</th>
+                        <th>Status</th>
+                        <th>Details</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-invoice let-rowIndex="rowIndex">
+                    <tr>
+                        <td>
+                            <a href="javascript:void(0)" class="invoice" (click)="viewselectedinvoice(invoice)">
+                                {{invoice?.invoice_number}}</a>
+                           </td>
+                        <td><a href="javascript:void(0)" class="invoice"><img alt="seller" class="img-fluid" title="Seller" src="/assets/table-icons/seller.png" />{{getSellerName(invoice)}}</a></td>
+                        
+                        <td>{{invoice?.invoice_amount}}</td>
+                        <td>{{invoice?.discount}}%</td>
+                        <td>{{invoice?.discounted_amount}}</td> 
+                        <td>{{invoice?.disbursement_date | date:'dd-MM-yyyy'}}</td>
+                        <td> <span class="status {{invoice.status}}">{{invoice?.status == "SENT_TO_SELLER" ? "Pending" : "Completed"}}</span> </td>
+                        <td class="actions">
+                           <img alt="View Details"  class="img-fluid" (click)="openQuickView(invoice)"  title="Invoice quick view" src="/assets/table-icons/view.png" /> 
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+
+    </div>
+</div>
+
+<p-dialog  [modal]="true" [(visible)]="visible" [style]="{ width: '60rem' }">
+     <p-card class="form-details">
+            <div class="row align-items-center">
+                <div class="col">
+                    <div class="row align-items-center">
+                        <div class="col-auto">
+                            <img alt="seller" class="img-fluid" title="Seller" src="/assets/icons/seller_large.png" />
+                        </div>
+                        <div class="col-auto d-grid">
+                            <span class="invoice">{{getSellerName(selectedinvoice)}}</span>
+                            <span style="font-size: 14px;">PAN: {{getPanNumber(selectedinvoice)}}</span>
+                        </div>
+                        <div class="col-auto">
+                            <span class="status {{selectedinvoice?.status}}">{{selectedinvoice?.status == "SENT_TO_SELLER" ? "Pending" : "Completed"}}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-auto d-flex justify-content-end ">
+                     <p-button label="Reject Discount"  class="btn-danger mr-3" icon="pi pi-times-circle">
+                    </p-button>
+                    <p-button class="btn-success"  label="Accept Discount">
+                                        <img alt="accept" class="img-fluid" src="/assets/table-icons/check_white.png" /> 
+                    </p-button>
+                    <!-- <p-button label="Edit Details & Resend" (click)="visible2 = true"  icon="pi pi-send" /> -->
+                    <!-- <p-button label="Authorize Payment" (click)="visible3 = true"  icon="pi pi-key" /> -->
+                    <!-- <label class="label">Payment Status :  <span class="status sent">Disbursement Pending by Buyer</span></label> -->
+                    <!-- <label class="label">Payment Status :  <span class="status approve">Disbursed by Buyer</span></label> -->
+                    <!-- <p-button label="Resend for Bidding"  icon="pi pi-refresh" /> -->
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="flex flex-column mb-2 text-left">
+                        <label class="label" for="username">Inovice Number</label>
+                        <span class="value">{{selectedinvoice?.invoice_number}}</span>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="flex flex-column mb-2 text-left">
+                        <label class="label" for="username">Discout </label>
+                        <span class="value">{{selectedinvoice?.discount}}</span>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="flex flex-column mb-2 text-left">
+                        <label class="label" for="username">Discounted Amount</label>
+                        <span class="value">{{selectedinvoice?.discounted_amount}}</span>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="flex flex-column mb-2 text-left">
+                        <label class="label" for="username">Disbursement Date</label>
+                        <span class="value">{{selectedinvoice?.disbursement_date}}</span>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="flex flex-column mb-2 text-left">
+                        <label class="label" for="username">Fund by</label>
+                        <span class="value">{{selectedinvoice?.fund_by}}</span>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="flex flex-column mb-2 text-left">
+                        <label class="label" for="username">Inovice Amount</label>
+                        <span class="value">{{selectedinvoice?.invoice_amount}}</span>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="flex flex-column mb-2 text-left">
+                        <label class="label" for="username">Inovice Date</label>
+                        <span class="value">{{selectedinvoice?.invoice_date}}</span>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="flex flex-column mb-2 text-left">
+                        <label class="label" for="username">Inovice Due Date</label>
+                        <span class="value">{{selectedinvoice?.invoice_due_date}}</span>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="flex flex-column mb-2 text-left">
+                        <label class="label" for="username">Inovice Pdf's</label>
+                        <span class="value">777777777</span>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="flex flex-column mb-2 text-left">
+                        <label class="label" for="username">Goods Description</label>
+                        <span class="value">{{selectedinvoice?.goods_description}}</span>
+                    </div>
+                </div>
+            </div>
+        </p-card>
+    <ng-template pTemplate="footer">
+        <div class="row">
+            <div class="col-9">
+            </div>
+            <div class="col-3">
+                <p-button label="Cancel" class="btn-secondary"  (onClick)="visible = false" />
+            </div>
+        </div>
+
+    </ng-template>
+</p-dialog>
+
+

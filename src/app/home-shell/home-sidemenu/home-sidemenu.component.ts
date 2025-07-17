@@ -14,14 +14,19 @@ import { Subscription } from 'rxjs';
 })
 export class HomeSidemenuComponent {
   menuItems: MenuItem[] = [];
-
+  userRole : string="";
 constructor(private sessionStorageService:SessionStorageTokenService,
   private toggleService: ToggleService,private routeDataService: RouteDataService
-) { }
+) { 
+  this.userRole = this.sessionStorageService.getUserRole() || '';
+  if(this.userRole) {
+  this.userRole = this.userRole.toLowerCase();
+  }
+}
   ngOnInit() {
     this.menuItems = [
-      { label: 'Dashboard', icon: 'pi pi-th-large', routerLink: ['/home/dashboard'], styleClass: 'active-item', url:'assets/icons/dashboard.png' },
-      { label: 'Invoices', icon: 'pi pi-file', routerLink: ['/home/invoices'] ,url:'assets/icons/Receipt.png'},
+      { label: 'Dashboard', icon: 'pi pi-th-large', routerLink: ['/home/dashboard'], styleClass: 'active-item', url:'assets/icons/dashboard_black.png' },
+      { label: 'Invoices', icon: 'pi pi-file', routerLink: [this.userRole == "seller" ?  '/home/seller-invoices' : '/home/invoices'] ,url:'assets/icons/Receipt.png'},
       { label: 'Reports', icon: 'pi pi-chart-bar', routerLink: ['/home/reports'],url:'assets/icons/ChartBar.png' },
       { label: 'My Vendors', icon: 'pi pi-users', routerLink: ['/home/vendors'],url:'assets/icons/vendors.png' },
       { label: 'Negotiate', icon: 'pi pi-comments', routerLink: ['/home/negotiate'],url:'assets/icons/Handshake.png' },

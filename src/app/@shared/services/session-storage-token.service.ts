@@ -25,13 +25,19 @@ export class SessionStorageTokenService implements TokenProvider {
     return (firstName + ' ' + lastName);
   }
 
+  getUserRole(): any {
+    return sessionStorage.getItem('role') || '';
+  }
+
   setToken(currentUser: any): any {
-    sessionStorage.setItem('currentUser', JSON.stringify(currentUser));
+    sessionStorage.setItem('currentUser', JSON.stringify(currentUser));  
+     sessionStorage.setItem('role',"seller1");
   }
 
   removeToken(): any {
     sessionStorage.removeItem('currentUser');
     sessionStorage.removeItem('parentToken');
+    sessionStorage.removeItem('role');
     this.removeUserName();
   }
 

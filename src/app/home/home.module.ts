@@ -15,6 +15,8 @@ import { CreateInvoicesComponent } from './create-invoices/create-invoices.compo
 import { CreateInvoiceComponent } from './create-invoice/create-invoice.component';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { InvoiceDetailsComponent } from './invoice-details/invoice-details.component';
+import { SellerInvoiceDetailsComponent } from './seller-invoice-details/seller-invoice-details.component';
+import { SellerInvoicesComponent } from './seller-invoices/seller-invoices.component';
 
 
 @NgModule({
@@ -28,7 +30,9 @@ import { InvoiceDetailsComponent } from './invoice-details/invoice-details.compo
     BiddingComponent,
     CreateInvoicesComponent,
     CreateInvoiceComponent,
-    InvoiceDetailsComponent
+    InvoiceDetailsComponent,
+    SellerInvoiceDetailsComponent,
+    SellerInvoicesComponent
   ],
   imports: [
     ReactiveFormsModule,  
