@@ -28,6 +28,7 @@ export class CreateInvoiceComponent {
     { label: 'Financier', value: 'FINANCIER' }
   ]
   date1: any;
+  minDisbursementDate!: Date;
   uploadedFiles: any[] = [];
   visible: boolean = false;
   first = 0;
@@ -112,11 +113,12 @@ export class CreateInvoiceComponent {
     for (let file of event.files) {
       this.uploadedFiles.push(file);
     } 
+    console.log(this.uploadedFiles);
   }
 
   invoiceFormFormSubmit(){
     this.invoiceFormSubmitAttempt = true;    
-    if (this.invoiceForm.valid && this.itemsList.length > 0) {
+    if (this.invoiceForm.valid) {
       this.invoiceFormSubmitAttempt = false;
       this.invoiceService.createInovice(this.invoiceForm.value, this.itemsList)
         .pipe(takeUntil(this.ngUnsubscribe)).subscribe((result: any) => {
@@ -156,6 +158,25 @@ closePopup() {
   this.itemForm.reset();
   this.itemFormSubmitAttempt = false;
 }
+
+ // Function that triggers on the selection of createDate
+  onCreateDateChange(event: any) {
+    
+    const selectedCreateDate = event;
+
+    if (selectedCreateDate) {
+      // Set min and max disbursement date based on the createDate
+      this.minDisbursementDate = new Date(selectedCreateDate);
+      
+      // You can also add custom logic to control the disbursement date range.
+      // For example, disable dates that are before or after a certain range.
+
+      this.minDisbursementDate.setDate(this.minDisbursementDate.getDate() + 1);  // Disable create date itself
+      this.invoiceForm.get('disbursementDate')?.setValue(null); // Reset disbursement date
+    }
+  }
+
+
 }
 
 

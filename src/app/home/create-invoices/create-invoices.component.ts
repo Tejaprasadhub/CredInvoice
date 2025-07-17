@@ -4,6 +4,7 @@ import { InvoiceService } from '../../@shared/services/invoice.service';
 import { Subject, takeUntil } from 'rxjs';
 import { SellerService } from '../../@shared/services/seller.service';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-create-invoices',
@@ -33,7 +34,7 @@ export class CreateInvoicesComponent {
   invoiceItems:any[] = [];
   constructor(private confirmationService: ConfirmationService, private messageService: MessageService,
     private incomeService: InvoiceService,private sellerService: SellerService,private fb: FormBuilder,
-    private invoiceService: InvoiceService
+    private invoiceService: InvoiceService,private router: Router
   ) {}
 
   ngOnInit(){
@@ -174,6 +175,13 @@ getTotalAmount(items: any[]): any {
     }
     this.visible1 = true;
     console.log("Selected Invoices:", selectedInvoices);
+  }
+
+
+  viewInvoiceDetails(invoice: any) {
+    // Navigate to the invoice details page or open a modal with invoice details
+    // For example, you can use Angular Router to navigate to the details page
+    this.router.navigate(['/home/invoice-details', invoice.id]);
   }
 
 

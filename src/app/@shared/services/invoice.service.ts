@@ -21,13 +21,19 @@ export class InvoiceService {
         return response;
       }), catchError(e => this.apiResponseHandler.handleError(e)));
   }
+  getInvoiceDetails(id: string) {
+    return this.httpClient.get("invoices/"+id).pipe(
+      map((response: any) => {
+        return response;
+      }), catchError(e => this.apiResponseHandler.handleError(e)));
+  }
 
-   createInovice(registerData: any,itemsList:any[]) {
+   createInovice(registerData: any,itemsList:any[]=[]) {
     let data = JSON.stringify({
       seller_id: registerData?.invoiceseller?.value,
       invoice_number: registerData.number,
       invoice_amount: registerData.amount,
-      invoice_pdf: "",
+      invoice_pdf: "123.pdf", // Placeholder, replace with actual file handling logic
       invoice_date: registerData.invoiceDate,
       invoice_due_date: registerData.disbursementDate,
       fund_by: registerData?.fundBy?.value,

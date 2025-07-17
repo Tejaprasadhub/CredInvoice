@@ -4,18 +4,7 @@
             <div class="row align-items-center">               
             <p-card>
                 <div class="row">
-                    <div class="col-md-3">
-                        <div class="flex flex-column mb-2 text-left">
-                            <label for="username">Seller</label>
-                              <p-dropdown formControlName="invoiceseller" [options]="sellers" optionLabel="label"
-                        placeholder="Select Seller"
-                        [ngClass]="{'error':((!invoiceForm.controls['invoiceseller'].valid && invoiceForm.controls['invoiceseller'].touched) || (!invoiceForm.controls['invoiceseller'].valid && invoiceForm.controls['invoiceseller'].untouched && invoiceFormSubmitAttempt))}" />
-                    <span class="error-div" *ngIf="(!invoiceForm.valid && invoiceFormSubmitAttempt)">
-                        <p class="validation-label mb-0" *ngIf="invoiceForm.controls['invoiceseller'].errors?.['required']">
-                            Seller is required</p>
-                    </span>
-                        </div>
-                    </div>
+                    
                     <div class="col-md-3">
                         <div class="flex flex-column mb-2 text-left">
                             <label for="username">Inovice Number</label>
@@ -49,7 +38,7 @@
                     <div class="col-md-3">
                         <div class="flex flex-column mb-2 text-left">
                             <label for="username">Create Date</label>
-                            <p-calendar formControlName="invoiceDate" [showIcon]="true" append="body"
+                            <p-calendar formControlName="invoiceDate" (onSelect)="onCreateDateChange($event)" [showIcon]="true" append="body"
                                 [showOnFocus]="false" inputId="buttondisplay"
                                 [ngClass]="{'error':((!invoiceForm.controls['invoiceDate'].valid && invoiceForm.controls['invoiceDate'].touched) || (!invoiceForm.controls['invoiceDate'].valid && invoiceForm.controls['invoiceDate'].untouched && invoiceFormSubmitAttempt))}" />
                             <span class="error-div" *ngIf="(!invoiceForm.valid && invoiceFormSubmitAttempt)">
@@ -65,7 +54,7 @@
                     <div class="col-md-3">
                         <div class="flex flex-column mb-2 text-left">
                             <label for="username">Disbursement Date</label>
-                            <p-calendar formControlName="disbursementDate" [showIcon]="true" append="body"
+                            <p-calendar formControlName="disbursementDate" [minDate]="minDisbursementDate"  [showIcon]="true" append="body"
                                 [showOnFocus]="false" inputId="buttondisplay"
                                 [ngClass]="{'error':((!invoiceForm.controls['disbursementDate'].valid && invoiceForm.controls['disbursementDate'].touched) || (!invoiceForm.controls['disbursementDate'].valid && invoiceForm.controls['disbursementDate'].untouched && invoiceFormSubmitAttempt))}" />
                             <span class="error-div" *ngIf="(!invoiceForm.valid && invoiceFormSubmitAttempt)">
@@ -89,6 +78,18 @@
                                     *ngIf="invoiceForm.controls['fundBy'].errors?.['required']">
                                     Fund by is required</p>
                             </span>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="flex flex-column mb-2 text-left">
+                            <label for="username">Seller</label>
+                              <p-dropdown formControlName="invoiceseller" [options]="sellers" optionLabel="label"
+                        placeholder="Select Seller"
+                        [ngClass]="{'error':((!invoiceForm.controls['invoiceseller'].valid && invoiceForm.controls['invoiceseller'].touched) || (!invoiceForm.controls['invoiceseller'].valid && invoiceForm.controls['invoiceseller'].untouched && invoiceFormSubmitAttempt))}" />
+                    <span class="error-div" *ngIf="(!invoiceForm.valid && invoiceFormSubmitAttempt)">
+                        <p class="validation-label mb-0" *ngIf="invoiceForm.controls['invoiceseller'].errors?.['required']">
+                            Seller is required</p>
+                    </span>
                         </div>
                     </div>
                     <div class="col-md-3">
@@ -133,10 +134,10 @@
                 </div>
             </div>
             <div class="row mt-3">
-                 <span class="error-div" *ngIf="(invoiceFormSubmitAttempt && this.itemsList.length === 0)">
+                 <!-- <span class="error-div" *ngIf="(invoiceFormSubmitAttempt && this.itemsList.length === 0)">
                                 <p class="validation-label mb-0">
                                    Please add items to create invoice</p>
-                            </span>                
+                            </span>                 -->
             </div>
             </div>
         </form>

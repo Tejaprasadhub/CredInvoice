@@ -6,13 +6,12 @@
                 <small>Unfortunately, we can't proceed with the requested discount/date as it doesn’t align with our terms. Please review and adjust your offer accordingly, and feel free to resend the details for reconsideration.</small>
             </div>
         </p-card> -->
-        <p-card styleClass="mb-2">
+        <!-- <p-card styleClass="mb-2">
             <div class="row">
                 <div class="col-md-12 mb-2 text-left">
                     <div class="row">
                         <div class="row col">
                             <div class="col-auto"><strong>Bid Details</strong></div>
-                            <!-- <div class="col-auto"> <span class="status sent">Awaiting Bid Acceptance</span></div> -->
                             <div class="col-auto">
                                 <span class="status reject">Expired without Bid</span>
                             </div>
@@ -66,7 +65,7 @@
                     </div>
                 </div>
             </div>
-        </p-card>
+        </p-card> -->
         <p-card>
             <div class="row align-items-center">
                 <div class="col">
@@ -75,21 +74,12 @@
                             <img alt="seller" class="img-fluid" title="Seller" src="/assets/icons/seller_large.png" />
                         </div>
                         <div class="col-auto d-grid">
-                            <span class="invoice">Moh Labs</span>
-                            <span style="font-size: 14px;">PAN: 123654789</span>
+                            <span class="invoice">{{getSellerName(invoiceDetails)}}</span>
+                            <span style="font-size: 14px;">PAN: {{getPanNumber(invoiceDetails)}}</span>
                         </div>
-                        <!-- <div class="col-auto">
-                            <span class="status reject">Rejected by Seller</span>
-                        </div> -->
-                        <!-- <div class="col-auto">
-                            <span class="status sent">Sent to Seller</span>
-                        </div> -->
-                        <!-- <div class="col-auto">
-                            <span class="status accept">Accepted by Seller</span>
-                        </div> -->
                         <div class="col-auto">
-                            <span class="status approve">Approved by Buyer(Fund by Self)</span>
-                        </div>                        
+                            <span class="status {{invoiceDetails?.status}}">{{invoiceDetails?.status}}</span>
+                        </div>
                     </div>
                 </div>
                 <div class="col-auto">
@@ -105,49 +95,49 @@
                 <div class="col-md-3">
                     <div class="flex flex-column mb-2 text-left">
                         <label class="label" for="username">Inovice Number</label>
-                        <span class="value">777777777</span>
+                        <span class="value">{{invoiceDetails?.invoice_number}}</span>
                     </div>
                 </div>
                 <div class="col-md-3">
                     <div class="flex flex-column mb-2 text-left">
                         <label class="label" for="username">Discout </label>
-                        <span class="value">3.75%</span>
+                        <span class="value">{{invoiceDetails?.discount}}</span>
                     </div>
                 </div>
                 <div class="col-md-3">
                     <div class="flex flex-column mb-2 text-left">
                         <label class="label" for="username">Discounted Amount</label>
-                        <span class="value">75 Lakhs</span>
+                        <span class="value">{{invoiceDetails?.discounted_amount}}</span>
                     </div>
                 </div>
                 <div class="col-md-3">
                     <div class="flex flex-column mb-2 text-left">
                         <label class="label" for="username">Disbursement Date</label>
-                        <span class="value">July 1st 2012</span>
+                        <span class="value">{{invoiceDetails?.disbursement_date}}</span>
                     </div>
                 </div>
                 <div class="col-md-3">
                     <div class="flex flex-column mb-2 text-left">
                         <label class="label" for="username">Fund by</label>
-                        <span class="value">Self/Financier</span>
+                        <span class="value">{{invoiceDetails?.fund_by}}</span>
                     </div>
                 </div>
                 <div class="col-md-3">
                     <div class="flex flex-column mb-2 text-left">
                         <label class="label" for="username">Inovice Amount</label>
-                        <span class="value">80 Lakhs</span>
+                        <span class="value">{{invoiceDetails?.invoice_amount}}</span>
                     </div>
                 </div>
                 <div class="col-md-3">
                     <div class="flex flex-column mb-2 text-left">
                         <label class="label" for="username">Inovice Date</label>
-                        <span class="value">July 7th 2012</span>
+                        <span class="value">{{invoiceDetails?.invoice_date}}</span>
                     </div>
                 </div>
                 <div class="col-md-3">
                     <div class="flex flex-column mb-2 text-left">
                         <label class="label" for="username">Inovice Due Date</label>
-                        <span class="value">July 15th 2012</span>
+                        <span class="value">{{invoiceDetails?.invoice_due_date}}</span>
                     </div>
                 </div>
                 <div class="col-md-3">
@@ -159,7 +149,7 @@
                 <div class="col-md-3">
                     <div class="flex flex-column mb-2 text-left">
                         <label class="label" for="username">Goods Description</label>
-                        <span class="value">wheat flour</span>
+                        <span class="value">{{invoiceDetails?.goods_description}}</span>
                     </div>
                 </div>
             </div>
@@ -169,7 +159,7 @@
                 <span class="mr-4"><strong>Items</strong>(27)</span>  
             </div> -->
                 <p-tabView>
-                    <p-tabPanel header="Bids">
+                    <!-- <p-tabPanel header="Bids">
                         <p-table [value]="products" [paginator]="true" [rows]="5" styleClass="p-datatable-striped" [first]="first"
                         [showCurrentPageReport]="true" [tableStyle]="{ 'min-width': '50rem' }"
                         currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
@@ -196,9 +186,9 @@
                                 </tr>
                             </ng-template>
                         </p-table>
-                    </p-tabPanel>
+                    </p-tabPanel> -->
                     <p-tabPanel header="Invoice Items(27)">
-                        <p-table [value]="products" [paginator]="true" [rows]="5" styleClass="p-datatable-striped" [first]="first"
+                        <p-table [value]="invoiceDetails?.items" [paginator]="true" [rows]="5" styleClass="p-datatable-striped" [first]="first"
                 [showCurrentPageReport]="true" [tableStyle]="{ 'min-width': '50rem' }"
                 currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
                 [rowsPerPageOptions]="[5,10, 25, 50]">
@@ -212,13 +202,13 @@
                             <th>Actions</th>
                         </tr>
                     </ng-template>
-                    <ng-template pTemplate="body" let-product>
+                    <ng-template pTemplate="body" let-item>
                         <tr>
-                            <td>7121</td>
-                            <td>Wheat Flour</td>
-                            <td>7 Lakhs</td>
-                            <td>2</td>
-                            <td>14 Lakhs</td>
+                            <td>{{item.item_number}}</td>
+                            <td>{{item.item_name}}</td>
+                            <td>{{item.unit_price}}</td>
+                            <td>{{item.quantity}}</td>
+                            <td>{{item.total_amount}}</td>
                             <td class="actions">
                                 <img alt="trash" class="img-fluid"    title="Delete" src="/assets/table-icons/Trash.png" />
                                 <img alt="edit" class="img-fluid" title="Edit" src="/assets/table-icons/Pencil.png" />

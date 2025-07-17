@@ -8,7 +8,6 @@ export class ToggleService {
   showMenu$ = this.showMenuSubject.asObservable();
 
   toggleMenu() {
-    debugger
     this.showMenuSubject.next(!this.showMenuSubject.value);
   }
 }
