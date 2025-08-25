@@ -83,9 +83,20 @@
                     <div class="col-md-3">
                         <div class="flex flex-column mb-2 text-left">
                             <label for="username">Seller</label>
-                              <p-dropdown formControlName="invoiceseller" [options]="sellers" optionLabel="label"
+                            <p-dropdown
+  formControlName="invoiceseller"
+  [options]="sellers"
+  optionLabel="label"
+  placeholder="Select Seller"
+  (onChange)="onSellerChange($event)"
+  [ngClass]="{
+    'error': (!invoiceForm.controls['invoiceseller'].valid && invoiceForm.controls['invoiceseller'].touched) ||
+             (!invoiceForm.controls['invoiceseller'].valid && invoiceForm.controls['invoiceseller'].untouched && invoiceFormSubmitAttempt)
+  }">
+</p-dropdown>
+                              <!-- <p-dropdown formControlName="invoiceseller" (onChange)="onSellerChange($event)" [options]="sellers" optionLabel="label"
                         placeholder="Select Seller"
-                        [ngClass]="{'error':((!invoiceForm.controls['invoiceseller'].valid && invoiceForm.controls['invoiceseller'].touched) || (!invoiceForm.controls['invoiceseller'].valid && invoiceForm.controls['invoiceseller'].untouched && invoiceFormSubmitAttempt))}" />
+                        [ngClass]="{'error':((!invoiceForm.controls['invoiceseller'].valid && invoiceForm.controls['invoiceseller'].touched) || (!invoiceForm.controls['invoiceseller'].valid && invoiceForm.controls['invoiceseller'].untouched && invoiceFormSubmitAttempt))}"></p-dropdown> -->
                     <span class="error-div" *ngIf="(!invoiceForm.valid && invoiceFormSubmitAttempt)">
                         <p class="validation-label mb-0" *ngIf="invoiceForm.controls['invoiceseller'].errors?.['required']">
                             Seller is required</p>

@@ -38,7 +38,7 @@ export class LoadingHttpInterceptorComponent implements HttpInterceptor {
       if (req.url.indexOf('post/upload') >= 0 
       || req.url.indexOf('profile/image') >= 0 
       || req.url.indexOf('category/image') >= 0 
-      || req.url.indexOf('category') >= 0 
+      || req.url.indexOf('invoices') >= 0 
       || req.url.indexOf('media') >= 0 
       || req.url.indexOf('amazonaws.com') >= 0) {
       headers = req.headers;

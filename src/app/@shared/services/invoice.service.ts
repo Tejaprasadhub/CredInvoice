@@ -42,25 +42,39 @@ export class InvoiceService {
       }), catchError(e => this.apiResponseHandler.handleError(e)));
   }
 
-   createInovice(registerData: any,itemsList:any[]=[]) {
-    let data = JSON.stringify({
-      seller_id: registerData?.invoiceseller?.value,
-      invoice_number: registerData.number,
-      invoice_amount: registerData.amount,
-      invoice_pdf: "123.pdf", // Placeholder, replace with actual file handling logic
-      invoice_date: registerData.invoiceDate,
-      invoice_due_date: registerData.disbursementDate,
-      fund_by: registerData?.fundBy?.value,
-      goods_description: registerData.description,
-      items: itemsList
-    });
-    console.log("create invoice data",data);
-    return this.httpClient.post("invoices", data).pipe(
+   createInovice(file: File,registerData: any,itemsList:any[]=[]) {
+     const formData: FormData = new FormData();
+        formData.append('invoice_number', registerData.number);
+        formData.append('file', file, file.name);
+        formData.append('invoice_amount', registerData.amount)
+        formData.append('invoice_date', registerData.invoiceDate.toISOString());
+        formData.append('invoice_due_date', registerData.disbursementDate.toISOString());
+        formData.append('fund_by', registerData?.fundBy?.value );
+        formData.append('goods_description', registerData.description );
+        formData.append('seller_id', registerData?.invoiceseller?.value );
+       formData.append('items', JSON.stringify(itemsList) );
+    return this.httpClient.post("invoices", formData).pipe(
       map((response: any) => {
         this.apiResponseHandler.handleSuccess(response?.message);
         return response;
       }), catchError(e => this.apiResponseHandler.handleError(e)));
   } 
+
+  subCategory(file: File, description: string, name: string, color:string,parentCategoryGuid:string,units:string) { 
+        const formData: FormData = new FormData();
+        formData.append('name', name);
+        formData.append('file', file, file.name);
+        formData.append('parentCategoryGuid', parentCategoryGuid)
+        formData.append('description', description);
+        formData.append('units', units);
+        formData.append('colorsApplicable', color );
+        return this.httpClient
+          .post('category', formData).pipe(
+            map((response: any) => {
+                this.apiResponseHandler.handleSuccess("Product Subcategory added successfully!!")
+              return response;
+            }), catchError(e => this.apiResponseHandler.handleError(e)));
+      }
 
   applyDiscountOnInvoices(requestData: any, selectedInvoices: any[]) {
     let data = JSON.stringify({

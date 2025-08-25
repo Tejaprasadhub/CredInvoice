@@ -31,7 +31,9 @@ export class SessionStorageTokenService implements TokenProvider {
 
   setToken(currentUser: any): any {
     sessionStorage.setItem('currentUser', JSON.stringify(currentUser));  
-     sessionStorage.setItem('role',"seller1");
+  }
+  setRole(role: string): any {
+    sessionStorage.setItem('role', role);
   }
 
   removeToken(): any {

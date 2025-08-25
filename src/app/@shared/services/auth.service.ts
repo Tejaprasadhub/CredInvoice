@@ -23,6 +23,7 @@ export class AuthService {
       map((response: any) => {
         if (response.status) {
           this.tokenProvider.setToken({ token: response?.data?.access_token });
+          this.tokenProvider.setRole(response?.data?.user_type);
         }        
          this.apiResponseHandler.handleSuccess(response?.message);
         return response;

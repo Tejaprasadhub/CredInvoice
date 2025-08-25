@@ -44,7 +44,7 @@ export class CreateInvoiceComponent {
   
   createInvoiceForm() {
     this.invoiceForm = this.fb.group({
-      'invoiceseller': new FormControl('', { validators: [Validators.required] }),
+      'invoiceseller': new FormControl(null, { validators: [Validators.required] }),
       'number': new FormControl('', { validators: [Validators.required, Validators.pattern('^[a-zA-Z0-9-]*$')] }),
       'amount': new FormControl('', { validators: [Validators.required, Validators.pattern('^[0-9]*$')] }),
       'invoiceDate': new FormControl('', { validators: [Validators.required] }),
@@ -90,12 +90,10 @@ export class CreateInvoiceComponent {
     this.sellerService.getSellersList()
       .pipe(takeUntil(this.ngUnsubscribe)).subscribe((result: any) => {
         if(result.data?.length > 0) {
-          result?.data.forEach((seller: any) => {
-            this.sellers.push({
-              label: seller.first_name + ' ' + seller.last_name,
-              value: seller.id
-              })
-              });
+           this.sellers = result.data.map((seller: any) => ({
+          label: seller.first_name,
+          value: seller.id
+        }));
         }else {
           this.sellers= [];
         }
@@ -120,10 +118,11 @@ export class CreateInvoiceComponent {
     this.invoiceFormSubmitAttempt = true;    
     if (this.invoiceForm.valid) {
       this.invoiceFormSubmitAttempt = false;
-      this.invoiceService.createInovice(this.invoiceForm.value, this.itemsList)
+      this.invoiceService.createInovice(this.uploadedFiles[0],this.invoiceForm.value, this.itemsList)
         .pipe(takeUntil(this.ngUnsubscribe)).subscribe((result: any) => {
           if (result.status) {
             this.invoiceForm.reset();
+            this.uploadedFiles = [];
             this.itemsList = [];
             this.invoiceFormSubmitAttempt = false;
           } else {
@@ -175,6 +174,14 @@ closePopup() {
       this.invoiceForm.get('disbursementDate')?.setValue(null); // Reset disbursement date
     }
   }
+
+
+  onSellerChange(event: any) {
+  console.log('Selected seller ID:', event.value);
+  const selectedSeller = this.sellers.find(s => s.value === event.value);
+  console.log('Selected Seller Object:', selectedSeller);
+  // No patchValue needed — form is already updated
+}
 
 
 }
