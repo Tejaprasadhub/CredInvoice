@@ -5,7 +5,7 @@ import { Subject, takeUntil } from 'rxjs';
 import { SellerService } from '../../@shared/services/seller.service';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-
+   
 @Component({
   selector: 'app-create-invoices',
   standalone: false,
@@ -132,8 +132,6 @@ export class CreateInvoicesComponent {
         }
     });
 }
-edit(event: Event) {
-}
 
 showItems(invoice: any) {
   this.visible2= true;
@@ -182,6 +180,12 @@ getTotalAmount(items: any[]): any {
     // Navigate to the invoice details page or open a modal with invoice details
     // For example, you can use Angular Router to navigate to the details page
     this.router.navigate(['/home/invoice-details', invoice.id]);
+  }
+
+
+  editInvoice(invoice: any) {
+    // For example, you can use Angular Router to navigate to the details page
+    this.router.navigate(['/home/create-invoice', invoice.id]);
   }
 
 

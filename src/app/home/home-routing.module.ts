@@ -18,6 +18,7 @@ const routes: Routes = [
   { path: 'invoices', component: CreateInvoicesComponent,data: { title: 'Invoices' } },
   { path: 'seller-invoices', component: SellerInvoicesComponent,data: { title: 'Invoices' } },
   { path: 'create-invoice', component: CreateInvoiceComponent,data: { title: 'Create Invoice' } },
+  { path: 'create-invoice/:id', component: CreateInvoiceComponent,data: { title: 'Edit Invoice' } },
   { path: 'invoice-details/:id', component: !isSeller ? InvoiceDetailsComponent : SellerInvoiceDetailsComponent,data: { title: 'Invoice Details' } },
   { path: 'reports', component: ReportsComponent,data: { title: 'Reports' } },
   { path: 'vendors', component: VendorsComponent,data: { title: 'My Vendors' } },

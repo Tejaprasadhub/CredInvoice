@@ -80,7 +80,7 @@
                         <td class="invoice cursor-pointer" (click)="showItems(invoice)">{{invoice?.items?.length}}</td>
                         <td class="actions" [ngClass]="this.selectedInvoices.length > 0 ? 'actions-disabled' : ''">
                             <img alt="trash"  class="img-fluid"   (click)="delete(invoice)"  title="Delete" src="/assets/table-icons/Trash.png" />
-                            <img alt="edit" class="img-fluid"  (click)="edit(invoice)" title="Edit" src="/assets/table-icons/Pencil.png" />
+                            <img alt="edit" class="img-fluid"  (click)="editInvoice(invoice)" title="Edit" src="/assets/table-icons/Pencil.png" />
                             <img alt="discount" (click)="visible = true" class="img-fluid"  title="Discount" src="/assets/table-icons/percent_green.png" /> 
                         </td>
                     </tr>

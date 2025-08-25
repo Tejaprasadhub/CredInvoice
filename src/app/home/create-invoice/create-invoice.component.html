@@ -84,7 +84,7 @@
                         <div class="flex flex-column mb-2 text-left">
                             <label for="username">Seller</label>
                             <p-dropdown
-  formControlName="invoiceseller"
+  formControlName="invoiceseller" 
   [options]="sellers"
   optionLabel="label"
   placeholder="Select Seller"
@@ -112,6 +112,10 @@
                                     (onSelect)="onSelectedFiles($event)" (onUpload)="onUpload($event)" />
                             </div>
                         </div>
+                    </div>
+                    <div class="col-md-3" *ngIf="invoiceDetails?.invoice_pdf && invoiceId">
+                        <span class="invoice" (click)="downloadBase64File(invoiceDetails.invoice_pdf, 'invoice.pdf', 'application/pdf')"> <i
+                            class="pi pi-download mr-2"></i>Download Invoice</span>
                     </div>
                     <div class="col-md-12">
                         <div class="flex flex-column mb-2 text-left">

@@ -6,6 +6,7 @@ import { takeUntil } from 'rxjs';
 import { AuthService } from '../../@shared/services/auth.service';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { InvoiceService } from '../../@shared/services/invoice.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-create-invoice',
@@ -22,7 +23,7 @@ export class CreateInvoiceComponent {
   itemsList:any[]=[];
   sellers: any[] = [
   ]
-
+invoiceDetails:any;
   fundBy: any[] = [
     { label: 'Self', value: 'SELF' },
     { label: 'Financier', value: 'FINANCIER' }
@@ -34,12 +35,59 @@ export class CreateInvoiceComponent {
   first = 0;
   rows = 5;
   totalRecords: number = 0;
+  invoiceId: string = '';
   ngOnInit() {
     this.totalRecords = this.itemsList.length;
     this.getSellers();
     this.createInvoiceForm();
     this.createItemForm();
+     this.route.params.subscribe((params: any) => {
+      this.invoiceId = params['id'];
+       if (this.invoiceId) {  
+          // Fetch invoice details and populate the form for editing
+          this.getInvoiceDetails(params['id']);
+       }      
+      });
   }
+
+  getInvoiceDetails(id:string) {
+  this.incomeService.getInvoiceDetails(id)
+          .pipe(takeUntil(this.ngUnsubscribe)).subscribe((result: any) => {
+            if(result.status) {
+             this.invoiceDetails = result.data;
+              this.invoiceForm.patchValue({
+                invoiceseller: this.sellers.filter(obj => obj.value == this.invoiceDetails.seller_id)[0],
+                number: this.invoiceDetails.invoice_number,
+                amount: this.invoiceDetails.invoice_amount,
+                invoiceDate: new Date(this.invoiceDetails.invoice_date),
+                disbursementDate: new Date(this.invoiceDetails.invoice_due_date),
+                fundBy:this.fundBy.filter(obj => obj.value == this.invoiceDetails.fund_by)[0],
+                description: this.invoiceDetails.goods_description                
+              });
+              this.itemsList = this.invoiceDetails.items || [];
+              this.totalRecords = this.itemsList.length;
+            }
+          })
+}
+
+
+downloadBase64File(base64: string, fileName: string, mimeType: string) {
+  const byteCharacters = atob(base64);
+  const byteNumbers = new Array(byteCharacters.length).fill(0).map((_, i) => byteCharacters.charCodeAt(i));
+  const byteArray = new Uint8Array(byteNumbers);
+
+  const blob = new Blob([byteArray], { type: mimeType });
+  const blobUrl = URL.createObjectURL(blob);
+
+  const link = document.createElement('a');
+  link.href = blobUrl;
+  link.download = fileName;
+  document.body.appendChild(link);
+  link.click();
+
+  document.body.removeChild(link);
+  URL.revokeObjectURL(blobUrl);
+}
 
   
   createInvoiceForm() {
@@ -83,7 +131,10 @@ export class CreateInvoiceComponent {
     private sellerService: SellerService,
     private authService:AuthService,
     private invoiceService:InvoiceService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private route: ActivatedRoute,
+     private incomeService: InvoiceService,
+     private router: Router
   ) { }
 
   getSellers() {
@@ -116,21 +167,48 @@ export class CreateInvoiceComponent {
 
   invoiceFormFormSubmit(){
     this.invoiceFormSubmitAttempt = true;    
-    if (this.invoiceForm.valid) {
-      this.invoiceFormSubmitAttempt = false;
+    if (this.invoiceForm.valid && this.invoiceId != "") {      
       this.invoiceService.createInovice(this.uploadedFiles[0],this.invoiceForm.value, this.itemsList)
         .pipe(takeUntil(this.ngUnsubscribe)).subscribe((result: any) => {
           if (result.status) {
+            this.invoiceFormSubmitAttempt = false;
             this.invoiceForm.reset();
             this.uploadedFiles = [];
             this.itemsList = [];
             this.invoiceFormSubmitAttempt = false;
+            // this.router.navigate(['/home/create-invoices'], { replaceUrl: true });
+          } else {
+            this.messageService.add({ severity: 'error', summary: 'Error', detail: result.message });
+          }
+        })
+    }else{
+      if(this.uploadedFiles.length == 0){
+         const file = this.base64ToFile(this.invoiceDetails?.invoice_pdf, "invoice.pdf", "application/pdf");
+        this.uploadedFiles.push(file);
+      }     
+      this.invoiceService.updateInovice(this.uploadedFiles[0],this.invoiceForm.value, this.itemsList,this.invoiceId)
+        .pipe(takeUntil(this.ngUnsubscribe)).subscribe((result: any) => {
+          if (result.status) {
+            this.invoiceFormSubmitAttempt = false;
+            this.invoiceForm.reset();
+            this.uploadedFiles = [];
+            this.itemsList = [];
+            this.invoiceFormSubmitAttempt = false;
+            // this.router.navigate(['/home/create-invoices'], { replaceUrl: true });
           } else {
             this.messageService.add({ severity: 'error', summary: 'Error', detail: result.message });
           }
         })
     }
   }
+
+  base64ToFile(base64: string, filename: string, mimeType: string): File {
+  const byteString = atob(base64);
+  const byteNumbers = new Array(byteString.length).fill(0).map((_, i) => byteString.charCodeAt(i));
+  const byteArray = new Uint8Array(byteNumbers);
+  return new File([byteArray], filename, { type: mimeType });
+}
+
   itemFormSubmit(){
   this.itemFormSubmitAttempt = true;    
   if (this.itemForm.valid) {
