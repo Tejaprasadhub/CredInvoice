@@ -8,7 +8,6 @@ import { SignUpComponent } from './sign-up/sign-up.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { VerifyComponent } from './verify/verify.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
-import { KycInfoComponent } from './kyc-info/kyc-info.component';
 import { PrimengModule } from '../primeng.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
@@ -25,7 +24,6 @@ import { ProfileVerificationComponent } from './profile-verification/profile-ver
     ForgotPasswordComponent,
     VerifyComponent,
     ChangePasswordComponent,
-    KycInfoComponent,
     ProfileVerificationComponent
   ],
   imports: [

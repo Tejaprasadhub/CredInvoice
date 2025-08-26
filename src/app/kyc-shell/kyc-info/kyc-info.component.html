@@ -1,0 +1,447 @@
+<div class="cred-invoice container text-center overflow-auto">
+    <div class="content-box">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-12 platform-logo ">
+                        <div class="align-items-center d-flex justify-content-center">
+                            <img class="logo" alt="Logo Image" class="img-fluid w-20rem" src="assets/logo.png" />
+                        </div>
+                    </div>
+                    <div class="col-md-12 mt-2 heading">
+                        <div class="row">
+                            <span class="header-title">
+                                <h5>Complete Your KYC Verification</h5>
+                            </span>
+                        </div>
+                        <div class="row">
+                            <span class="sub-title">Please complete your KYC verification by providing the required
+                                details below. Accurate information helps us verify your identity and business
+                                credentials securely. Your data will be safely stored and used solely for verification
+                                purposes. To avoid delays in approval, ensure that all uploaded documents are clear and
+                                valid. Once verified, you will gain full access to our platform and its financial
+                                tools.</span>
+                        </div>
+                    </div>
+                    <div class="col-md-12 inputs">
+                        <form [formGroup]="kycForm" class="col-md-12" (ngSubmit)="kycFormFormSubmit()">
+                            <div class="row text-left mt-3">
+                                <span class="header-title">
+                                    <h6>Company details</h6>
+                                </span>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="flex flex-column mb-2 text-left">
+                                        <label for="username">Company Name</label>
+                                        <input formControlName="company" type="text" maxlength="100" pInputText
+                                            [ngClass]="{'error':((!kycForm.controls['company'].valid && kycForm.controls['company'].touched) || (!kycForm.controls['company'].valid && kycForm.controls['company'].untouched && kycFormSubmitAttempt))}">
+                                        <span class="error-div" *ngIf="(!kycForm.valid && kycFormSubmitAttempt)">
+                                            <p class="validation-label mb-0"
+                                                *ngIf="kycForm.controls['company'].errors?.['required']">
+                                                Company name is required</p>
+                                            <p class="validation-label mb-0"
+                                                *ngIf="!kycForm.controls['company'].errors?.['required'] && kycForm.controls['company'].errors?.['pattern']">
+                                                Please Enter Valid Company Name</p>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="flex flex-column mb-2 text-left">
+                                        <label for="username">Company Type</label>
+                                        <p-dropdown formControlName="companyType" [options]="companyTypes"
+                                            optionLabel="label" placeholder="Select Comapny Type"
+                                            [ngClass]="{'error':((!kycForm.controls['companyType'].valid && kycForm.controls['companyType'].touched) || (!kycForm.controls['companyType'].valid && kycForm.controls['companyType'].untouched && kycFormSubmitAttempt))}" />
+                                        <span class="error-div" *ngIf="(!kycForm.valid && kycFormSubmitAttempt)">
+                                            <p class="validation-label mb-0"
+                                                *ngIf="kycForm.controls['companyType'].errors?.['required']">
+                                                Company Type is required</p>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="flex flex-column mb-2 text-left">
+                                        <label for="username">Email Address</label>
+                                        <input formControlName="email" type="text" maxlength="100" pInputText
+                                            [ngClass]="{'error':((!kycForm.controls['email'].valid && kycForm.controls['email'].touched) || (!kycForm.controls['email'].valid && kycForm.controls['email'].untouched && kycFormSubmitAttempt))}">
+                                        <span class="error-div" *ngIf="(!kycForm.valid && kycFormSubmitAttempt)">
+                                            <p class="validation-label mb-0"
+                                                *ngIf="kycForm.controls['email'].errors?.['required']">
+                                                Email Address is required</p>
+                                            <p class="validation-label mb-0"
+                                                *ngIf="!kycForm.controls['email'].errors?.['required'] && kycForm.controls['email'].errors?.['pattern']">
+                                                Please Enter Valid Email Address</p>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="flex flex-column mb-2 text-left">
+                                        <label for="username">Phone Number</label>
+                                        <input formControlName="phone" type="text" maxlength="100" pInputText
+                                            [ngClass]="{'error':((!kycForm.controls['phone'].valid && kycForm.controls['phone'].touched) || (!kycForm.controls['phone'].valid && kycForm.controls['phone'].untouched && kycFormSubmitAttempt))}">
+                                        <span class="error-div" *ngIf="(!kycForm.valid && kycFormSubmitAttempt)">
+                                            <p class="validation-label mb-0"
+                                                *ngIf="kycForm.controls['phone'].errors?.['required']">
+                                                Phone Number is required</p>
+                                            <p class="validation-label mb-0"
+                                                *ngIf="!kycForm.controls['phone'].errors?.['required'] && kycForm.controls['phone'].errors?.['pattern']">
+                                                Please Enter Valid Phone Number</p>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="flex flex-column mb-2 text-left">
+                                        <label for="username">Nature of Business</label>
+                                        <input formControlName="nature" readonly type="text" maxlength="100" pInputText
+                                            [ngClass]="{'error':((!kycForm.controls['nature'].valid && kycForm.controls['nature'].touched) || (!kycForm.controls['nature'].valid && kycForm.controls['nature'].untouched && kycFormSubmitAttempt))}">
+                                        <span class="error-div" *ngIf="(!kycForm.valid && kycFormSubmitAttempt)">
+                                            <p class="validation-label mb-0"
+                                                *ngIf="kycForm.controls['nature'].errors?.['required']">
+                                                Nature of business is required</p>
+                                            <p class="validation-label mb-0"
+                                                *ngIf="!kycForm.controls['nature'].errors?.['required'] && kycForm.controls['nature'].errors?.['pattern']">
+                                                Please Enter Valid Nature of business</p>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="flex flex-column mb-2 text-left">
+                                        <label for="username">Date of Incorporation</label>
+                                        <p-calendar formControlName="incorpDate" [showIcon]="true" append="body"
+                                            [showOnFocus]="false" inputId="buttondisplay"
+                                            [ngClass]="{'error':((!kycForm.controls['incorpDate'].valid && kycForm.controls['incorpDate'].touched) || (!kycForm.controls['incorpDate'].valid && kycForm.controls['incorpDate'].untouched && kycFormSubmitAttempt))}" />
+                                        <span class="error-div" *ngIf="(!kycForm.valid && kycFormSubmitAttempt)">
+                                            <p class="validation-label mb-0"
+                                                *ngIf="kycForm.controls['incorpDate'].errors?.['required']">
+                                                Date of Incorporation is required</p>
+                                            <p class="validation-label mb-0"
+                                                *ngIf="!kycForm.controls['incorpDate'].errors?.['required'] && kycForm.controls['incorpDate'].errors?.['pattern']">
+                                                Please Enter Valid Date of Incorporation</p>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row text-left mt-3">
+                                <span class="header-title">
+                                    <h6>Business & Tax details</h6>
+                                </span>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3">
+                                 <div class="flex flex-column mb-2 text-left">
+                                        <label for="username">Business PAN</label>
+                                        <input formControlName="pan" readonly type="text" maxlength="100" pInputText
+                                            [ngClass]="{'error':((!kycForm.controls['pan'].valid && kycForm.controls['pan'].touched) || (!kycForm.controls['pan'].valid && kycForm.controls['pan'].untouched && kycFormSubmitAttempt))}">
+                                        <span class="error-div" *ngIf="(!kycForm.valid && kycFormSubmitAttempt)">
+                                            <p class="validation-label mb-0"
+                                                *ngIf="kycForm.controls['pan'].errors?.['required']">
+                                                Business PAN is required</p>
+                                            <p class="validation-label mb-0"
+                                                *ngIf="!kycForm.controls['pan'].errors?.['required'] && kycForm.controls['pan'].errors?.['pattern']">
+                                                Please Enter Valid Business PAN</p>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                   <div class="flex flex-column mb-2 text-left">
+                                        <label for="username">GST</label>
+                                        <input formControlName="gst" readonly type="text" maxlength="100" pInputText
+                                            [ngClass]="{'error':((!kycForm.controls['gst'].valid && kycForm.controls['gst'].touched) || (!kycForm.controls['gst'].valid && kycForm.controls['gst'].untouched && kycFormSubmitAttempt))}">
+                                        <span class="error-div" *ngIf="(!kycForm.valid && kycFormSubmitAttempt)">
+                                            <p class="validation-label mb-0"
+                                                *ngIf="kycForm.controls['gst'].errors?.['required']">
+                                                GST is required</p>
+                                            <p class="validation-label mb-0"
+                                                *ngIf="!kycForm.controls['gst'].errors?.['required'] && kycForm.controls['gst'].errors?.['pattern']">
+                                                Please Enter Valid GST</p>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row text-left mt-3">
+                                <span class="header-title">
+                                    <h6>Bank details</h6>
+                                </span>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <!-- <div class="flex flex-column mb-2 text-left">
+                                        <label for="username">Bank Account Number</label>
+                                        <input pInputText id="username" aria-describedby="username-help" />
+                                    </div> -->
+                                    <div class="flex flex-column mb-2 text-left">
+                                        <label for="username">Bank Account Number</label>
+                                        <input formControlName="accountNumber" readonly type="text" maxlength="100" pInputText
+                                            [ngClass]="{'error':((!kycForm.controls['accountNumber'].valid && kycForm.controls['accountNumber'].touched) || (!kycForm.controls['accountNumber'].valid && kycForm.controls['accountNumber'].untouched && kycFormSubmitAttempt))}">
+                                        <span class="error-div" *ngIf="(!kycForm.valid && kycFormSubmitAttempt)">
+                                            <p class="validation-label mb-0"
+                                                *ngIf="kycForm.controls['accountNumber'].errors?.['required']">
+                                                Account Number is required</p>
+                                            <p class="validation-label mb-0"
+                                                *ngIf="!kycForm.controls['accountNumber'].errors?.['required'] && kycForm.controls['accountNumber'].errors?.['pattern']">
+                                                Please Enter Valid Account Number</p>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="flex flex-column mb-2 text-left">
+                                        <label for="username">Bank IFSC</label>
+                                        <input formControlName="ifsc" readonly type="text" maxlength="100" pInputText
+                                            [ngClass]="{'error':((!kycForm.controls['ifsc'].valid && kycForm.controls['ifsc'].touched) || (!kycForm.controls['ifsc'].valid && kycForm.controls['ifsc'].untouched && kycFormSubmitAttempt))}">
+                                        <span class="error-div" *ngIf="(!kycForm.valid && kycFormSubmitAttempt)">
+                                            <p class="validation-label mb-0"
+                                                *ngIf="kycForm.controls['ifsc'].errors?.['required']">
+                                                Bank IFSC is required</p>
+                                            <p class="validation-label mb-0"
+                                                *ngIf="!kycForm.controls['ifsc'].errors?.['required'] && kycForm.controls['ifsc'].errors?.['pattern']">
+                                                Please Enter Valid Bank IFSC</p>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                             <div class="row text-left mt-3">
+                                <span class="header-title">
+                                    <h6>Communication Address</h6>
+                                </span>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="flex flex-column mb-2 text-left">
+                                        <label for="username">Address Line1</label>
+                                        <input formControlName="addrline1" readonly type="text" maxlength="100" pInputText
+                                            [ngClass]="{'error':((!kycForm.controls['addrline1'].valid && kycForm.controls['addrline1'].touched) || (!kycForm.controls['addrline1'].valid && kycForm.controls['addrline1'].untouched && kycFormSubmitAttempt))}">
+                                        <span class="error-div" *ngIf="(!kycForm.valid && kycFormSubmitAttempt)">
+                                            <p class="validation-label mb-0"
+                                                *ngIf="kycForm.controls['addrline1'].errors?.['required']">
+                                                Address Line1 is required</p>
+                                            <p class="validation-label mb-0"
+                                                *ngIf="!kycForm.controls['addrline1'].errors?.['required'] && kycForm.controls['addrline1'].errors?.['pattern']">
+                                                Please Enter Valid Address Line1</p>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                   <div class="flex flex-column mb-2 text-left">
+                                        <label for="username">Address Line2</label>
+                                        <input formControlName="addrline2" readonly type="text" maxlength="100" pInputText
+                                            [ngClass]="{'error':((!kycForm.controls['addrline2'].valid && kycForm.controls['addrline2'].touched) || (!kycForm.controls['addrline2'].valid && kycForm.controls['addrline2'].untouched && kycFormSubmitAttempt))}">
+                                        <span class="error-div" *ngIf="(!kycForm.valid && kycFormSubmitAttempt)">
+                                            <p class="validation-label mb-0"
+                                                *ngIf="kycForm.controls['addrline2'].errors?.['required']">
+                                                Address Line2 is required</p>
+                                            <p class="validation-label mb-0"
+                                                *ngIf="!kycForm.controls['addrline2'].errors?.['required'] && kycForm.controls['addrline2'].errors?.['pattern']">
+                                                Please Enter Valid Address Line2</p>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                   <div class="flex flex-column mb-2 text-left">
+                                        <label for="username">District</label>
+                                        <input formControlName="district" readonly type="text" maxlength="100" pInputText
+                                            [ngClass]="{'error':((!kycForm.controls['district'].valid && kycForm.controls['district'].touched) || (!kycForm.controls['district'].valid && kycForm.controls['district'].untouched && kycFormSubmitAttempt))}">
+                                        <span class="error-div" *ngIf="(!kycForm.valid && kycFormSubmitAttempt)">
+                                            <p class="validation-label mb-0"
+                                                *ngIf="kycForm.controls['district'].errors?.['required']">
+                                                District is required</p>
+                                            <p class="validation-label mb-0"
+                                                *ngIf="!kycForm.controls['district'].errors?.['required'] && kycForm.controls['district'].errors?.['pattern']">
+                                                Please Enter Valid District</p>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                   <div class="flex flex-column mb-2 text-left">
+                                        <label for="username">City</label>
+                                        <input formControlName="city" readonly type="text" maxlength="100" pInputText
+                                            [ngClass]="{'error':((!kycForm.controls['city'].valid && kycForm.controls['city'].touched) || (!kycForm.controls['city'].valid && kycForm.controls['city'].untouched && kycFormSubmitAttempt))}">
+                                        <span class="error-div" *ngIf="(!kycForm.valid && kycFormSubmitAttempt)">
+                                            <p class="validation-label mb-0"
+                                                *ngIf="kycForm.controls['city'].errors?.['required']">
+                                                City is required</p>
+                                            <p class="validation-label mb-0"
+                                                *ngIf="!kycForm.controls['city'].errors?.['required'] && kycForm.controls['city'].errors?.['pattern']">
+                                                Please Enter Valid City</p>
+                                        </span>
+                                    </div>
+                                </div>
+                                 <div class="col-md-3">
+                                   <div class="flex flex-column mb-2 text-left">
+                                        <label for="username">State</label>
+                                        <input formControlName="state" readonly type="text" maxlength="100" pInputText
+                                            [ngClass]="{'error':((!kycForm.controls['state'].valid && kycForm.controls['state'].touched) || (!kycForm.controls['state'].valid && kycForm.controls['state'].untouched && kycFormSubmitAttempt))}">
+                                        <span class="error-div" *ngIf="(!kycForm.valid && kycFormSubmitAttempt)">
+                                            <p class="validation-label mb-0"
+                                                *ngIf="kycForm.controls['state'].errors?.['required']">
+                                                state is required</p>
+                                            <p class="validation-label mb-0"
+                                                *ngIf="!kycForm.controls['state'].errors?.['required'] && kycForm.controls['state'].errors?.['pattern']">
+                                                Please Enter Valid state</p>
+                                        </span>
+                                    </div>
+                                </div>
+                                 <div class="col-md-3">
+                                   <div class="flex flex-column mb-2 text-left">
+                                        <label for="username">Pin Code</label>
+                                        <input formControlName="pincode" readonly type="text" maxlength="100" pInputText
+                                            [ngClass]="{'error':((!kycForm.controls['pincode'].valid && kycForm.controls['pincode'].touched) || (!kycForm.controls['pincode'].valid && kycForm.controls['pincode'].untouched && kycFormSubmitAttempt))}">
+                                        <span class="error-div" *ngIf="(!kycForm.valid && kycFormSubmitAttempt)">
+                                            <p class="validation-label mb-0"
+                                                *ngIf="kycForm.controls['pincode'].errors?.['required']">
+                                                Pincode is required</p>
+                                            <p class="validation-label mb-0"
+                                                *ngIf="!kycForm.controls['pincode'].errors?.['required'] && kycForm.controls['pincode'].errors?.['pattern']">
+                                                Please Enter Valid pincode</p>
+                                        </span>
+                                    </div>
+                                </div>
+                                 <div class="col-md-3">
+                                   <div class="flex flex-column mb-2 text-left">
+                                        <label for="username">Country</label>
+                                        <input formControlName="country" readonly type="text" maxlength="100" pInputText
+                                            [ngClass]="{'error':((!kycForm.controls['country'].valid && kycForm.controls['country'].touched) || (!kycForm.controls['country'].valid && kycForm.controls['country'].untouched && kycFormSubmitAttempt))}">
+                                        <span class="error-div" *ngIf="(!kycForm.valid && kycFormSubmitAttempt)">
+                                            <p class="validation-label mb-0"
+                                                *ngIf="kycForm.controls['country'].errors?.['required']">
+                                                country is required</p>
+                                            <p class="validation-label mb-0"
+                                                *ngIf="!kycForm.controls['country'].errors?.['required'] && kycForm.controls['country'].errors?.['pattern']">
+                                                Please Enter Valid country</p>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                             <div class="row text-left mt-3">
+                                <span class="header-title">
+                                    <h6>Billing Address</h6>
+                                </span>
+                                <span>
+                                    <p-checkbox 
+    formControlName="checked" 
+    [binary]="true" 
+    inputId="binary" /> <small>Same as Communication address</small>
+</span>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="flex flex-column mb-2 text-left">
+                                        <label for="username">Address Line1</label>
+                                        <input formControlName="baddrline1" readonly type="text" maxlength="100" pInputText
+                                            [ngClass]="{'error':((!kycForm.controls['baddrline1'].valid && kycForm.controls['baddrline1'].touched) || (!kycForm.controls['baddrline1'].valid && kycForm.controls['baddrline1'].untouched && kycFormSubmitAttempt))}">
+                                        <span class="error-div" *ngIf="(!kycForm.valid && kycFormSubmitAttempt)">
+                                            <p class="validation-label mb-0"
+                                                *ngIf="kycForm.controls['baddrline1'].errors?.['required']">
+                                                Address Line1 is required</p>
+                                            <p class="validation-label mb-0"
+                                                *ngIf="!kycForm.controls['baddrline1'].errors?.['required'] && kycForm.controls['baddrline1'].errors?.['pattern']">
+                                                Please Enter Valid Address Line1</p>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                   <div class="flex flex-column mb-2 text-left">
+                                        <label for="username">Address Line2</label>
+                                        <input formControlName="baddrline2" readonly type="text" maxlength="100" pInputText
+                                            [ngClass]="{'error':((!kycForm.controls['baddrline2'].valid && kycForm.controls['baddrline2'].touched) || (!kycForm.controls['baddrline2'].valid && kycForm.controls['baddrline2'].untouched && kycFormSubmitAttempt))}">
+                                        <span class="error-div" *ngIf="(!kycForm.valid && kycFormSubmitAttempt)">
+                                            <p class="validation-label mb-0"
+                                                *ngIf="kycForm.controls['baddrline2'].errors?.['required']">
+                                                Address Line2 is required</p>
+                                            <p class="validation-label mb-0"
+                                                *ngIf="!kycForm.controls['baddrline2'].errors?.['required'] && kycForm.controls['baddrline2'].errors?.['pattern']">
+                                                Please Enter Valid Address Line2</p>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                   <div class="flex flex-column mb-2 text-left">
+                                        <label for="username">District</label>
+                                        <input formControlName="bdistrict" readonly type="text" maxlength="100" pInputText
+                                            [ngClass]="{'error':((!kycForm.controls['bdistrict'].valid && kycForm.controls['bdistrict'].touched) || (!kycForm.controls['bdistrict'].valid && kycForm.controls['bdistrict'].untouched && kycFormSubmitAttempt))}">
+                                        <span class="error-div" *ngIf="(!kycForm.valid && kycFormSubmitAttempt)">
+                                            <p class="validation-label mb-0"
+                                                *ngIf="kycForm.controls['bdistrict'].errors?.['required']">
+                                                District is required</p>
+                                            <p class="validation-label mb-0"
+                                                *ngIf="!kycForm.controls['bdistrict'].errors?.['required'] && kycForm.controls['bdistrict'].errors?.['pattern']">
+                                                Please Enter Valid District</p>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                   <div class="flex flex-column mb-2 text-left">
+                                        <label for="username">City</label>
+                                        <input formControlName="bcity" readonly type="text" maxlength="100" pInputText
+                                            [ngClass]="{'error':((!kycForm.controls['bcity'].valid && kycForm.controls['bcity'].touched) || (!kycForm.controls['bcity'].valid && kycForm.controls['bcity'].untouched && kycFormSubmitAttempt))}">
+                                        <span class="error-div" *ngIf="(!kycForm.valid && kycFormSubmitAttempt)">
+                                            <p class="validation-label mb-0"
+                                                *ngIf="kycForm.controls['bcity'].errors?.['required']">
+                                                City is required</p>
+                                            <p class="validation-label mb-0"
+                                                *ngIf="!kycForm.controls['bcity'].errors?.['required'] && kycForm.controls['bcity'].errors?.['pattern']">
+                                                Please Enter Valid City</p>
+                                        </span>
+                                    </div>
+                                </div>
+                                 <div class="col-md-3">
+                                   <div class="flex flex-column mb-2 text-left">
+                                        <label for="username">State</label>
+                                        <input formControlName="bstate" readonly type="text" maxlength="100" pInputText
+                                            [ngClass]="{'error':((!kycForm.controls['bstate'].valid && kycForm.controls['bstate'].touched) || (!kycForm.controls['bstate'].valid && kycForm.controls['bstate'].untouched && kycFormSubmitAttempt))}">
+                                        <span class="error-div" *ngIf="(!kycForm.valid && kycFormSubmitAttempt)">
+                                            <p class="validation-label mb-0"
+                                                *ngIf="kycForm.controls['bstate'].errors?.['required']">
+                                                state is required</p>
+                                            <p class="validation-label mb-0"
+                                                *ngIf="!kycForm.controls['bstate'].errors?.['required'] && kycForm.controls['bstate'].errors?.['pattern']">
+                                                Please Enter Valid state</p>
+                                        </span>
+                                    </div>
+                                </div>
+                                 <div class="col-md-3">
+                                   <div class="flex flex-column mb-2 text-left">
+                                        <label for="username">Pin Code</label>
+                                        <input formControlName="bpincode" readonly type="text" maxlength="100" pInputText
+                                            [ngClass]="{'error':((!kycForm.controls['bpincode'].valid && kycForm.controls['bpincode'].touched) || (!kycForm.controls['bpincode'].valid && kycForm.controls['bpincode'].untouched && kycFormSubmitAttempt))}">
+                                        <span class="error-div" *ngIf="(!kycForm.valid && kycFormSubmitAttempt)">
+                                            <p class="validation-label mb-0"
+                                                *ngIf="kycForm.controls['bpincode'].errors?.['required']">
+                                                Pincode is required</p>
+                                            <p class="validation-label mb-0"
+                                                *ngIf="!kycForm.controls['bpincode'].errors?.['required'] && kycForm.controls['bpincode'].errors?.['pattern']">
+                                                Please Enter Valid pincode</p>
+                                        </span>
+                                    </div>
+                                </div>
+                                 <div class="col-md-3">
+                                   <div class="flex flex-column mb-2 text-left">
+                                        <label for="username">Country</label>
+                                        <input formControlName="bcountry" readonly type="text" maxlength="100" pInputText
+                                            [ngClass]="{'error':((!kycForm.controls['bcountry'].valid && kycForm.controls['bcountry'].touched) || (!kycForm.controls['bcountry'].valid && kycForm.controls['bcountry'].untouched && kycFormSubmitAttempt))}">
+                                        <span class="error-div" *ngIf="(!kycForm.valid && kycFormSubmitAttempt)">
+                                            <p class="validation-label mb-0"
+                                                *ngIf="kycForm.controls['bcountry'].errors?.['required']">
+                                                country is required</p>
+                                            <p class="validation-label mb-0"
+                                                *ngIf="!kycForm.controls['bcountry'].errors?.['required'] && kycForm.controls['bcountry'].errors?.['pattern']">
+                                                Please Enter Valid country</p>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mt-6 mb-6">
+                                <div class="col-md-3"></div>
+                                <div class="col-md-6">
+                                    <p-button label="Submit KYC details" type="submit"></p-button>
+                                </div>
+                                <div class="col-md-3"></div>
+                            </div>
+                        </form>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

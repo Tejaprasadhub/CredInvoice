@@ -9,6 +9,7 @@ import { MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { LoadingHttpInterceptorComponent, LoadingHttpInterceptorFactoryProvider } from './@shared/loading-http-interceptor/loading-http-interceptor.component';
+import { KycShellModule } from './kyc-shell/kyc-shell.module';
 
 const LoadingHttpInterceptorProvider = {
   provide: HTTP_INTERCEPTORS,
@@ -23,6 +24,7 @@ const LoadingHttpInterceptorProvider = {
   imports: [
     BrowserModule,
     HomeShellModule,
+    KycShellModule,
     HttpClientModule,
     SharedModule,
     ToastModule,

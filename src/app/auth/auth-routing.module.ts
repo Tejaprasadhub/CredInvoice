@@ -6,7 +6,7 @@ import { ForgotPasswordComponent } from './forgot-password/forgot-password.compo
 import { VerifyComponent } from './verify/verify.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
 import { SignUpComponent } from './sign-up/sign-up.component';
-import { KycInfoComponent } from './kyc-info/kyc-info.component';
+import { KycInfoComponent } from '../kyc-shell/kyc-info/kyc-info.component';
 import { ProfileVerificationComponent } from './profile-verification/profile-verification.component';
 
 const routes: Routes = [
@@ -16,7 +16,6 @@ const routes: Routes = [
   { path: 'change-password', component: ChangePasswordComponent },
   { path: 'verify', component: VerifyComponent },
   { path: 'signup', component: SignUpComponent },
-  { path: 'kyc', component: KycInfoComponent },
   { path: 'profile-verification', component: ProfileVerificationComponent },
 ];
 

@@ -8,7 +8,7 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "component:create": "ng g component sellerInvoices --module=home/home.module.ts",
-    "module:create": "ng g m --module app.module --route @shared"
+    "module:create": "ng g m --module app.module --route kyc-shell"
   },
   "private": true,
   "dependencies": {

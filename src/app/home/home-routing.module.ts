@@ -12,6 +12,7 @@ import { BiddingComponent } from './bidding/bidding.component';
 import { SessionStorageTokenService } from '../@shared/services/session-storage-token.service';
 import { SellerInvoiceDetailsComponent } from './seller-invoice-details/seller-invoice-details.component';
 import { SellerInvoicesComponent } from './seller-invoices/seller-invoices.component';
+import { KycInfoComponent } from '../kyc-shell/kyc-info/kyc-info.component';
 const isSeller = sessionStorage.getItem("role")?.toLowerCase()  === 'seller';
 const routes: Routes = [
   { path: 'dashboard', component: DashboardComponent,data: { title: 'Dashboard' } },
