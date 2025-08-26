@@ -29,4 +29,18 @@ export class SellerService {
       }), catchError(e => this.apiResponseHandler.handleError(e)));
   }
 
+  getFinancierSellersList() {
+    return this.httpClient.get("financier/list-sellers").pipe(
+      map((response: any) => {
+        return response;
+      }), catchError(e => this.apiResponseHandler.handleError(e)));
+  }
+
+   getFinacierBuyersList() {
+    return this.httpClient.get("financier/list-buyers").pipe(
+      map((response: any) => {
+        return response;
+      }), catchError(e => this.apiResponseHandler.handleError(e)));
+  }
+
 }

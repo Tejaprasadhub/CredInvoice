@@ -393,6 +393,7 @@ button.p-element.btn-cirle {
 .p-tabview .p-tabview-nav li.p-highlight .p-tabview-nav-link {
   background: var(--white);
   border-color: var(--primary);
+  text-decoration: none!important;;
 }
 
 .p-calendar.p-calendar-w-btn .p-button {

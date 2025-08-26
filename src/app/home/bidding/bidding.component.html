@@ -1,36 +1,64 @@
 <p-toast />
     <p-confirmPopup />
 <div class="row app-container">
-    <div class="col-md-12">
+    <p-tabView>
+                    <p-tabPanel header="Bidding List">
+                        <div class="col-md-12">
         <div class="row align-items-center">
             <div class="col-3">
-                <p-dropdown [options]="cities" [(ngModel)]="selectedCity" optionLabel="name"
-                    placeholder="Selected Sellers" />
+                <!-- <p-dropdown [options]="sellers" optionLabel="label"
+                    placeholder="Selected Seller" /> -->
+                     <p-multiSelect 
+    [options]="sellers" 
+    [(ngModel)]="selectedSellers" 
+    optionLabel="label" 
+    placeholder="Select Sellers" />
             </div>
+
             <div class="col-3">
-                <p-dropdown [options]="status" [(ngModel)]="selectedStatus" optionLabel="name"
-                    placeholder="Select Status" />
+                <!-- <p-dropdown [options]="buyers" optionLabel="label"
+                    placeholder="Select Buyer" /> -->
+                     <p-multiSelect 
+    [options]="buyers" 
+    [(ngModel)]="selectedBuyers" 
+    optionLabel="label" 
+    placeholder="Select Buyers" />
             </div>
             <div class="col-3"></div>
             <div class="col-3">
-                <p-inputGroup>
+                <!-- <p-inputGroup>
                     <p-inputGroupAddon>
                         <i class="pi pi-search"></i>
                     </p-inputGroupAddon>
                     <input pInputText placeholder="Search..." />
-                </p-inputGroup>
+                </p-inputGroup> -->
+                <div class="card flex justify-content-center actions">
+                    <p-button label="View Reports"  icon="pi pi-chart-bar">
+                    </p-button>
+                </div>
             </div>
         </div>
-        <div class="row align-items-center">
+        <div class="row align-items-center" *ngIf="selectedSellers?.length">
             <div class="col-auto">
-                <label class="font-medium">Selected Sellelrs: </label>
+                <label class="font-medium">Selected Sellers: </label>
             </div>
             <div class="col">
-                <div class="flex align-items-center gap-2 flex-wrap pt-1 pb-1">
-                    <p-chip label="Apple" [removable]="true" />
-                    <p-chip label="Facebook" [removable]="true" />
-                    <p-chip label="Google" [removable]="true"/>
-                    <p-chip label="Microsoft" [removable]="true" />
+                 <div class="flex align-items-center gap-2 flex-wrap pt-1 pb-1">
+                    <ng-template ngFor let-seller [ngForOf]="selectedSellers" let-i="index">
+                        <p-chip [label]="getSelectedSellerName(seller)" />
+                    </ng-template>
+                </div>
+            </div>         
+        </div>
+        <div class="row align-items-center" *ngIf="selectedBuyers?.length">
+            <div class="col-auto">
+                <label class="font-medium">Selected Buyers: </label>
+            </div>
+            <div class="col">
+                 <div class="flex align-items-center gap-2 flex-wrap pt-1 pb-1">
+                    <ng-template ngFor let-buyer [ngForOf]="selectedBuyers" let-i="index">
+                        <p-chip [label]="getSelectedBuyerName(buyer)" />
+                    </ng-template>
                 </div>
             </div>         
         </div>
@@ -70,5 +98,11 @@
         </div>
 
     </div>
+                    </p-tabPanel>
+                    <p-tabPanel header="My Biddings">
+                        <p>Coming Soon!!</p>
+                    </p-tabPanel>
+                </p-tabView>
+    
 </div>
 

@@ -68,17 +68,31 @@
         </p-card> -->
         <p-card>
             <div class="row align-items-center">
-                <div class="col">
+               <div class="col" *ngIf="currentRole == 'buyer'">
                     <div class="row align-items-center">
                         <div class="col-auto">
                             <img alt="seller" class="img-fluid" title="Seller" src="/assets/icons/seller_large.png" />
                         </div>
                         <div class="col-auto d-grid">
                             <span class="invoice">{{getSellerName(invoiceDetails)}}</span>
-                            <span style="font-size: 14px;">PAN: {{getPanNumber(invoiceDetails)}}</span>
+                            <span style="font-size: 14px;">PAN: {{getSellerPanNumber(invoiceDetails)}}</span>
                         </div>
                         <div class="col-auto">
-                            <span class="status {{invoiceDetails?.status}}">{{invoiceDetails?.status == "SENT_TO_SELLER" ? "Pending" : "Completed"}}</span>
+                            <span class="status {{invoiceDetails?.status}}">{{invoiceDetails?.status}}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col" *ngIf="currentRole == 'seller'">
+                    <div class="row align-items-center">
+                        <div class="col-auto">
+                            <img alt="seller" class="img-fluid" title="Seller" src="/assets/icons/seller_large.png" />
+                        </div>
+                        <div class="col-auto d-grid">
+                            <span class="invoice">{{getBuyerName(invoiceDetails)}}</span>
+                            <span style="font-size: 14px;">PAN: {{getBuyerPanNumber(invoiceDetails)}}</span>
+                        </div>
+                        <div class="col-auto">
+                            <span class="status {{invoiceDetails?.status}}">{{invoiceDetails?.status}}</span>
                         </div>
                     </div>
                 </div>
@@ -192,7 +206,7 @@
                             </ng-template>
                         </p-table>
                     </p-tabPanel> -->
-                    <p-tabPanel header="Invoice Items(27)">
+                    <p-tabPanel header="Invoice Items({{invoiceDetails?.items?.length}})">
                         <p-table [value]="invoiceDetails?.items" [paginator]="true" [rows]="5" styleClass="p-datatable-striped" [first]="first"
                 [showCurrentPageReport]="true" [tableStyle]="{ 'min-width': '50rem' }"
                 currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"

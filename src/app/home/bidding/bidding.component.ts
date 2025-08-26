@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { ConfirmationService, MessageService } from 'primeng/api';
+import { SellerService } from '../../@shared/services/seller.service';
+import { Subject } from 'rxjs/internal/Subject';
+import { takeUntil } from 'rxjs/internal/operators/takeUntil';
 
 @Component({
   selector: 'app-bidding',
@@ -9,8 +12,13 @@ import { ConfirmationService, MessageService } from 'primeng/api';
   styleUrl: './bidding.component.scss'
 })
 export class BiddingComponent {
-  cities: any[] =[];
-  status: any[] =[];
+    private ngUnsubscribe = new Subject();
+  buyers: any[] = [
+  ];
+  sellers: any[] = [
+  ];
+  selectedSellers:any[]=[];
+  selectedBuyers:any[]=[];
   selectedCity: any;
   selectedStatus: any;
   first = 0;
@@ -21,24 +29,9 @@ export class BiddingComponent {
   visible2:boolean=false;
   date1:any;
   constructor(private confirmationService: ConfirmationService, private messageService: MessageService,
-    private router: Router) {}
+    private router: Router,private sellerService: SellerService) {}
 
   ngOnInit(){
-    this.cities = [
-      { name: 'Selected Seller', code: '' },
-      { name: 'Alpha Traders', code: 'NY' },
-      { name: 'Bravo Mart', code: 'RM' },
-      { name: 'Charlie Supplies', code: 'LDN' },
-      { name: 'Delta Grocers', code: 'IST' }
-  ];
-  this.status = [
-    { name: 'Select Status', code: '' },
-    { name: 'Sent to Seller', code: 'NY' },
-    { name: 'Accepted by Seller', code: 'RM' },
-    { name: 'Rejected by Seller', code: 'LDN' },
-    { name: 'Approved by Buyer|Fund by Financier', code: 'IST' },
-    { name: 'Approved by Buyer|Fund by Self', code: 'IST' }
-];
   this.products=[
     {
       code:"1",
@@ -222,8 +215,47 @@ export class BiddingComponent {
       invoice:"invoice1.pdf"
     }
   ]
+
+   this.getBuyers();
+   this.getSellers();
   }
 
+   getSellers() {
+    this.sellerService.getFinancierSellersList()
+      .pipe(takeUntil(this.ngUnsubscribe)).subscribe((result: any) => {
+        if(result.data?.length > 0) {
+          result?.data.forEach((seller: any) => {
+            this.sellers.push({
+              label: seller.first_name + ' ' + seller.last_name,
+              value: seller.id
+              })
+              });
+        }else {
+          this.sellers= [];
+        }
+      })
+  }
+
+  getBuyers() {
+      this.sellerService.getFinacierBuyersList()
+        .pipe(takeUntil(this.ngUnsubscribe)).subscribe((result: any) => {
+          if(result.data?.length > 0) {
+             this.buyers = result.data.map((buyer: any) => ({
+            label: buyer.first_name,
+            value: buyer.id
+          }));
+          }else {
+            this.buyers= [];
+          }
+        })
+    }
+getSelectedBuyerName(buyer: any) {
+    return this.buyers.find(b => b.value === buyer)?.label || '';
+  }
+
+  getSelectedSellerName(seller: any) {
+    return this.sellers.find(b => b.value === seller)?.label || '';
+  }
   delete(event: Event) {
     this.confirmationService.confirm({
         target: event.target as EventTarget,
