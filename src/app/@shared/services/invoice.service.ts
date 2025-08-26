@@ -16,7 +16,7 @@ export class InvoiceService {
   ) { }
   
   getInvoicesList() {
-    const isSeller = sessionStorage.getItem("role")  === 'seller';
+    const isSeller = sessionStorage.getItem("role")?.toLowerCase()  === 'seller';
     let url = "";
     if (isSeller) {
       url = "seller-invoices";
@@ -28,8 +28,8 @@ export class InvoiceService {
         return response;
       }), catchError(e => this.apiResponseHandler.handleError(e)));
   }
-  getInvoiceDetails(id: string) {
-    const isSeller = sessionStorage.getItem("role")  === 'seller';
+  getInvoiceDetails(id: string) {   
+    const isSeller = sessionStorage.getItem("role")?.toLowerCase()  === 'seller';
     let url = "";
     if (isSeller) {
       url = "seller-invoices";
@@ -44,13 +44,13 @@ export class InvoiceService {
 
    createInovice(file: File,registerData: any,itemsList:any[]=[]) {
      const formData: FormData = new FormData();
-        formData.append('invoice_number', registerData.number);
+        formData.append('invoice_number', registerData?.number);
         formData.append('file', file, file?.name);
-        formData.append('invoice_amount', registerData.amount)
-        formData.append('invoice_date', registerData.invoiceDate.toISOString());
-        formData.append('invoice_due_date', registerData.disbursementDate.toISOString());
+        formData.append('invoice_amount', registerData?.amount)
+        formData.append('invoice_date', registerData?.invoiceDate?.toISOString());
+        formData.append('invoice_due_date', registerData?.disbursementDate?.toISOString());
         formData.append('fund_by', registerData?.fundBy?.value );
-        formData.append('goods_description', registerData.description );
+        formData.append('goods_description', registerData?.description );
         formData.append('seller_id', registerData?.invoiceseller?.value );
        formData.append('items', JSON.stringify(itemsList) );
     return this.httpClient.post("invoices", formData).pipe(
@@ -62,13 +62,13 @@ export class InvoiceService {
 
   updateInovice(file: File,registerData: any,itemsList:any[]=[],invoiceId:string="") {
      const formData: FormData = new FormData();
-        formData.append('invoice_number', registerData.number);
-        formData.append('file', file, file?.name);
-        formData.append('invoice_amount', registerData.amount);
-        formData.append('invoice_date', registerData.invoiceDate.toISOString());
-        formData.append('invoice_due_date', registerData.disbursementDate.toISOString());
+        formData.append('invoice_number', registerData?.number);
+        formData.append('file', file, file?.name ? file?.name : registerData?.number+'_invoice'); // Handle case where file might be undefined
+        formData.append('invoice_amount', registerData?.amount);
+        formData.append('invoice_date', registerData?.invoiceDate?.toISOString());
+        formData.append('invoice_due_date', registerData?.disbursementDate?.toISOString());
         formData.append('fund_by', registerData?.fundBy?.value );
-        formData.append('goods_description', registerData.description );
+        formData.append('goods_description', registerData?.description );
         formData.append('seller_id', registerData?.invoiceseller?.value );
        formData.append('items', JSON.stringify(itemsList) );
     return this.httpClient.put("invoices/"+invoiceId, formData).pipe(

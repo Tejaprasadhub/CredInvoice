@@ -17,8 +17,9 @@ export class SellerInvoicesComponent {
   first = 0;
   rows = 10;
   invoices: any[]=[];
-  sellers: any[] = [
+  buyers: any[] = [
   ]
+selectedBuyers:any[]=[];
   visible:boolean=false;
   selectedinvoice!: any;
   constructor(private confirmationService: ConfirmationService, private messageService: MessageService,
@@ -28,7 +29,7 @@ export class SellerInvoicesComponent {
 
   ngOnInit(){
     this.getInvoices();
-    this.getSellers();
+    this.getBuyers();
   }
 
   getInvoices() {
@@ -43,21 +44,22 @@ export class SellerInvoicesComponent {
   }
 
 
-  getSellerName(invoice: any) {
-    return this.sellers.find(seller => seller.value === invoice?.seller_id)?.label || '';
+  getBuyerName(invoice: any) {
+    return this.buyers.find(buyer => buyer.value === invoice?.buyer_id)?.label || '';
   }
-   getSellers() {
-    this.sellerService.getSellersList()
+  getSelectedBuyerName(buyer: any) {
+    return this.buyers.find(b => b.value === buyer)?.label || '';
+  }
+  getBuyers() {
+    this.sellerService.getbBuyersList()
       .pipe(takeUntil(this.ngUnsubscribe)).subscribe((result: any) => {
         if(result.data?.length > 0) {
-          result?.data.forEach((seller: any) => {
-            this.sellers.push({
-              label: seller.first_name + ' ' + seller.last_name,
-              value: seller.id
-              })
-              });
+           this.buyers = result.data.map((buyer: any) => ({
+          label: buyer.first_name,
+          value: buyer.id
+        }));
         }else {
-          this.sellers= [];
+          this.buyers= [];
         }
       })
   }
@@ -70,7 +72,7 @@ openQuickView(invoice: any) {
 
   
    getPanNumber(invoiceDetails: any) {
-    return this.sellers.find(seller => seller.value === invoiceDetails?.seller_id)?.pan || '';
+    return this.buyers.find(buyer => buyer.value === invoiceDetails?.buyer_id)?.pan || '';
   }
 
 

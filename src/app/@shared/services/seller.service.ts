@@ -22,4 +22,11 @@ export class SellerService {
       }), catchError(e => this.apiResponseHandler.handleError(e)));
   }
 
+   getbBuyersList() {
+    return this.httpClient.get("buyers").pipe(
+      map((response: any) => {
+        return response;
+      }), catchError(e => this.apiResponseHandler.handleError(e)));
+  }
+
 }

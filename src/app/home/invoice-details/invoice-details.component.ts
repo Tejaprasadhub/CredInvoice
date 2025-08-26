@@ -16,6 +16,7 @@ export class InvoiceDetailsComponent {
   private ngUnsubscribe = new Subject();
   invoiceDetails:any;
   sellers: any[] =[];
+  buyers: any[] =[];
   selectedCity: any;
   date1:any;
   uploadedFiles: any[] = [];
@@ -27,10 +28,18 @@ export class InvoiceDetailsComponent {
   products: any[]=[];
   first = 0;
   rows = 5;
+  currentRole:string="";
   ngOnInit(){   
    this.route.params.subscribe((params: any) => {
       this.getInvoiceDetails(params['id']);
-      this.getSellers();
+      this.currentRole = sessionStorage.getItem('role')?.toLowerCase() || '';
+      if(this.currentRole === 'buyer') {
+           this.getSellers();
+      }else{
+            this.getBuyers();
+      }
+      
+      
     });
 }
 
@@ -38,15 +47,28 @@ getSellers() {
     this.sellerService.getSellersList()
       .pipe(takeUntil(this.ngUnsubscribe)).subscribe((result: any) => {
         if(result.data?.length > 0) {
-          result?.data.forEach((seller: any) => {
-            this.sellers.push({
-              label: seller.first_name + ' ' + seller.last_name,
-              value: seller.id,
-              pan: seller.pan_number
-              })
-              });
+         this.sellers = result.data.map((seller: any) => ({
+          label: seller.first_name + ' ' + seller.last_name,
+          value: seller.id,
+          pan: seller.pan_number
+        }));
         }else {
           this.sellers= [];
+        }
+      })
+  }
+
+  getBuyers() {
+    this.sellerService.getbBuyersList()
+      .pipe(takeUntil(this.ngUnsubscribe)).subscribe((result: any) => {
+        if(result.data?.length > 0) {
+           this.buyers = result.data.map((buyer: any) => ({
+          label: buyer.first_name + ' ' + buyer.last_name,
+          value: buyer.id,
+          pan: buyer.pan_number
+        }));
+        }else {
+          this.buyers= [];
         }
       })
   }
@@ -76,7 +98,13 @@ getInvoiceDetails(id:string) {
  getSellerName(invoiceDetails: any) {
     return this.sellers.find(seller => seller.value === invoiceDetails?.seller_id)?.label || '';
   }
-   getPanNumber(invoiceDetails: any) {
+   getBuyerName(invoiceDetails: any) {
+    return this.buyers.find(buyer => buyer.value === invoiceDetails?.buyer_id)?.label || '';
+  }
+   getSellerPanNumber(invoiceDetails: any) {
     return this.sellers.find(seller => seller.value === invoiceDetails?.seller_id)?.pan || '';
+  }
+  getBuyerPanNumber(invoiceDetails: any) {
+    return this.buyers.find(buyer => buyer.value === invoiceDetails?.buyer_id)?.pan || '';
   }
 }

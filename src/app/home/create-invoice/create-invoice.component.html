@@ -145,7 +145,7 @@
                             class="pi pi-download mr-2"></i>Sampleitems.csv</span>
                 </div>
                 <div class="col-md-3">
-                    <p-button label="Save Invoice" icon="pi pi-plus" type="submit" />
+                    <p-button label="{{invoiceId ? 'Update Invoice' : 'Save Inovice'}}" icon="pi pi-plus" type="submit" />
                 </div>
             </div>
             <div class="row mt-3">
@@ -180,8 +180,8 @@
                             <td>{{item.quantity}}</td>
                             <td>{{item.total_amount}}</td>
                             <td class="actions">
-                                <img alt="edit" (click)="edit(item)"  class="img-fluid" title="Edit" src="/assets/table-icons/Pencil.png" />
-                                <img alt="trash" class="img-fluid" title="Delete" src="/assets/table-icons/Trash.png" />
+                                <!-- <img alt="edit" (click)="edit(item)"  class="img-fluid" title="Edit" src="/assets/table-icons/Pencil.png" /> -->
+                                <img alt="trash" class="img-fluid" (click)="delete(item)" title="Delete" src="/assets/table-icons/Trash.png" />
                             </td>
                         </tr>
                     </ng-template>

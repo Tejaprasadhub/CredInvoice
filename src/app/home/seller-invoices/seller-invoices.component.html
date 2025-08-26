@@ -4,12 +4,17 @@
     <div class="col-md-12">
         <div class="row align-items-center">
             <div class="col-3">
-                <p-dropdown [options]="sellers"  optionLabel="label"
-                    placeholder="Select Buyers" />
+                <!-- <p-dropdown [options]="buyers"  optionLabel="label"
+                    placeholder="Select Buyers" /> -->
+                    <p-multiSelect 
+    [options]="buyers" 
+    [(ngModel)]="selectedBuyers" 
+    optionLabel="label" 
+    placeholder="Select Buyers" />
             </div>
             <div class="col-3">
-                <p-dropdown [options]="sellers"  optionLabel="label"
-                    placeholder="Select Status" />
+                <!-- <p-dropdown [options]="buyers"  optionLabel="label"
+                    placeholder="Select Status" /> -->
             </div>
             <div class="col-4">
                 <!-- <p-inputGroup>
@@ -26,14 +31,14 @@
                 </div>
             </div>
         </div>
-        <div class="row align-items-center">
+        <div class="row align-items-center" *ngIf="selectedBuyers?.length">
             <div class="col-auto">
                 <label class="font-medium">Selected Buyers: </label>
             </div>
             <div class="col">
                 <div class="flex align-items-center gap-2 flex-wrap pt-1 pb-1">
-                    <ng-template ngFor let-seller [ngForOf]="sellers" let-i="index">
-                        <p-chip [label]="seller.label" [removable]="true" />
+                    <ng-template ngFor let-buyer [ngForOf]="selectedBuyers" let-i="index">
+                        <p-chip [label]="getSelectedBuyerName(buyer)" />
                     </ng-template>
                 </div>
             </div>         
@@ -61,12 +66,12 @@
                             <a href="javascript:void(0)" class="invoice" (click)="viewselectedinvoice(invoice)">
                                 {{invoice?.invoice_number}}</a>
                            </td>
-                        <td><a href="javascript:void(0)" class="invoice"><img alt="seller" class="img-fluid" title="Seller" src="/assets/table-icons/seller.png" />{{getSellerName(invoice)}}</a></td>
+                        <td><a href="javascript:void(0)" class="invoice"><img alt="seller" class="img-fluid" title="Seller" src="/assets/table-icons/seller.png" />{{getBuyerName(invoice)}}</a></td>
                         
                         <td>{{invoice?.invoice_amount}}</td>
-                        <td>{{invoice?.discount}}%</td>
-                        <td>{{invoice?.discounted_amount}}</td> 
-                        <td>{{invoice?.disbursement_date | date:'dd-MM-yyyy'}}</td>
+                        <td >{{invoice?.discount ? invoice?.discount+'%' : '-'}}</td>
+                        <td>{{invoice?.discounted_amount ? invoice?.discounted_amount : '-'}}</td> 
+                        <td>{{invoice?.disbursement_date ? (invoice?.disbursement_date | date:'dd-MM-yyyy') : '-'}}</td>
                         <td> <span class="status {{invoice.status}}">{{invoice?.status == "SENT_TO_SELLER" ? "Pending" : "Completed"}}</span> </td>
                         <td class="actions">
                            <img alt="View Details"  class="img-fluid" (click)="openQuickView(invoice)"  title="Invoice quick view" src="/assets/table-icons/view.png" /> 
@@ -88,7 +93,7 @@
                             <img alt="seller" class="img-fluid" title="Seller" src="/assets/icons/seller_large.png" />
                         </div>
                         <div class="col-auto d-grid">
-                            <span class="invoice">{{getSellerName(selectedinvoice)}}</span>
+                            <span class="invoice">{{getBuyerName(selectedinvoice)}}</span>
                             <span style="font-size: 14px;">PAN: {{getPanNumber(selectedinvoice)}}</span>
                         </div>
                         <div class="col-auto">

@@ -23,7 +23,9 @@ export class CreateInvoicesComponent {
   rows = 10;
   invoices: any[]=[];
   sellers: any[] = [
-  ]
+  ];
+  buyers: any[] = [
+  ];
   selectedinvoices!: any;
   visible:boolean=false;
   visible1:boolean=false;
@@ -39,7 +41,8 @@ export class CreateInvoicesComponent {
 
   ngOnInit(){
     this.getInvoices();
-    this.getSellers();
+    
+   this.getSellers();
     this.applyDiscountOnSelectedInvoicesForm();
   }
 
@@ -114,6 +117,21 @@ export class CreateInvoicesComponent {
               });
         }else {
           this.sellers= [];
+        }
+      })
+  }
+
+
+  getBuyers() {
+    this.sellerService.getbBuyersList()
+      .pipe(takeUntil(this.ngUnsubscribe)).subscribe((result: any) => {
+        if(result.data?.length > 0) {
+           this.buyers = result.data.map((buyer: any) => ({
+          label: buyer.first_name,
+          value: buyer.id
+        }));
+        }else {
+          this.buyers= [];
         }
       })
   }

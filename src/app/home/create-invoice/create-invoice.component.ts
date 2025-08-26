@@ -167,7 +167,7 @@ downloadBase64File(base64: string, fileName: string, mimeType: string) {
 
   invoiceFormFormSubmit(){
     this.invoiceFormSubmitAttempt = true;    
-    if (this.invoiceForm.valid && this.invoiceId != "") {      
+    if (this.invoiceForm.valid && !this.invoiceId) {      
       this.invoiceService.createInovice(this.uploadedFiles[0],this.invoiceForm.value, this.itemsList)
         .pipe(takeUntil(this.ngUnsubscribe)).subscribe((result: any) => {
           if (result.status) {
@@ -176,6 +176,8 @@ downloadBase64File(base64: string, fileName: string, mimeType: string) {
             this.uploadedFiles = [];
             this.itemsList = [];
             this.invoiceFormSubmitAttempt = false;
+            this.router.navigate(['/home/invoices']);
+
             // this.router.navigate(['/home/create-invoices'], { replaceUrl: true });
           } else {
             this.messageService.add({ severity: 'error', summary: 'Error', detail: result.message });
@@ -186,6 +188,7 @@ downloadBase64File(base64: string, fileName: string, mimeType: string) {
          const file = this.base64ToFile(this.invoiceDetails?.invoice_pdf, "invoice.pdf", "application/pdf");
         this.uploadedFiles.push(file);
       }     
+
       this.invoiceService.updateInovice(this.uploadedFiles[0],this.invoiceForm.value, this.itemsList,this.invoiceId)
         .pipe(takeUntil(this.ngUnsubscribe)).subscribe((result: any) => {
           if (result.status) {
@@ -194,6 +197,7 @@ downloadBase64File(base64: string, fileName: string, mimeType: string) {
             this.uploadedFiles = [];
             this.itemsList = [];
             this.invoiceFormSubmitAttempt = false;
+            this.router.navigate(['/home/invoices']);
             // this.router.navigate(['/home/create-invoices'], { replaceUrl: true });
           } else {
             this.messageService.add({ severity: 'error', summary: 'Error', detail: result.message });
@@ -212,7 +216,6 @@ downloadBase64File(base64: string, fileName: string, mimeType: string) {
   itemFormSubmit(){
   this.itemFormSubmitAttempt = true;    
   if (this.itemForm.valid) {
-    console.log(this.itemForm.value);
     this.itemFormSubmitAttempt = false;
     this.itemsList.push(this.itemForm.value);
     this.itemForm.reset();
@@ -229,6 +232,11 @@ edit(item:any) {
     total_amount: item.total_amount
   });
   this.visible = true;
+}
+
+delete(item:any){
+  this.itemsList = this.itemsList.filter(i => i !== item);
+  this.totalRecords = this.itemsList.length;
 }
 closePopup() {
   this.visible = false;
