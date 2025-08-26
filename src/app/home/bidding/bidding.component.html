@@ -1,108 +1,289 @@
 <p-toast />
-    <p-confirmPopup />
+<p-confirmPopup />
 <div class="row app-container">
     <p-tabView>
-                    <p-tabPanel header="Bidding List">
-                        <div class="col-md-12">
-        <div class="row align-items-center">
-            <div class="col-3">
-                <!-- <p-dropdown [options]="sellers" optionLabel="label"
+        <p-tabPanel header="Bidding List">
+            <div class="col-md-12">
+                <div class="row align-items-center">
+                    <div class="col-3">
+                        <!-- <p-dropdown [options]="sellers" optionLabel="label"
                     placeholder="Selected Seller" /> -->
-                     <p-multiSelect 
-    [options]="sellers" 
-    [(ngModel)]="selectedSellers" 
-    optionLabel="label" 
-    placeholder="Select Sellers" />
-            </div>
+                        <p-multiSelect [options]="sellers" [(ngModel)]="selectedSellers" optionLabel="label"
+                            placeholder="Select Sellers" />
+                    </div>
 
-            <div class="col-3">
-                <!-- <p-dropdown [options]="buyers" optionLabel="label"
+                    <div class="col-3">
+                        <!-- <p-dropdown [options]="buyers" optionLabel="label"
                     placeholder="Select Buyer" /> -->
-                     <p-multiSelect 
-    [options]="buyers" 
-    [(ngModel)]="selectedBuyers" 
-    optionLabel="label" 
-    placeholder="Select Buyers" />
-            </div>
-            <div class="col-3"></div>
-            <div class="col-3">
-                <!-- <p-inputGroup>
+                        <p-multiSelect [options]="buyers" [(ngModel)]="selectedBuyers" optionLabel="label"
+                            placeholder="Select Buyers" />
+                    </div>
+                    <div class="col-3"></div>
+                    <div class="col-3">
+                        <!-- <p-inputGroup>
                     <p-inputGroupAddon>
                         <i class="pi pi-search"></i>
                     </p-inputGroupAddon>
                     <input pInputText placeholder="Search..." />
                 </p-inputGroup> -->
-                <div class="card flex justify-content-center actions">
-                    <p-button label="View Reports"  icon="pi pi-chart-bar">
-                    </p-button>
+                        <div class="card flex justify-content-center actions">
+                            <p-button label="View Reports" icon="pi pi-chart-bar">
+                            </p-button>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
-        <div class="row align-items-center" *ngIf="selectedSellers?.length">
-            <div class="col-auto">
-                <label class="font-medium">Selected Sellers: </label>
-            </div>
-            <div class="col">
-                 <div class="flex align-items-center gap-2 flex-wrap pt-1 pb-1">
-                    <ng-template ngFor let-seller [ngForOf]="selectedSellers" let-i="index">
-                        <p-chip [label]="getSelectedSellerName(seller)" />
-                    </ng-template>
+                <div class="row align-items-center" *ngIf="selectedSellers?.length">
+                    <div class="col-auto">
+                        <label class="font-medium">Selected Sellers: </label>
+                    </div>
+                    <div class="col">
+                        <div class="flex align-items-center gap-2 flex-wrap pt-1 pb-1">
+                            <ng-template ngFor let-seller [ngForOf]="selectedSellers" let-i="index">
+                                <p-chip [label]="getSelectedSellerName(seller)" />
+                            </ng-template>
+                        </div>
+                    </div>
                 </div>
-            </div>         
-        </div>
-        <div class="row align-items-center" *ngIf="selectedBuyers?.length">
-            <div class="col-auto">
-                <label class="font-medium">Selected Buyers: </label>
-            </div>
-            <div class="col">
-                 <div class="flex align-items-center gap-2 flex-wrap pt-1 pb-1">
-                    <ng-template ngFor let-buyer [ngForOf]="selectedBuyers" let-i="index">
-                        <p-chip [label]="getSelectedBuyerName(buyer)" />
-                    </ng-template>
+                <div class="row align-items-center" *ngIf="selectedBuyers?.length">
+                    <div class="col-auto">
+                        <label class="font-medium">Selected Buyers: </label>
+                    </div>
+                    <div class="col">
+                        <div class="flex align-items-center gap-2 flex-wrap pt-1 pb-1">
+                            <ng-template ngFor let-buyer [ngForOf]="selectedBuyers" let-i="index">
+                                <p-chip [label]="getSelectedBuyerName(buyer)" />
+                            </ng-template>
+                        </div>
+                    </div>
                 </div>
-            </div>         
-        </div>
-        <div class="row align-items-center">
-            <p-table [value]="products" [paginator]="true" [rows]="10" styleClass="p-datatable-striped" [first]="first"
+                <div class="row align-items-center">
+                    <!-- <p-table [value]="products" [paginator]="true" [rows]="10" styleClass="p-datatable-striped"
+                        [first]="first" [showCurrentPageReport]="true" [tableStyle]="{ 'min-width': '50rem' }"
+                        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                        [rowsPerPageOptions]="[10, 25, 50]">
+                        <ng-template pTemplate="header">
+                            <tr>
+                                <th>Seller</th>
+                                <th>Invoice Number</th>
+                                <th>Discounted Amount</th>
+                                <th>Disbursement Date</th>
+                                <th>Status</th>
+                                <th>Total Bids</th>
+                                <th>Actions</th>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-product>
+                            <tr class="cursor-pointer" (click)="invoiceDetais()">
+                                <td><a href="javascript:void(0)" class="invoice"><img alt="seller" class="img-fluid"
+                                            title="Seller" src="/assets/table-icons/seller.png" />Moh Labs </a></td>
+                                <td>77779777</td>
+                                <td>77Lakhs</td>
+                                <td>01/04/2025</td>
+                                <td><span class="status {{product.statusId}}">{{product.status}}</span></td>
+                                <td class="invoice cursor-pointer" (click)="visible2 = true">18</td>
+                                <td class="actions">
+                                    <img alt="trash" class="img-fluid" (click)="delete($event)" title="Delete"
+                                        src="/assets/table-icons/Trash.png" />
+                                    <img alt="edit" class="img-fluid" title="Edit"
+                                        src="/assets/table-icons/Pencil.png" />
+                                    <img alt="discount" (click)="visible = true" class="img-fluid" title="Discount"
+                                        src="/assets/table-icons/percent_green.png" />
+                                    <img alt="view" (click)="visible = true" class="img-fluid" title="view"
+                                        src="/assets/table-icons/view.png" />
+                                </td>
+                            </tr>
+                        </ng-template>
+                    </p-table> -->
+
+                       <p-table [value]="invoices" [(selection)]="selectedInvoices" dataKey="id" [paginator]="true" [rows]="10" styleClass="p-datatable-striped" [first]="first"
                 [showCurrentPageReport]="true" [tableStyle]="{ 'min-width': '50rem' }"
                 currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
                 [rowsPerPageOptions]="[10, 25, 50]">
                 <ng-template pTemplate="header">
                     <tr>
-                        <th>Seller</th> 
-                        <th>Invoice Number</th>                
-                        <th>Discounted Amount</th>
-                        <th>Disbursement Date</th>                        
-                        <th>Status</th>  
-                        <th>Total Bids</th>                           
+                        <th style="width: 2rem"><p-tableHeaderCheckbox /></th>
+                        <th>Seller</th>
+                        <th>Number</th>
+                        <th>Amount</th>
+                        <th>Date</th>
+                        <th>Due Date</th>
+                        <th>Invoice pdf's</th>
+                        <th>Status</th>
+                        <th>Discount</th>
+                        <th>After Discount</th>
+                        <th>Disbursement On</th>
+                        <th>Fund By</th>
                         <th>Actions</th>
                     </tr>
                 </ng-template>
-                <ng-template pTemplate="body" let-product>
-                    <tr class="cursor-pointer" (click)="invoiceDetais()">
-                        <td><a href="javascript:void(0)" class="invoice"><img alt="seller" class="img-fluid" title="Seller" src="/assets/table-icons/seller.png" />Moh Labs </a></td>
-                        <td>77779777</td>
-                        <td>77Lakhs</td>
-                        <td>01/04/2025</td>
-                        <td><span class="status {{product.statusId}}">{{product.status}}</span></td>
-                        <td class="invoice cursor-pointer" (click)="visible2 = true">18</td>                        
-                        <td class="actions">
-                            <img alt="trash" class="img-fluid"  (click)="delete($event)"  title="Delete" src="/assets/table-icons/Trash.png" />
-                            <img alt="edit" class="img-fluid" title="Edit" src="/assets/table-icons/Pencil.png" />
-                            <img alt="discount" (click)="visible = true" class="img-fluid" title="Discount" src="/assets/table-icons/percent_green.png" /> 
-                            <img alt="view" (click)="visible = true" class="img-fluid" title="view" src="/assets/table-icons/view.png" /> 
+                <ng-template pTemplate="body" let-invoice let-rowIndex="rowIndex">
+                    <tr>
+                        <td>
+                            <p-tableCheckbox [value]="invoice" />
+                        </td>
+                        <td>
+                            <!-- <a href="javascript:void(0)" class="invoice">
+                                <img alt="seller" class="img-fluid" title="Seller" 
+                                src="/assets/table-icons/seller.png" />{{getSellerName(invoice)}}
+                            </a> -->
+                        </td>
+                        <td>
+                            <a href="javascript:void(0)" class="invoice">
+                                {{invoice?.invoice_number}}</a>
+                           </td>
+                        <td>{{invoice?.invoice_amount}}</td>
+                        <td>{{invoice?.invoice_date | date:'dd-MM-yyyy' }}</td>
+                        <td>{{invoice?.invoice_due_date | date:'dd-MM-yyyy'}}</td>
+                        <td class="invoice"><a href="javascript:void(0)"></a>File {{rowIndex + 1}}</td>
+                        <td> <span class="status {{invoice.status}}">{{invoice?.status}}</span> </td>
+                        <td>{{invoice?.discount}}%</td>
+                        <td>{{invoice?.discounted_amount}}</td> 
+                        <td>{{invoice?.disbursement_date | date:'dd-MM-yyyy'}}</td>
+                        <td>{{invoice?.fund_by}}</td> 
+                        <td class="actions" [ngClass]="this.selectedInvoices.length  ? 'actions-disabled' : ''">
+                            <img alt="trash"  class="img-fluid"   (click)="SignleBid(invoice)"  title="Bidding" src="/assets/icons/Gavel_black.png" />
+                            <img alt="edit" class="img-fluid"   title="View" src="/assets/table-icons/view.png" />
+                            <!-- <img alt="discount" (click)="visible = true" class="img-fluid"  title="Discount" src="/assets/table-icons/percent_green.png" />  -->
                         </td>
                     </tr>
                 </ng-template>
             </p-table>
         </div>
+        </div>
 
-    </div>
-                    </p-tabPanel>
-                    <p-tabPanel header="My Biddings">
-                        <p>Coming Soon!!</p>
-                    </p-tabPanel>
-                </p-tabView>
-    
+        <div class="row invoice-bottom-div align-items-center mt-2">
+            <div class="col-2"></div>
+            <div class="col-8">
+                <p-card>
+                    <div class="row align-items-center">
+                        <div class="col-3">
+                            <div class="row">
+                                <label>selected</label>
+                            </div>
+                            <div class="row align-items-baseline">
+                                <div class="col-auto pr-0">
+                                    <span class="value">{{this.selectedInvoices.length}}</span>
+                                    <span class="label">Invoices</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="row">
+                                <label>Total Amount</label>
+                            </div>
+                            <div class="row align-items-baseline">
+                                <div class="col-auto pr-0">
+                                    <span class="pi pi-indiarupee value">{{getTotalAmount(this.selectedInvoices)}}</span>
+                                    <span class="label">{{transformText(getTotalAmount(this.selectedInvoices))}}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="row align-items-baseline">
+                              
+                                <div class="col-auto">
+                                    <p-button label="BulkBid Seected Invoices" (onClick)="applyDBiddingOnSelectedInvoices(this.selectedInvoices)" [disabled]="this.selectedInvoices.length == 0"  icon="pi pi-send">
+                                        
+                                    </p-button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </p-card>
+            </div>
+            <div class="col-2"></div>
+        </div>
+                
+        </p-tabPanel>
+        <p-tabPanel header="My Biddings">
+            <p>Coming Soon!!</p>
+        </p-tabPanel>
+    </p-tabView>
+
 </div>
 
+
+
+<p-dialog header="Bulk Bid Selected Invoices" [modal]="true" [(visible)]="visible1" [style]="{ width: '50rem' }">
+<form [formGroup]="applyDiscountSelectedForm" class="col-md-12" (ngSubmit)="applyDiscountSelectedFormSubmit()">
+    <div class="row invoice-bottom-div align-items-center">       
+        <div class="col-md-5">
+             <div class="flex flex-column mb-2 text-left">
+                            <label for="username">Discount (calculated in %)</label>
+                            <input formControlName="discount" type="text" maxlength="50" pInputText
+                                [ngClass]="{'error':((!applyDiscountSelectedForm.controls['discount'].valid && applyDiscountSelectedForm.controls['discount'].touched) || (!applyDiscountSelectedForm.controls['discount'].valid && applyDiscountSelectedForm.controls['discount'].untouched && applyDiscountSelectedFormSubmitAttempt))}">
+                            <span class="error-div" *ngIf="(!applyDiscountSelectedForm.valid && applyDiscountSelectedFormSubmitAttempt)">
+                                <p class="validation-label mb-0"
+                                    *ngIf="applyDiscountSelectedForm.controls['discount'].errors?.['required']">
+                                    Discount is required</p>
+                                <p class="validation-label mb-0"
+                                    *ngIf="!applyDiscountSelectedForm.controls['discount'].errors?.['required'] && applyDiscountSelectedForm.controls['discount'].errors?.['pattern']">
+                                    Please Enter Valid Discount</p>
+                            </span>
+                        </div>
+        </div>
+        <div class="col-md-1"></div>
+         <div class="col-md-3">
+                            <div class="row">
+                                <label>selected</label>
+                            </div>
+                            <div class="row align-items-baseline">
+                                <div class="col-auto pr-0">
+                                    <span class="value">{{this.selectedInvoices.length}}</span>
+                                    <span class="label">Invoices</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="row">
+                                <label>Total Amount</label>
+                            </div>
+                            <div class="row align-items-baseline">
+                                <div class="col-auto pr-0">
+                                    <span class="pi pi-indiarupee value">{{getTotalAmount(this.selectedInvoices)}}</span>
+                                    <span class="label">{{transformText(getTotalAmount(this.selectedInvoices))}}</span>
+                                </div>
+                            </div>
+                        </div>
+        
+        <div class="col-md-12 mt-2">
+            <p-table [value]="selectedInvoices" [rows]="10" styleClass="p-datatable-striped" [first]="first"
+                >
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th>Buyer</th>
+                        <th>Cost of Funds</th>
+                        <th>Payment Amount</th>
+                        <th>Tenure</th>
+                        <th>Disbursement Date</th>
+                        <th>Repayment Date</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-invoice>
+                    <tr>
+                        <td>{{invoice?.invoice_number}}</td>
+                        <td>{{invoice?.invoice_amount}}</td>
+                        <td>{{invoice?.invoice_amount}}</td>
+                        <td>{{invoice?.invoice_amount}}</td>
+                        <td>{{invoice?.invoice_amount}}</td>
+                        <td>{{invoice?.invoice_amount}}</td>
+                        <td></td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>  
+        </div>
+
+        <div class="row mt-2">       
+        <div class="col-3"></div>
+            <div class="col-3">
+                <p-button class="btn-success" type="submit" label="Bid Invoices"/>
+            </div>
+            <div class="col-3">
+                <p-button label="Cancel" class="btn-secondary"  (onClick)="visible1 = false" />
+            </div>
+            <div class="col-3"></div>
+    </div>
+   
+</form>
+</p-dialog>

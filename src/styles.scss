@@ -54,6 +54,25 @@ textarea:focus-visible {
         color:#0D9488;
     }
 }
+.invoice-bottom-div{
+        label{
+            color: var(--sub-title);
+        }
+        .value {
+            font-weight: 600;
+            font-size: 26px;
+            line-height: 44px;
+            letter-spacing: 0%;
+            margin-right: 2px;
+        }
+        .label {
+            font-weight: 600;
+            font-size: 16px;
+            line-height: 28px;
+            letter-spacing: 1%;
+        }
+
+    }
 .cred-invoice {
     position: absolute;
     top: 0;
