@@ -74,7 +74,7 @@ visible1:boolean=false;
        let obj:any={};
       obj['invoice_id'] = invoice.id;
       obj['interest_rate'] = this.bulkBidSelectedForm.value.discount;
-      obj['bid_amount'] = invoice?.invoice_amount * (1 + (this.bulkBidSelectedForm.value.discount / 100));
+      obj['bid_amount'] = invoice?.invoice_amount ;
       bidData.push(obj);
     });
    // const selectedInvoiceIds = this.selectedInvoices.map(invoice => invoice.id);

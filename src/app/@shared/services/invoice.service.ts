@@ -61,6 +61,7 @@ export class InvoiceService {
   } 
 
   updateInovice(file: File,registerData: any,itemsList:any[]=[],invoiceId:string="") {
+      itemsList = itemsList.map(({ created_at, ...rest }) => rest);
      const formData: FormData = new FormData();
         formData.append('invoice_number', registerData?.number);
         if(file?.name){

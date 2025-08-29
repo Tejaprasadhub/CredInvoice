@@ -20,7 +20,7 @@ export class CreateInvoicesComponent {
     private ngUnsubscribe = new Subject();
    selectedInvoices: any[]=[];
   cities: any[] =[];
-  selectedCity: any;
+  selectedSellers: any[]=[];
   first = 0;
   rows = 10;
   invoices: any[]=[];
@@ -159,7 +159,28 @@ discountKeyUp(){
           // }
         })
   }
+ getSelectedSellerName(invoice: any) {
+    return this.sellers.find(seller => seller.value === invoice)?.label || '';
+  }
 
+
+  downloadBase64File(base64: string, fileName: string, mimeType: string) {
+  const byteCharacters = atob(base64);
+  const byteNumbers = new Array(byteCharacters.length).fill(0).map((_, i) => byteCharacters.charCodeAt(i));
+  const byteArray = new Uint8Array(byteNumbers);
+
+  const blob = new Blob([byteArray], { type: mimeType });
+  const blobUrl = URL.createObjectURL(blob);
+
+  const link = document.createElement('a');
+  link.href = blobUrl;
+  link.download = fileName;
+  document.body.appendChild(link);
+  link.click();
+
+  document.body.removeChild(link);
+  URL.revokeObjectURL(blobUrl);
+}
 
   getSellerName(invoice: any) {
     return this.sellers.find(seller => seller.value === invoice?.seller_id)?.label || '';
@@ -168,12 +189,10 @@ discountKeyUp(){
     this.sellerService.getSellersList()
       .pipe(takeUntil(this.ngUnsubscribe)).subscribe((result: any) => {
         if(result.data?.length > 0) {
-          result?.data.forEach((seller: any) => {
-            this.sellers.push({
-              label: seller.first_name + ' ' + seller.last_name,
+            this.sellers = result.data.map((seller: any) => ({
+               label: seller.first_name + ' ' + seller.last_name,
               value: seller.id
-              })
-              });
+        }));
         }else {
           this.sellers= [];
         }

@@ -4,8 +4,11 @@
     <div class="col-md-12">
         <div class="row align-items-center">
             <div class="col-3">
-                <p-dropdown [options]="sellers" [(ngModel)]="selectedCity" optionLabel="label"
-                    placeholder="Select Seller" />
+                <!-- <p-dropdown [options]="sellers" [(ngModel)]="selectedSellers" optionLabel="label"
+                    placeholder="Select Seller" /> -->
+
+                     <p-multiSelect [options]="sellers"  [(ngModel)]="selectedSellers" optionLabel="label"
+                            placeholder="Select Sellers" />
             </div>
             <div class="col-3"></div>
             <div class="col-3">
@@ -23,14 +26,14 @@
                 </div>
             </div>
         </div>
-        <div class="row align-items-center">
+        <div class="row align-items-center" *ngIf="selectedSellers && selectedSellers.length > 0">
             <div class="col-auto">
                 <label class="font-medium">Selected Sellelrs: </label>
             </div>
             <div class="col">
                 <div class="flex align-items-center gap-2 flex-wrap pt-1 pb-1">
-                    <ng-template ngFor let-seller [ngForOf]="sellers" let-i="index">
-                        <p-chip [label]="seller.label" [removable]="true" />
+                    <ng-template ngFor let-seller [ngForOf]="selectedSellers" let-i="index">
+                        <p-chip [label]="getSelectedSellerName(seller)" [removable]="true" />
                     </ng-template>
                 </div>
             </div>         
@@ -71,7 +74,8 @@
                         <td>{{invoice?.invoice_amount}}</td>
                         <td>{{invoice?.invoice_date | date:'dd-MM-yyyy' }}</td>
                         <td>{{invoice?.invoice_due_date | date:'dd-MM-yyyy'}}</td>
-                        <td class="invoice"><a href="javascript:void(0)"></a>File {{rowIndex + 1}}</td>
+                        <td class="invoice"> <span class="invoice" *ngIf="invoice?.invoice_pdf" (click)="downloadBase64File(invoice?.invoice_pdf, 'invoice.pdf', 'application/pdf')"> <i
+                            class="pi pi-download mr-2"></i>Invoice</span></td>
                         <td> <span class="status {{invoice.status}}">{{invoice?.status}}</span> </td>
                         <td>{{invoice?.discount}}%</td>
                         <td>{{invoice?.discounted_amount}}</td> 
