@@ -111,6 +111,10 @@
                                     name="demo[]" accept=".pdf" maxFileSize="1000000"
                                     (onSelect)="onSelectedFiles($event)" (onUpload)="onUpload($event)" />
                             </div>
+                             <span class="error-div" *ngIf="(uploadedFiles.length == 0 && invoiceFormSubmitAttempt)">
+                        <p class="validation-label mb-0">
+                            Invoice Document is required</p>
+                    </span>
                         </div>
                     </div>
                     <div class="col-md-3" *ngIf="invoiceDetails?.invoice_pdf && invoiceId">
@@ -160,7 +164,7 @@
             <div class="col-md-12">
                 <p-table [value]="itemsList" [paginator]="true" [rows]="5" styleClass="p-datatable-striped"
                     [first]="first" [showCurrentPageReport]="true" [tableStyle]="{ 'min-width': '50rem' }"
-                    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [totalRecords]="totalRecords"
                     [rowsPerPageOptions]="[5,10, 25, 50]">
                     <ng-template pTemplate="header">
                         <tr>

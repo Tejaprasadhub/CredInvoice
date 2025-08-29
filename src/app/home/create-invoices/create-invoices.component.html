@@ -80,8 +80,8 @@
                         <td class="invoice cursor-pointer" (click)="showItems(invoice)">{{invoice?.items?.length}}</td>
                         <td class="actions" [ngClass]="this.selectedInvoices.length > 0 ? 'actions-disabled' : ''">
                             <img alt="trash"  class="img-fluid"   (click)="delete(invoice)"  title="Delete" src="/assets/table-icons/Trash.png" />
-                            <img alt="edit" class="img-fluid"  (click)="editInvoice(invoice)" title="Edit" src="/assets/table-icons/Pencil.png" />
-                            <img alt="discount" (click)="visible = true" class="img-fluid"  title="Discount" src="/assets/table-icons/percent_green.png" /> 
+                            <img alt="edit" class="img-fluid" [ngClass]="invoice.status == 'PENDING' ? '' : 'actions-disabled'"   (click)="editInvoice(invoice)" title="Edit" src="/assets/table-icons/Pencil.png" />
+                            <img alt="discount" (click)="viewDiscount(invoice)" class="img-fluid"  title="Discount" src="/assets/table-icons/percent_green.png" /> 
                         </td>
                     </tr>
                 </ng-template>
@@ -148,38 +148,101 @@
     </div>
 </div>
 <p-dialog header="Apply Discount" [modal]="true" [(visible)]="visible" [style]="{ width: '40rem' }">
+  <form [formGroup]="applyDiscountSelectedInvoice" class="col-md-12" (ngSubmit)="applyDiscountSelectedInvoiceSubmit()">
     <div class="row">
         <div class="col-md-6">
             <div class="flex flex-column mb-2 text-left">
-                <label for="username">Total Amount</label>
-                <input pInputText id="username" aria-describedby="username-help" />
+                            <label for="username">Total Amount</label>
+                            <input formControlName="totalamount" readonly type="text" maxlength="50" pInputText
+                                [ngClass]="{'error':((!applyDiscountSelectedInvoice.controls['totalamount'].valid && applyDiscountSelectedInvoice.controls['totalamount'].touched) || (!applyDiscountSelectedInvoice.controls['totalamount'].valid && applyDiscountSelectedInvoice.controls['totalamount'].untouched && applyDiscountSelectedInvoiceSubmitAttempt))}">
+                            <span class="error-div" *ngIf="(!applyDiscountSelectedInvoice.valid && applyDiscountSelectedInvoiceSubmitAttempt)">
+                                <p class="validation-label mb-0"
+                                    *ngIf="applyDiscountSelectedInvoice.controls['totalamount'].errors?.['required']">
+                                    Total amount is required</p>
+                                <p class="validation-label mb-0"
+                                    *ngIf="!applyDiscountSelectedInvoice.controls['totalamount'].errors?.['required'] && applyDiscountSelectedInvoice.controls['totalamount'].errors?.['pattern']">
+                                    Please Enter Valid Total Amount</p>
+                            </span>
             </div>
         </div>
         <div class="col-md-6">
             <div class="flex flex-column mb-2 text-left">
-                <label for="username">Discount</label>
-                <input pInputText id="username" aria-describedby="username-help" />
+                            <label for="username">Discount</label>
+                            <input formControlName="totaldiscount" type="text" (keyup)="discountKeyUp()" maxlength="50" pInputText
+                                [ngClass]="{'error':((!applyDiscountSelectedInvoice.controls['totaldiscount'].valid && applyDiscountSelectedInvoice.controls['totaldiscount'].touched) || (!applyDiscountSelectedInvoice.controls['totaldiscount'].valid && applyDiscountSelectedInvoice.controls['totaldiscount'].untouched && applyDiscountSelectedInvoiceSubmitAttempt))}">
+                            <span class="error-div" *ngIf="(!applyDiscountSelectedInvoice.valid && applyDiscountSelectedInvoiceSubmitAttempt)">
+                                <p class="validation-label mb-0"
+                                    *ngIf="applyDiscountSelectedInvoice.controls['totaldiscount'].errors?.['required']">
+                                    Discount is required</p>
+                                <p class="validation-label mb-0"
+                                    *ngIf="!applyDiscountSelectedInvoice.controls['totaldiscount'].errors?.['required'] && applyDiscountSelectedInvoice.controls['totaldiscount'].errors?.['pattern']">
+                                    Please Enter Valid Discount</p>
+                            </span>
             </div>
         </div>
         <div class="col-md-6">
             <div class="flex flex-column mb-2 text-left">
-                <label for="username">Amount After Discount</label>
-                <input pInputText id="username" aria-describedby="username-help" />
+                            <label for="username">Discounted Amount</label>
+                            <input formControlName="totaldiscountedamount" readonly type="text" maxlength="50" pInputText
+                                [ngClass]="{'error':((!applyDiscountSelectedInvoice.controls['totaldiscountedamount'].valid && applyDiscountSelectedInvoice.controls['totaldiscount'].touched) || (!applyDiscountSelectedInvoice.controls['totaldiscount'].valid && applyDiscountSelectedInvoice.controls['totaldiscount'].untouched && applyDiscountSelectedInvoiceSubmitAttempt))}">
+                            <span class="error-div" *ngIf="(!applyDiscountSelectedInvoice.valid && applyDiscountSelectedInvoiceSubmitAttempt)">
+                                <p class="validation-label mb-0"
+                                    *ngIf="applyDiscountSelectedInvoice.controls['totaldiscountedamount'].errors?.['required']">
+                                    Discounted Amount is required</p>
+                                <p class="validation-label mb-0"
+                                    *ngIf="!applyDiscountSelectedInvoice.controls['totaldiscountedamount'].errors?.['required'] && applyDiscountSelectedInvoice.controls['totaldiscount'].errors?.['pattern']">
+                                    Please Enter Discounted Amount</p>
+                            </span>
             </div>
         </div>
         <div class="col-md-6">
             <div class="flex flex-column mb-2 text-left">
-                <label for="username">Disbursement Date</label>
-                <p-calendar [(ngModel)]="date1" [showIcon]="true" append="body" [showOnFocus]="false" inputId="buttondisplay"
+                            <label for="username">Amount after discount</label>
+                            <input formControlName="amountafterdiscount" readonly type="text" maxlength="50" pInputText
+                                [ngClass]="{'error':((!applyDiscountSelectedInvoice.controls['amountafterdiscount'].valid && applyDiscountSelectedInvoice.controls['amountafterdiscount'].touched) || (!applyDiscountSelectedInvoice.controls['amountafterdiscount'].valid && applyDiscountSelectedInvoice.controls['amountafterdiscount'].untouched && applyDiscountSelectedInvoiceSubmitAttempt))}">
+                            <span class="error-div" *ngIf="(!applyDiscountSelectedInvoice.valid && applyDiscountSelectedInvoiceSubmitAttempt)">
+                                <p class="validation-label mb-0"
+                                    *ngIf="applyDiscountSelectedInvoice.controls['amountafterdiscount'].errors?.['required']">
+                                    Amount After Discount is required</p>
+                                <p class="validation-label mb-0"
+                                    *ngIf="!applyDiscountSelectedInvoice.controls['amountafterdiscount'].errors?.['required'] && applyDiscountSelectedInvoice.controls['amountafterdiscount'].errors?.['pattern']">
+                                    Please Enter amount after discount</p>
+                            </span>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="flex flex-column mb-2 text-left">
+                            <label for="username">Total Disbursement Date</label>
+                             <p-calendar formControlName="total_disbursement_date" [(ngModel)]="date1" [showIcon]="true" append="body" [showOnFocus]="false" inputId="buttondisplay"
                  />
+                            <span class="error-div" *ngIf="(!applyDiscountSelectedInvoice.valid && applyDiscountSelectedInvoiceSubmitAttempt)">
+                                <p class="validation-label mb-0"
+                                    *ngIf="applyDiscountSelectedInvoice.controls['total_disbursement_date'].errors?.['required']">
+                                    Disbursement Date is required</p>
+                                <p class="validation-label mb-0"
+                                    *ngIf="!applyDiscountSelectedInvoice.controls['total_disbursement_date'].errors?.['required'] && applyDiscountSelectedInvoice.controls['total_disbursement_date'].errors?.['pattern']">
+                                    Please Enter valid disbursement date</p>
+                            </span>
             </div>
         </div>        
+        <div class="col-md-6">
+                        <div class="flex flex-column mb-2 text-left">
+                            <label for="username">Fund By</label>
+                            <p-dropdown formControlName="totalfundBy" readonly [options]="fundBy" optionLabel="label"
+                                placeholder="Select Fund By"
+                                [ngClass]="{'error':((!applyDiscountSelectedInvoice.controls['totalfundBy'].valid && applyDiscountSelectedInvoice.controls['totalfundBy'].touched) || (!applyDiscountSelectedInvoice.controls['totalfundBy'].valid && applyDiscountSelectedInvoice.controls['totalfundBy'].untouched && applyDiscountSelectedInvoiceSubmitAttempt))}" />
+                            <span class="error-div" *ngIf="(!applyDiscountSelectedInvoice.valid && applyDiscountSelectedInvoiceSubmitAttempt)">
+                                <p class="validation-label mb-0"
+                                    *ngIf="applyDiscountSelectedInvoice.controls['totalfundBy'].errors?.['required']">
+                                    Fund by is required</p>
+                            </span>
+                        </div>
+                    </div>
     </div>
-    <ng-template pTemplate="footer">
-        <div class="row">
+    <div class="row">
             <div class="col-3"></div>
             <div class="col-3">
-                <p-button class="btn-success" label="Apply" (onClick)="visible = false" />
+                <p-button class="btn-success" type="submit" label="Apply" />
             </div>
             <div class="col-3">
                 <p-button label="Cancel" class="btn-secondary"  (onClick)="visible = false" />
@@ -187,8 +250,8 @@
             <div class="col-3"></div>
 
         </div>
-
-    </ng-template>
+   
+  </form>
 </p-dialog>
 
 <p-dialog header="Apply discount for selected invoices" [modal]="true" [(visible)]="visible1" [style]="{ width: '40rem' }">

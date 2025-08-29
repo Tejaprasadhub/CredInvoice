@@ -2,6 +2,7 @@ import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/c
 import { Injectable } from '@angular/core';
 import { Observable, ReplaySubject, throwError as observableThrowError } from 'rxjs';
 import { catchError, finalize, map } from 'rxjs/operators';
+import { environment } from '../../../environments/environment';
 
 
 
@@ -38,7 +39,7 @@ export class LoadingHttpInterceptorComponent implements HttpInterceptor {
       if (req.url.indexOf('post/upload') >= 0 
       || req.url.indexOf('profile/image') >= 0 
       || req.url.indexOf('category/image') >= 0 
-      || req.url.indexOf('invoices') >= 0 
+      || (req.url == environment.serverUrl +'invoices')  
       || req.url.indexOf('media') >= 0 
       || req.url.indexOf('amazonaws.com') >= 0) {
       headers = req.headers;

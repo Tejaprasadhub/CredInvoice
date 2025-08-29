@@ -166,7 +166,8 @@
                 <div class="col-md-3">
                     <div class="flex flex-column mb-2 text-left">
                         <label class="label" for="username">Inovice Pdf's</label>
-                        <span class="value">777777777</span>
+                         <span class="invoice" *ngIf="selectedinvoice?.invoice_pdf" (click)="downloadBase64File(selectedinvoice?.invoice_pdf, 'invoice.pdf', 'application/pdf')"> <i
+                            class="pi pi-download mr-2"></i>Invoice</span>
                     </div>
                 </div>
                 <div class="col-md-3">

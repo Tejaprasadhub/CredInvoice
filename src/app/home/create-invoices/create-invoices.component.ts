@@ -14,7 +14,9 @@ import { Router } from '@angular/router';
 })
 export class CreateInvoicesComponent {
   applyDiscountSelectedForm!: FormGroup;
+  applyDiscountSelectedInvoice!: FormGroup;
   applyDiscountSelectedFormSubmitAttempt: boolean=false;
+  applyDiscountSelectedInvoiceSubmitAttempt: boolean=false;
     private ngUnsubscribe = new Subject();
    selectedInvoices: any[]=[];
   cities: any[] =[];
@@ -26,6 +28,10 @@ export class CreateInvoicesComponent {
   ];
   buyers: any[] = [
   ];
+  fundBy: any[] = [
+    { label: 'Self', value: 'SELF' },
+    { label: 'Financier', value: 'FINANCIER' }
+  ]
   selectedinvoices!: any;
   visible:boolean=false;
   visible1:boolean=false;
@@ -44,12 +50,24 @@ export class CreateInvoicesComponent {
     
    this.getSellers();
     this.applyDiscountOnSelectedInvoicesForm();
+    this.applyDiscountOnSelectedInvoiceForm();
   }
 
    applyDiscountOnSelectedInvoicesForm() {
     this.applyDiscountSelectedForm = this.fb.group({
       'discount': new FormControl('', { validators: [Validators.required, Validators.pattern('^[0-9]*$')] }),
       'disbursementDate': new FormControl('', { validators: [Validators.required] }),
+    })
+  }
+
+  applyDiscountOnSelectedInvoiceForm() {
+    this.applyDiscountSelectedInvoice = this.fb.group({
+      'totalamount': new FormControl('', { validators: [Validators.required, Validators.pattern('^[0-9]*$')] }),
+      'totaldiscount': new FormControl('', { validators: [Validators.required] }),
+      'totaldiscountedamount': new FormControl('', { validators: [Validators.required] }),
+      'amountafterdiscount': new FormControl('', { validators: [Validators.required] }),
+      'total_disbursement_date': new FormControl('', { validators: [Validators.required] }),
+      'totalfundBy': new FormControl('', { validators: [Validators.required] }),
     })
   }
   getInvoices() {
@@ -62,7 +80,48 @@ export class CreateInvoicesComponent {
           }
         })
   }
+applyDiscountSelectedInvoiceSubmit(){
+    this.applyDiscountSelectedInvoiceSubmitAttempt = true;
+    const selectedInvoiceIds = this.selectedInvoices; // Extracting only the IDs of selected invoices
+    if (this.applyDiscountSelectedInvoice.valid) {     
+       this.invoiceService.applyDiscountOnInvoice(this.applyDiscountSelectedInvoice.value, selectedInvoiceIds)
+        .pipe(takeUntil(this.ngUnsubscribe)).subscribe((result: any) => {
+          if (result.status) {
+            this.applyDiscountSelectedInvoiceSubmitAttempt = false;
+            this.applyDiscountSelectedInvoice.reset();
+            this.visible = false;
+            this.selectedInvoices = [];
+            this.getInvoices();
+          } else {
+            this.messageService.add({ severity: 'error', summary: 'Error', detail: result.message });
+          }
+        })
+    }
+}
 
+viewDiscount(invoice: any) {
+  this.visible = true;
+  let invoiceId = invoice?.id;
+  this.selectedInvoices = []; 
+  this.selectedInvoices.push(invoiceId); // Extracting only the IDs of selected invoices
+  this.applyDiscountSelectedInvoice.reset();
+   this.applyDiscountSelectedInvoice.patchValue({
+        totalamount: invoice?.invoice_amount,
+        totalfundBy: this.fundBy.filter((input:any) => input.value == invoice?.fund_by)[0] || null
+      });
+}
+
+discountKeyUp(){
+   const totalAmount = parseFloat(this.applyDiscountSelectedInvoice.get('totalamount')?.value) || 0;
+      const discount = parseFloat(this.applyDiscountSelectedInvoice.get('totaldiscount')?.value) || 0;
+      const discountedAmount = (totalAmount * discount) / 100;
+      const amountAfterDiscount = totalAmount - discountedAmount;
+
+      this.applyDiscountSelectedInvoice.patchValue({
+        totaldiscountedamount: discountedAmount.toFixed(2),
+        amountafterdiscount: amountAfterDiscount.toFixed(2)
+      });
+}
   applyDiscountSelectedFormSubmit() {
     this.applyDiscountSelectedFormSubmitAttempt = true;
     const selectedInvoiceIds = this.selectedInvoices.map(invoice => invoice.id); // Extracting only the IDs of selected invoices

@@ -167,7 +167,7 @@ downloadBase64File(base64: string, fileName: string, mimeType: string) {
 
   invoiceFormFormSubmit(){
     this.invoiceFormSubmitAttempt = true;    
-    if (this.invoiceForm.valid && !this.invoiceId) {      
+    if (this.invoiceForm.valid && !this.invoiceId && this.uploadedFiles.length > 0) {      
       this.invoiceService.createInovice(this.uploadedFiles[0],this.invoiceForm.value, this.itemsList)
         .pipe(takeUntil(this.ngUnsubscribe)).subscribe((result: any) => {
           if (result.status) {
@@ -183,11 +183,11 @@ downloadBase64File(base64: string, fileName: string, mimeType: string) {
             this.messageService.add({ severity: 'error', summary: 'Error', detail: result.message });
           }
         })
-    }else{
-      if(this.uploadedFiles.length == 0){
-         const file = this.base64ToFile(this.invoiceDetails?.invoice_pdf, "invoice.pdf", "application/pdf");
-        this.uploadedFiles.push(file);
-      }     
+    }else if (this.invoiceForm.valid && this.invoiceId) {
+      // if(this.uploadedFiles.length == 0){
+      //    const file = this.base64ToFile(this.invoiceDetails?.invoice_pdf, "invoice.pdf", "application/pdf");
+      //   this.uploadedFiles.push(file);
+      // }     
 
       this.invoiceService.updateInovice(this.uploadedFiles[0],this.invoiceForm.value, this.itemsList,this.invoiceId)
         .pipe(takeUntil(this.ngUnsubscribe)).subscribe((result: any) => {
@@ -220,6 +220,7 @@ downloadBase64File(base64: string, fileName: string, mimeType: string) {
     this.itemsList.push(this.itemForm.value);
     this.itemForm.reset();
     this.visible = false;
+    this.totalRecords = this.itemsList.length;
   }
 }
 

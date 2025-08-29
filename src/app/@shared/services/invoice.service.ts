@@ -63,7 +63,9 @@ export class InvoiceService {
   updateInovice(file: File,registerData: any,itemsList:any[]=[],invoiceId:string="") {
      const formData: FormData = new FormData();
         formData.append('invoice_number', registerData?.number);
+        if(file?.name){
         formData.append('file', file, file?.name ? file?.name : registerData?.number+'_invoice'); // Handle case where file might be undefined
+        }
         formData.append('invoice_amount', registerData?.amount);
         formData.append('invoice_date', registerData?.invoiceDate?.toISOString());
         formData.append('invoice_due_date', registerData?.disbursementDate?.toISOString());
@@ -82,7 +84,7 @@ export class InvoiceService {
   applyDiscountOnInvoices(requestData: any, selectedInvoices: any[]) {
     let data = JSON.stringify({
       discount_percentage: requestData.discount,
-      disbursement_date: requestData.disbursementDate,
+      disbursement_date: requestData.disbursementDate?.toISOString(),
       invoice_ids: selectedInvoices,
       fund_by:"FINANCIER"
     });
@@ -93,6 +95,30 @@ export class InvoiceService {
       }), catchError(e => this.apiResponseHandler.handleError(e)));
   }
 
+  applyDiscountOnInvoice(requestData: any, selectedInvoices: any[]) {
+    let data = JSON.stringify({
+      discount_percentage: requestData.totaldiscount,
+      disbursement_date: requestData.total_disbursement_date?.toISOString(),
+      invoice_ids: selectedInvoices,
+      fund_by:requestData.totalfundBy?.value
+    });
+    return this.httpClient.post("invoices/apply-discount", data).pipe(
+      map((response: any) => {
+        this.apiResponseHandler.handleSuccess(response?.message);
+        return response;
+      }), catchError(e => this.apiResponseHandler.handleError(e)));
+  }
+authorizationInvoice(requestData: any, invoiceId: any[]) {
+    let data = JSON.stringify({
+     "invoice_id": invoiceId,
+     "fund_by": requestData
+    });
+    return this.httpClient.post("invoices/authorize-payment", data).pipe(
+      map((response: any) => {
+        this.apiResponseHandler.handleSuccess(response?.message);
+        return response;
+      }), catchError(e => this.apiResponseHandler.handleError(e)));
+  }
   sendToSeller(invoiceIds: any[]) {
     let data = JSON.stringify({
       invoice_ids: invoiceIds,

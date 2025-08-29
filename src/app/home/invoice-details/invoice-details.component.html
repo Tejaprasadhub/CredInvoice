@@ -1,11 +1,11 @@
 <div class="row app-container">
     <div class="col-md-12 form-details">
-        <!-- <p-card styleClass="mb-2">
+        <p-card styleClass="mb-2" *ngIf="invoiceDetails?.status == 'REJECTED' || invoiceDetails?.status == 'REJECTED_BY_SELLER'">
             <div class="row">
-                <strong>Reason for rejecting</strong>
+                <strong>Seller rejection reason</strong>
                 <small>Unfortunately, we can't proceed with the requested discount/date as it doesn’t align with our terms. Please review and adjust your offer accordingly, and feel free to resend the details for reconsideration.</small>
             </div>
-        </p-card> -->
+        </p-card>
         <!-- <p-card styleClass="mb-2">
             <div class="row">
                 <div class="col-md-12 mb-2 text-left">
@@ -97,11 +97,11 @@
                     </div>
                 </div>
                 <div class="col-auto">
-                    <!-- <p-button label="Delete" (click)="visible1 = true" class="btn-danger" icon="pi pi-trash" /> -->
-                    <!-- <p-button label="Edit Details & Resend" (click)="visible2 = true"  icon="pi pi-send" /> -->
-                    <!-- <p-button label="Authorize Payment" (click)="visible3 = true"  icon="pi pi-key" /> -->
+                    <p-button label="Delete" *ngIf="invoiceDetails?.status == 'SENT_TO_SELLER'" (click)="visible1 = true" class="btn-danger" icon="pi pi-trash" />
+                    <p-button label="Edit Details & Resend" *ngIf="invoiceDetails?.status == 'REJECTED' || invoiceDetails?.status == 'REJECTED_BY_SELLER'" (click)="viewDiscount(invoiceDetails)"  icon="pi pi-send" />
+                    <p-button label="Authorize Payment" *ngIf="invoiceDetails?.status == 'ACCEPTED_BY_SELLER'" (click)="visible3 = true"  icon="pi pi-key" />
                     <!-- <label class="label">Payment Status :  <span class="status sent">Disbursement Pending by Buyer</span></label> -->
-                    <label class="label">Payment Status :  <span class="status approve">Disbursed by Buyer</span></label>
+                    <!-- <label class="label">Payment Status :  <span class="status approve">Disbursed by Buyer</span></label> -->
                     <!-- <p-button label="Resend for Bidding"  icon="pi pi-refresh" /> -->
                 </div>
             </div>
@@ -132,6 +132,12 @@
                 </div>
                 <div class="col-md-3">
                     <div class="flex flex-column mb-2 text-left">
+                        <label class="label" for="username">Amount after discount</label>
+                        <span class="value">{{invoiceDetails?.amountafterdiscount}}</span>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="flex flex-column mb-2 text-left">
                         <label class="label" for="username">Fund by</label>
                         <span class="value">{{invoiceDetails?.fund_by}}</span>
                     </div>
@@ -157,7 +163,9 @@
                 <div class="col-md-3">
                     <div class="flex flex-column mb-2 text-left">
                         <label class="label" for="username">Inovice Pdf's</label>
-                        <span class="value">777777777</span>
+                        <!-- <span class="value">777777777</span> -->
+                        <span class="invoice" *ngIf="invoiceDetails?.invoice_pdf" (click)="downloadBase64File(invoiceDetails?.invoice_pdf, 'invoice.pdf', 'application/pdf')"> <i
+                            class="pi pi-download mr-2"></i>Invoice</span>
                     </div>
                 </div>
                 <div class="col-md-3">
@@ -201,7 +209,7 @@
                             </ng-template>
                         </p-table>
                     </p-tabPanel> -->
-                    <p-tabPanel header="Invoice Items(27)">
+                    <p-tabPanel header="Invoice Items({{invoiceDetails?.items?.length}})">
                         <p-table [value]="invoiceDetails?.items" [paginator]="true" [rows]="5" styleClass="p-datatable-striped" [first]="first"
                 [showCurrentPageReport]="true" [tableStyle]="{ 'min-width': '50rem' }"
                 currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
@@ -302,58 +310,118 @@
 </p-dialog>
 
 <p-dialog header="Edit Details and Resend"  [(visible)]="visible2" [modal]="true" [style]="{ width: '35rem' }">
-   <div class="row">
-    <div class="col-md-6">
-        <div class="flex flex-column mb-2 text-left">
-            <label for="username">Total Amount</label>
-            <input pInputText id="username" aria-describedby="username-help" />
-        </div>
-    </div>
-    <div class="col-md-6">
-        <div class="flex flex-column mb-2 text-left">
-            <label for="username">Discount Value</label>
-            <input pInputText id="username" aria-describedby="username-help" />
-        </div>
-    </div>
-    <div class="col-md-6">
-        <div class="flex flex-column mb-2 text-left">
-            <label for="username">Amount after Discount</label>
-            <input pInputText id="username" aria-describedby="username-help" />
-        </div>
-    </div>
-    <div class="col-md-6">
-        <div class="flex flex-column mb-2 text-left">
-            <label for="username">Requesting Due Date</label>
-            <p-calendar [(ngModel)]="date1" [showIcon]="true" append="body" [showOnFocus]="false"
-                inputId="buttondisplay" />
-        </div>
-    </div>
-    <div class="col-md-6">
-        <div class="flex flex-column mb-2 text-left">
-            <label for="username">Fund By</label>
-            <div class="row d-block text-left mt-2">
-                <p-chip label="Self" class="active" />
-                <p-chip label="Financier" />
+    <form [formGroup]="applyDiscountSelectedInvoice" class="col-md-12" (ngSubmit)="applyDiscountSelectedInvoiceSubmit()">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="flex flex-column mb-2 text-left">
+                            <label for="username">Total Amount</label>
+                            <input formControlName="totalamount" readonly type="text" maxlength="50" pInputText
+                                [ngClass]="{'error':((!applyDiscountSelectedInvoice.controls['totalamount'].valid && applyDiscountSelectedInvoice.controls['totalamount'].touched) || (!applyDiscountSelectedInvoice.controls['totalamount'].valid && applyDiscountSelectedInvoice.controls['totalamount'].untouched && applyDiscountSelectedInvoiceSubmitAttempt))}">
+                            <span class="error-div" *ngIf="(!applyDiscountSelectedInvoice.valid && applyDiscountSelectedInvoiceSubmitAttempt)">
+                                <p class="validation-label mb-0"
+                                    *ngIf="applyDiscountSelectedInvoice.controls['totalamount'].errors?.['required']">
+                                    Total amount is required</p>
+                                <p class="validation-label mb-0"
+                                    *ngIf="!applyDiscountSelectedInvoice.controls['totalamount'].errors?.['required'] && applyDiscountSelectedInvoice.controls['totalamount'].errors?.['pattern']">
+                                    Please Enter Valid Total Amount</p>
+                            </span>
             </div>
         </div>
+        <div class="col-md-6">
+            <div class="flex flex-column mb-2 text-left">
+                            <label for="username">Discount</label>
+                            <input formControlName="totaldiscount" type="text" (keyup)="discountKeyUp()" maxlength="50" pInputText
+                                [ngClass]="{'error':((!applyDiscountSelectedInvoice.controls['totaldiscount'].valid && applyDiscountSelectedInvoice.controls['totaldiscount'].touched) || (!applyDiscountSelectedInvoice.controls['totaldiscount'].valid && applyDiscountSelectedInvoice.controls['totaldiscount'].untouched && applyDiscountSelectedInvoiceSubmitAttempt))}">
+                            <span class="error-div" *ngIf="(!applyDiscountSelectedInvoice.valid && applyDiscountSelectedInvoiceSubmitAttempt)">
+                                <p class="validation-label mb-0"
+                                    *ngIf="applyDiscountSelectedInvoice.controls['totaldiscount'].errors?.['required']">
+                                    Discount is required</p>
+                                <p class="validation-label mb-0"
+                                    *ngIf="!applyDiscountSelectedInvoice.controls['totaldiscount'].errors?.['required'] && applyDiscountSelectedInvoice.controls['totaldiscount'].errors?.['pattern']">
+                                    Please Enter Valid Discount</p>
+                            </span>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="flex flex-column mb-2 text-left">
+                            <label for="username">Discounted Amount</label>
+                            <input formControlName="totaldiscountedamount" readonly type="text" maxlength="50" pInputText
+                                [ngClass]="{'error':((!applyDiscountSelectedInvoice.controls['totaldiscountedamount'].valid && applyDiscountSelectedInvoice.controls['totaldiscount'].touched) || (!applyDiscountSelectedInvoice.controls['totaldiscount'].valid && applyDiscountSelectedInvoice.controls['totaldiscount'].untouched && applyDiscountSelectedInvoiceSubmitAttempt))}">
+                            <span class="error-div" *ngIf="(!applyDiscountSelectedInvoice.valid && applyDiscountSelectedInvoiceSubmitAttempt)">
+                                <p class="validation-label mb-0"
+                                    *ngIf="applyDiscountSelectedInvoice.controls['totaldiscountedamount'].errors?.['required']">
+                                    Discounted Amount is required</p>
+                                <p class="validation-label mb-0"
+                                    *ngIf="!applyDiscountSelectedInvoice.controls['totaldiscountedamount'].errors?.['required'] && applyDiscountSelectedInvoice.controls['totaldiscount'].errors?.['pattern']">
+                                    Please Enter Discounted Amount</p>
+                            </span>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="flex flex-column mb-2 text-left">
+                            <label for="username">Amount after discount</label>
+                            <input formControlName="amountafterdiscount" readonly type="text" maxlength="50" pInputText
+                                [ngClass]="{'error':((!applyDiscountSelectedInvoice.controls['amountafterdiscount'].valid && applyDiscountSelectedInvoice.controls['amountafterdiscount'].touched) || (!applyDiscountSelectedInvoice.controls['amountafterdiscount'].valid && applyDiscountSelectedInvoice.controls['amountafterdiscount'].untouched && applyDiscountSelectedInvoiceSubmitAttempt))}">
+                            <span class="error-div" *ngIf="(!applyDiscountSelectedInvoice.valid && applyDiscountSelectedInvoiceSubmitAttempt)">
+                                <p class="validation-label mb-0"
+                                    *ngIf="applyDiscountSelectedInvoice.controls['amountafterdiscount'].errors?.['required']">
+                                    Amount After Discount is required</p>
+                                <p class="validation-label mb-0"
+                                    *ngIf="!applyDiscountSelectedInvoice.controls['amountafterdiscount'].errors?.['required'] && applyDiscountSelectedInvoice.controls['amountafterdiscount'].errors?.['pattern']">
+                                    Please Enter amount after discount</p>
+                            </span>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="flex flex-column mb-2 text-left">
+                            <label for="username">Total Disbursement Date</label>
+                             <p-calendar formControlName="total_disbursement_date" [(ngModel)]="date1" [showIcon]="true" append="body" [showOnFocus]="false" inputId="buttondisplay"
+                 />
+                            <span class="error-div" *ngIf="(!applyDiscountSelectedInvoice.valid && applyDiscountSelectedInvoiceSubmitAttempt)">
+                                <p class="validation-label mb-0"
+                                    *ngIf="applyDiscountSelectedInvoice.controls['total_disbursement_date'].errors?.['required']">
+                                    Disbursement Date is required</p>
+                                <p class="validation-label mb-0"
+                                    *ngIf="!applyDiscountSelectedInvoice.controls['total_disbursement_date'].errors?.['required'] && applyDiscountSelectedInvoice.controls['total_disbursement_date'].errors?.['pattern']">
+                                    Please Enter valid disbursement date</p>
+                            </span>
+            </div>
+        </div>        
+        <div class="col-md-6">
+                        <div class="flex flex-column mb-2 text-left">
+                            <label for="username">Fund By</label>
+                            <p-dropdown formControlName="totalfundBy" readonly [options]="fundBy" optionLabel="label"
+                                placeholder="Select Fund By"
+                                [ngClass]="{'error':((!applyDiscountSelectedInvoice.controls['totalfundBy'].valid && applyDiscountSelectedInvoice.controls['totalfundBy'].touched) || (!applyDiscountSelectedInvoice.controls['totalfundBy'].valid && applyDiscountSelectedInvoice.controls['totalfundBy'].untouched && applyDiscountSelectedInvoiceSubmitAttempt))}" />
+                            <span class="error-div" *ngIf="(!applyDiscountSelectedInvoice.valid && applyDiscountSelectedInvoiceSubmitAttempt)">
+                                <p class="validation-label mb-0"
+                                    *ngIf="applyDiscountSelectedInvoice.controls['totalfundBy'].errors?.['required']">
+                                    Fund by is required</p>
+                            </span>
+                        </div>
+                    </div>
     </div>
-</div>
-    <ng-template pTemplate="footer">
-        <div class="row">
+    <div class="row">
             <div class="col-2"></div>
             <div class="col-4">
-                <p-button label="Save & Resend"  (click)="visible2 = false" />
+                <p-button class="btn-success" type="submit" label="Save & Resend" />
             </div>
             <div class="col-4">
-                <p-button label="Cancel" class="btn-secondary" (click)="visible2 = false" />
+                <p-button label="Cancel" class="btn-secondary"  (onClick)="visible2 = false" />
             </div>
             <div class="col-2"></div>
+
         </div>
-    </ng-template>
+   
+  </form>
+
+
 </p-dialog>
 
-<p-dialog header="Authorize Payment"  [(visible)]="visible3" [modal]="true" [style]="{ width: '35rem' }">
-    <div class="row">
+<p-dialog header="Authorize Payment"  [(visible)]="visible3" [modal]="true" [style]="{ width: '45rem' }">
+     <form [formGroup]="authorizeSelectedInvoice" class="col-md-12" (ngSubmit)="authorizeSelectedInvoiceSubmitForm()">
+    <div class="row">   
+        <div class="row">
         <div class="col-md-12">
             <small>Authorise by confirming whether the invoice is fund by you or by a financier</small>
         </div>
@@ -361,24 +429,100 @@
             <div class="flex flex-column mb-2 text-left">
                 <label for="username">Fund By</label>
                 <div class="row d-block text-left mt-2">
-                    <p-chip label="Self" class="active" />
-                    <p-chip label="Financier" />
+                    <p-chip label="Self" (click)="authorizeType('SELF')"  [ngClass]="authorize == 'SELF' ? 'active' : ''"/>
+                    <p-chip label="Financier" (click)="authorizeType('FINANCIER')" [ngClass]="authorize == 'FINANCIER' ? 'active' : ''" />
                 </div>
             </div>
         </div>
- </div>
-     <ng-template pTemplate="footer">
-         <div class="row">
-             <div class="col-2"></div>
-             <div class="col-4">
-                 <p-button label="Authorize"  (click)="visible3 = false" />
-             </div>
-             <div class="col-4">
-                 <p-button label="Cancel" class="btn-secondary" (click)="visible3 = false" />
-             </div>
-             <div class="col-2"></div>
-         </div>
-     </ng-template>
+        <div class="col-md-12 mt-2" *ngIf="authorize == 'SELF'">
+            <label>
+  <input type="checkbox" formControlName="selfChecked"/>
+I hereby confirm that this invoice is funded by myself</label>
+        </div>  
+    </div>   
+        <div class="col-md-6" *ngIf="authorize == 'FINANCIER'">
+            <div class="flex flex-column mb-2 text-left">
+                            <label for="username">Disbursement Date</label>
+                             <p-calendar formControlName="auth_disbursement_date" readonly [showIcon]="true" append="body" [showOnFocus]="false" inputId="buttondisplay"
+                 />
+                            <span class="error-div" *ngIf="(!authorizeSelectedInvoice.valid && authorizeSelectedInvoiceSubmitAttempt)">
+                                <p class="validation-label mb-0"
+                                    *ngIf="authorizeSelectedInvoice.controls['auth_disbursement_date'].errors?.['required']">
+                                    Disbursement Date is required</p>
+                                <p class="validation-label mb-0"
+                                    *ngIf="!authorizeSelectedInvoice.controls['auth_disbursement_date'].errors?.['required'] && authorizeSelectedInvoice.controls['auth_disbursement_date'].errors?.['pattern']">
+                                    Please Enter valid disbursement date</p>
+                            </span>
+            </div>
+        </div>       
+         <div class="col-md-6" *ngIf="authorize == 'FINANCIER'">
+            <div class="flex flex-column mb-2 text-left">
+                            <label for="username">Repayment Date</label>
+                             <p-calendar formControlName="repayment_date" [(ngModel)]="date1" [showIcon]="true" append="body" [showOnFocus]="false" inputId="buttondisplay"
+                 />
+                            <span class="error-div" *ngIf="(!authorizeSelectedInvoice.valid && authorizeSelectedInvoiceSubmitAttempt)">
+                                <p class="validation-label mb-0"
+                                    *ngIf="authorizeSelectedInvoice.controls['repayment_date'].errors?.['required']">
+                                    Repayment Date is required</p>
+                                <p class="validation-label mb-0"
+                                    *ngIf="!authorizeSelectedInvoice.controls['repayment_date'].errors?.['required'] && authorizeSelectedInvoice.controls['repayment_date'].errors?.['pattern']">
+                                    Please Enter valid repayment date</p>
+                            </span>
+            </div>
+        </div>      
+        <div class="col-md-6" *ngIf="authorize == 'FINANCIER'">
+            <div class="flex flex-column mb-2 text-left">
+                            <label for="username">Payment Amount</label>
+                            <input formControlName="authtotalamount"  type="text" maxlength="50" pInputText
+                                [ngClass]="{'error':((!authorizeSelectedInvoice.controls['authtotalamount'].valid && authorizeSelectedInvoice.controls['authtotalamount'].touched) || (!authorizeSelectedInvoice.controls['authtotalamount'].valid && authorizeSelectedInvoice.controls['authtotalamount'].untouched && authorizeSelectedInvoiceSubmitAttempt))}">
+                            <span class="error-div" *ngIf="(!authorizeSelectedInvoice.valid && authorizeSelectedInvoiceSubmitAttempt)">
+                                <p class="validation-label mb-0"
+                                    *ngIf="authorizeSelectedInvoice.controls['authtotalamount'].errors?.['required']">
+                                    Payment amount is required</p>
+                                <p class="validation-label mb-0"
+                                    *ngIf="!authorizeSelectedInvoice.controls['authtotalamount'].errors?.['required'] && authorizeSelectedInvoice.controls['authtotalamount'].errors?.['pattern']">
+                                    Please Enter Valid payment Amount</p>
+                            </span>
+            </div>
+        </div> 
+        <div class="col-md-6" *ngIf="authorize == 'FINANCIER'">
+            <div class="flex flex-column mb-2 text-left">
+                            <label for="username">Tenure(in days)</label>
+                            <input formControlName="tenure" type="text" maxlength="50" pInputText
+                                [ngClass]="{'error':((!authorizeSelectedInvoice.controls['tenure'].valid && authorizeSelectedInvoice.controls['tenure'].touched) || (!authorizeSelectedInvoice.controls['tenure'].valid && authorizeSelectedInvoice.controls['tenure'].untouched && authorizeSelectedInvoiceSubmitAttempt))}">
+                            <span class="error-div" *ngIf="(!authorizeSelectedInvoice.valid && authorizeSelectedInvoiceSubmitAttempt)">
+                                <p class="validation-label mb-0"
+                                    *ngIf="authorizeSelectedInvoice.controls['tenure'].errors?.['required']">
+                                    Tenure is required</p>
+                                <p class="validation-label mb-0"
+                                    *ngIf="!authorizeSelectedInvoice.controls['tenure'].errors?.['required'] && authorizeSelectedInvoice.controls['tenure'].errors?.['pattern']">
+                                    Please Enter Valid Tenure</p>
+                            </span>
+            </div>
+        </div> 
+         <div class="col-md-12 mt-2" *ngIf="authorize == 'FINANCIER'">
+            <label>
+  <input type="checkbox" formControlName="financierChecked"/>
+This invoice will be sent to the financiers for Bidding</label>
+        </div>  
+    </div>
+    <div class="row">
+            <div class="col-2"></div>
+            <div class="col-4">
+                <!-- {{authorizeSelectedInvoice | json}} -->
+                <p-button class="btn-success" *ngIf="authorize == 'SELF'"  type="submit" [disabled]="!(authorizeSelectedInvoice!.value!.selfChecked)" label="Authorize" />
+                <p-button class="btn-success" *ngIf="authorize == 'FINANCIER'"  type="submit" [disabled]="!(authorizeSelectedInvoice!.value!.financierChecked)" label="Sent to Financiers" />
+              <!-- <p-button class="btn-success"  type="submit"  label="Authorize" />
+                <p-button class="btn-success"  type="submit"  label="Sent to Financiers" /> -->
+            </div>
+            <div class="col-4">
+                <p-button label="Cancel" class="btn-secondary"  (onClick)="visible3 = false" />
+            </div>
+            <div class="col-2"></div>
+
+        </div>
+   
+  </form>
  </p-dialog>
 
  <p-dialog header="Accept Bid"  [(visible)]="visible4" [modal]="true" [style]="{ width: '45rem' }">
@@ -448,3 +592,34 @@
          </div>
      </ng-template>
  </p-dialog>
+
+
+ <p-dialog header="" [modal]="true" [(visible)]="successFullPopup" [style]="{ width: '40rem' }">
+    <div class="row">    
+        <div class="col-md-12 text-center">
+            <img src="assets/SealCheck.png" class="img-fluid" alt="Seal Check" >
+        </div>
+        <div class="col-md-12 text-center">
+            <h4 *ngIf="authorize=='SELF'">Self-Funding Authorised!</h4>
+            <h4 *ngIf="authorize=='FINANCIER'">Sent for Financiers Bidding!</h4>
+        </div>  
+        <div class="col-md-12 text-center">
+            <span class="" *ngIf="authorize=='SELF'">
+You have successfully authorised the payment to be fund by yourself.
+            </span>
+            <span class="" *ngIf="authorize=='FINANCIER'">
+Your invoice has been successfully sent to the financiers for bidding.
+            </span>
+        </div>      
+    </div>
+    <ng-template pTemplate="footer">
+        <div class="row">
+            <div class="col-3"></div>
+            <div class="col-6">
+                <p-button class="btn-success" label="Okay" (click)="successFullPopup = false" />
+            </div>
+            <div class="col-3"></div>
+        </div>
+
+    </ng-template>
+</p-dialog>

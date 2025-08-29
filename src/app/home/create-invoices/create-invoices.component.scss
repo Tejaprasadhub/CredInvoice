@@ -20,6 +20,8 @@
     
 
     .actions-disabled{
+          pointer-events: none;
+            opacity: 0.5; /* Optional: visually show it's disabled */
         img{
             pointer-events: none;
             opacity: 0.5; /* Optional: visually show it's disabled */

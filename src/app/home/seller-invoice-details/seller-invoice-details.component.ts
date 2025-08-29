@@ -135,4 +135,22 @@ getInvoiceDetails(id:string) {
   getBuyerPanNumber(invoiceDetails: any) {
     return this.buyers.find(buyer => buyer.value === invoiceDetails?.buyer_id)?.pan || '';
   }
+
+  downloadBase64File(base64: string, fileName: string, mimeType: string) {
+  const byteCharacters = atob(base64);
+  const byteNumbers = new Array(byteCharacters.length).fill(0).map((_, i) => byteCharacters.charCodeAt(i));
+  const byteArray = new Uint8Array(byteNumbers);
+
+  const blob = new Blob([byteArray], { type: mimeType });
+  const blobUrl = URL.createObjectURL(blob);
+
+  const link = document.createElement('a');
+  link.href = blobUrl;
+  link.download = fileName;
+  document.body.appendChild(link);
+  link.click();
+
+  document.body.removeChild(link);
+  URL.revokeObjectURL(blobUrl);
+}
 }
