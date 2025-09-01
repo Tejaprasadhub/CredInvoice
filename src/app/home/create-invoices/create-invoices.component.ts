@@ -284,6 +284,11 @@ getTotalAmount(items: any[]): any {
     this.router.navigate(['/home/create-invoice', invoice.id]);
   }
 
+  viewbidDetails(invoice: any) {
+    // For example, you can use Angular Router to navigate to the details page
+    this.router.navigate(['/home/invoice-bids', invoice.id]);
+  }
+
 
 
 

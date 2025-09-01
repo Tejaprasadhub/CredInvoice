@@ -86,6 +86,7 @@
                             <img alt="trash"  class="img-fluid"   (click)="delete(invoice)"  title="Delete" src="/assets/table-icons/Trash.png" />
                             <img alt="edit" class="img-fluid" [ngClass]="invoice.status == 'PENDING' ? '' : 'actions-disabled'"   (click)="editInvoice(invoice)" title="Edit" src="/assets/table-icons/Pencil.png" />
                             <img alt="discount" (click)="viewDiscount(invoice)" class="img-fluid"  title="Discount" src="/assets/table-icons/percent_green.png" /> 
+                            <img alt="initiatebid" *ngIf="invoice.status == 'INITIATED_BID' || invoice.status == 'BID_ACCEPTED'" (click)="viewbidDetails(invoice)" class="img-fluid"  title="Bids" src="/assets/table-icons/view.png" /> 
                         </td>
                     </tr>
                 </ng-template>

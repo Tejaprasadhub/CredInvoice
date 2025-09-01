@@ -81,7 +81,7 @@ export class InvoiceService {
       }), catchError(e => this.apiResponseHandler.handleError(e)));
   }
 
-
+ 
   applyDiscountOnInvoices(requestData: any, selectedInvoices: any[]) {
     let data = JSON.stringify({
       discount_percentage: requestData.discount,
@@ -94,7 +94,7 @@ export class InvoiceService {
         this.apiResponseHandler.handleSuccess(response?.message);
         return response;
       }), catchError(e => this.apiResponseHandler.handleError(e)));
-  }
+  } 
 
   applyDiscountOnInvoice(requestData: any, selectedInvoices: any[]) {
     let data = JSON.stringify({
@@ -104,6 +104,19 @@ export class InvoiceService {
       fund_by:requestData.totalfundBy?.value
     });
     return this.httpClient.post("invoices/apply-discount", data).pipe(
+      map((response: any) => {
+        this.apiResponseHandler.handleSuccess(response?.message);
+        return response;
+      }), catchError(e => this.apiResponseHandler.handleError(e)));
+  }
+  resendInvoice(requestData: any,invoiceId:string) {
+    debugger
+    let data = JSON.stringify({
+      discount_percentage: requestData.totaldiscount,
+      disbursement_date: requestData.total_disbursement_date?.toISOString(),
+      fund_by:requestData.totalfundBy?.value
+    });
+    return this.httpClient.post("invoices/"+invoiceId+"/resubmit", data).pipe(
       map((response: any) => {
         this.apiResponseHandler.handleSuccess(response?.message);
         return response;
@@ -158,6 +171,23 @@ authorizationInvoice(requestData: any, invoiceId: any[]) {
         return response;
       }), catchError(e => this.apiResponseHandler.handleError(e)));
   }
+
+  getInvoiceBids(invoiceId: string) {   
+  return this.httpClient.get("invoices/"+invoiceId+"/bids").pipe(
+          map((response: any) => {
+        return response;
+      }), catchError(e => this.apiResponseHandler.handleError(e)));
+  }
+
+  acceptBid(invoice: any) {   
+  return this.httpClient.post("invoices/bids/"+invoice.id+"/accept",null).pipe(
+          map((response: any) => {
+             this.apiResponseHandler.handleSuccess("Bid accepted successfully");
+        return response;
+      }), catchError(e => this.apiResponseHandler.handleError(e)));
+  }
+
+  
 
 
   

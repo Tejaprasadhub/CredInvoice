@@ -13,6 +13,7 @@ import { SessionStorageTokenService } from '../@shared/services/session-storage-
 import { SellerInvoiceDetailsComponent } from './seller-invoice-details/seller-invoice-details.component';
 import { SellerInvoicesComponent } from './seller-invoices/seller-invoices.component';
 import { KycInfoComponent } from '../kyc-shell/kyc-info/kyc-info.component';
+import { InoviceBidsComponent } from './inovice-bids/inovice-bids.component';
 const isSeller = sessionStorage.getItem("role")?.toLowerCase()  === 'seller';
 const routes: Routes = [
   { path: 'dashboard', component: DashboardComponent,data: { title: 'Dashboard' } },
@@ -24,7 +25,8 @@ const routes: Routes = [
   { path: 'reports', component: ReportsComponent,data: { title: 'Reports' } },
   { path: 'vendors', component: VendorsComponent,data: { title: 'My Vendors' } },
   { path: 'negotiate', component: NegotiateComponent,data: { title: 'Negotiate' } },
-  { path: 'bidding', component: BiddingComponent,data: { title: 'Bidding Management' } }
+  { path: 'bidding', component: BiddingComponent,data: { title: 'Bidding Management' } },
+  { path: 'invoice-bids/:id', component: InoviceBidsComponent,data: { title: 'Invoice Bids' } }
 ];
 
 @NgModule({

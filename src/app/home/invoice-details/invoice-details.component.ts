@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Route, Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { InvoiceService } from '../../@shared/services/invoice.service';
 import { Subject } from 'rxjs/internal/Subject';
@@ -92,7 +92,7 @@ getSellers() {
       })
   }
 
-constructor(private route: ActivatedRoute,private messageService: MessageService,
+constructor(private route: ActivatedRoute,private router :Router,private messageService: MessageService,
   private incomeService: InvoiceService,private sellerService: SellerService,private fb: FormBuilder
   ) { }
 
@@ -158,22 +158,16 @@ applyDiscountOnSelectedInvoiceForm() {
   }
 applyDiscountSelectedInvoiceSubmit(){
     this.applyDiscountSelectedInvoiceSubmitAttempt = true;
-    const selectedInvoiceIds = this.selectedInvoices; // Extracting only the IDs of selected invoices
     if (this.applyDiscountSelectedInvoice.valid) {    
-      this.applyDiscountSelectedInvoiceSubmitAttempt = false;
-      this.applyDiscountSelectedInvoice.reset(); 
-      //  this.invoiceService.applyDiscountOnInvoice(this.applyDiscountSelectedInvoice.value, selectedInvoiceIds)
-      //   .pipe(takeUntil(this.ngUnsubscribe)).subscribe((result: any) => {
-      //     if (result.status) {
-      //       this.applyDiscountSelectedInvoiceSubmitAttempt = false;
-      //       this.applyDiscountSelectedInvoice.reset();
-      //       this.visible = false;
-      //       this.selectedInvoices = [];
-      //       this.getInvoices();
-      //     } else {
-      //       this.messageService.add({ severity: 'error', summary: 'Error', detail: result.message });
-      //     }
-      //   })
+       this.incomeService.resendInvoice(this.applyDiscountSelectedInvoice.value, this.invoiceDetails?.id )
+        .pipe(takeUntil(this.ngUnsubscribe)).subscribe((result: any) => {
+          if (result.status) {
+            this.applyDiscountSelectedInvoiceSubmitAttempt = false;
+            this.router.navigate(['/home/invoices']);
+          } else {
+            this.messageService.add({ severity: 'error', summary: 'Error', detail: result.message });
+          }
+        })
     }
 }
 

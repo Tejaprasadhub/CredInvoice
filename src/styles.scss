@@ -53,7 +53,7 @@ textarea:focus-visible {
         background:#F0F9FF;
         color: #0EA5E9;
     }
-    &.APPROVE{
+    &.APPROVE,&.BID_ACCEPTED,&.ACCEPTED{
         background:#F0FDFA;
         color:#0D9488;
     }
