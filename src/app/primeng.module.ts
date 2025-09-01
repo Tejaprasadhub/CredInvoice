@@ -111,7 +111,8 @@ import { PanelMenuModule } from 'primeng/panelmenu';
     FloatLabelModule,
     ChartModule,
     FileUploadModule,
-    PanelMenuModule
+    PanelMenuModule,
+    StepsModule
   ],
   imports:[
     FileUploadModule
