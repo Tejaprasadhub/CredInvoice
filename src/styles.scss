@@ -45,7 +45,7 @@ textarea:focus-visible {
         background:#FFFBEB;
         color:#D97706;
     }
-    &.REJECTED_BY_SELLER,&.REJECTED{
+    &.REJECTED_BY_SELLER,&.REJECTED,&.EXPIRED{
         background: #FFF1F2;
         color:#F43F5E;
     }

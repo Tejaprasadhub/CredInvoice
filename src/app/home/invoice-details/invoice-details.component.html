@@ -102,6 +102,7 @@
                 </div>
                 <div class="col-auto">
                     <p-button label="Delete" *ngIf="invoiceDetails?.status == 'SENT_TO_SELLER'" (click)="visible1 = true" class="btn-danger" icon="pi pi-trash" />
+                    <!-- <p-button label="Expired" *ngIf="invoiceDetails?.status == 'EXPIRED'" class="btn-danger" /> -->
                     <p-button label="Edit Details & Resend" *ngIf="invoiceDetails?.status == 'REJECTED' || invoiceDetails?.status == 'REJECTED_BY_SELLER'" (click)="viewDiscount(invoiceDetails)"  icon="pi pi-send" />
                     <p-button label="Authorize Payment" *ngIf="invoiceDetails?.status == 'ACCEPTED_BY_SELLER'" (click)="visible3 = true"  icon="pi pi-key" />
                     <!-- <label class="label">Payment Status :  <span class="status sent">Disbursement Pending by Buyer</span></label> -->

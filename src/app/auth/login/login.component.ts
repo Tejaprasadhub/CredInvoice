@@ -37,8 +37,8 @@ export class LoginComponent {
       this.authService.login(this.loginForm.value)
       .pipe(takeUntil(this.ngUnsubscribe)).subscribe((result: any) => {
         if (result.status) {
-                    // this.router.navigate(['/home/dashboard'], { relativeTo: this.route });
-          this.router.navigate(['/kyc/view'], { relativeTo: this.route });
+                    this.router.navigate(['/home/dashboard'], { relativeTo: this.route });
+          // this.router.navigate(['/kyc/view'], { relativeTo: this.route });
         }
         else{
           this.router.navigate(['/login'], {relativeTo: this.route})
