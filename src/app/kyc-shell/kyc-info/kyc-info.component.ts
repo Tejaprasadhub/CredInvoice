@@ -11,6 +11,7 @@ import { MenuItem } from 'primeng/api';
 import { KycService } from '../../@shared/services/kyc.service';
 import { Subject, takeUntil } from 'rxjs';
 import { FileUpload } from 'primeng/fileupload';
+import { MessageService } from 'primeng/api';
 
 @Component({
    selector: 'app-kyc-info',
@@ -44,9 +45,10 @@ kycSubmissions:any[]=[];
  first = 0;
  uploadedFiles: any[] = [];
  kycDocuments:any[]=[];
+ isEdit = false;
+ kycStatus = '';
  @ViewChild('fileUpload') fileUpload!: FileUpload;
-
-  constructor(private fb: FormBuilder,private kycService : KycService) {
+  constructor(private fb: FormBuilder, private kycService: KycService, private messageService: MessageService) {
     this.companyForm = this.fb.group({
       company: ['', [Validators.required, Validators.pattern(/^[a-zA-Z0-9\s]+$/)]],
       companyType: ['', Validators.required],
@@ -158,7 +160,7 @@ kycSubmissions:any[]=[];
       kycRequestObject.company_type_id = this.companyForm.get('companyType')?.value?.value;
       kycRequestObject.form_data = {
         company_name: this.companyForm.get('company')?.value,
-        company_type: '',
+        company_type: this.companyForm.get('companyType')?.value?.value,
         email: this.companyForm.get('email')?.value,
         phone_number: this.companyForm.get('phone')?.value,
         nature_of_business: this.companyForm.get('nature')?.value,
@@ -191,41 +193,126 @@ kycSubmissions:any[]=[];
     }
   }
 
+  updateKycDetails(name:string){
+    let kycId = this.kycSubmissions[0]?.id;
+    if(!this.isEdit){
+      return;
+    }
+    if(!kycId){
+      return;
+    }
+    if(!name){
+      return;
+    }
+    if(name == 'company-details' && !this.companyForm.valid){
+      this.kycSubmitAttempt = true;
+      return;
+    } 
+    if(name == 'business-tax-details' && !this.businessTaxForm.valid){
+      this.kycSubmitAttempt = true;
+      return;
+    }
+    if(name == 'bank-details' && !this.bankForm.valid){
+      this.kycSubmitAttempt = true;
+      return;
+    }
+    if(name == 'addresses' && !this.addressForm.valid){
+      this.kycSubmitAttempt = true;
+      return;
+    }
+    let kycRequestObject:any={};
+      if(name == 'company-details'){
+        kycRequestObject = {
+        company_name: this.companyForm.get('company')?.value,
+        company_type: this.companyForm.get('companyType')?.value?.value,
+        email: this.companyForm.get('email')?.value,
+        phone_number: this.companyForm.get('phone')?.value,
+        nature_of_business: this.companyForm.get('nature')?.value
+        }
+      }
+      else if(name == 'business-tax-details'){
+        kycRequestObject = {
+        business_pan: this.businessTaxForm.get('pan')?.value,
+        gst_number: this.businessTaxForm.get('gst')?.value
+        }
+      }
+      else if(name == 'bank-details'){
+        kycRequestObject = {
+        bank_account_number: this.bankForm.get('accountNumber')?.value,
+        bank_ifsc_number: this.bankForm.get('ifsc')?.value
+        }
+      }
+      else if(name == 'addresses'){
+        kycRequestObject = {
+        communication_address: {  
+          address_line_1: this.addressForm.get('addrline1')?.value,
+          address_line_2: this.addressForm.get('addrline2')?.value,
+          district: this.addressForm.get('district')?.value,
+          city: this.addressForm.get('city')?.value,
+          state: this.addressForm.get('state')?.value,
+          pin_code: this.addressForm.get('pincode')?.value,
+          country: this.addressForm.get('country')?.value
+        },
+        billing_address: {
+          same_as_communication: this.addressForm.get('checked')?.value,
+          address_line_1: this.addressForm.get('baddrline1')?.value,
+          address_line_2: this.addressForm.get('baddrline2')?.value,
+          district: this.addressForm.get('bdistrict')?.value,
+          city: this.addressForm.get('bcity')?.value,
+          state: this.addressForm.get('bstate')?.value,
+          pin_code: this.addressForm.get('bpincode')?.value,
+          country: this.addressForm.get('bcountry')?.value
+        }
+        }
+      } 
+    this.kycService.updateKycDetails(kycId,name,kycRequestObject)
+    .pipe(takeUntil(this.ngUnsubscribe)).subscribe((result: any) => {
+      if (result.status) {
+        this.getKycSubmissions();
+        this.nextStep();
+      }
+    })
+  }
+
   BindKycData(){
     if(this.kycSubmissions?.length > 0){
-      const kycData = this.kycSubmissions[0]?.form_data;
+      const companyData = this.kycSubmissions[0]?.company_details || {};
+      const businessData = this.kycSubmissions[0]?.business_tax_details || {};
+      const bankData = this.kycSubmissions[0]?.bank_details || {};
+      const communicationData = this.kycSubmissions[0]?.communication_address || {};
+      const billingData = this.kycSubmissions[0]?.billing_address || {};
       this.companyForm.patchValue({
-        company: kycData?.company_name,
-        companyType: this.companyTypes.find((ct:any) => ct?.id === kycData?.company_type_id) || '',
-        email: kycData?.email,
-        phone: kycData?.phone_number,
-        nature: kycData?.nature_of_business,
-        incorpDate: kycData?.incorpDate // Assuming incorpDate is not part of form_data
+        company: companyData?.company_name,
+        companyType: this.companyTypes.find((ct:any) => ct?.value === companyData?.company_type) || '',
+        email: companyData?.email,
+        phone: companyData?.phone_number,
+        nature: companyData?.nature_of_business,
+        incorpDate: companyData?.incorpDate // Assuming incorpDate is not part of form_data
       });
       this.businessTaxForm.patchValue({
-        pan: kycData?.business_pan,
-        gst: kycData?.gst_number
+        pan: businessData?.business_pan,
+        gst: businessData?.gst_number
       });
       this.bankForm.patchValue({
-        accountNumber: kycData?.bank_account_number,
-        ifsc: kycData?.bank_ifsc_number
+        accountNumber: bankData?.bank_account_number,
+        ifsc: bankData?.bank_ifsc_number
       });
       this.addressForm.patchValue({
-        addrline1: kycData?.communication_address?.address_line_1,
-        addrline2: kycData?.communication_address?.address_line_2,
-        district: kycData?.communication_address?.district,
-        city: kycData?.communication_address?.city,
-        state: kycData?.communication_address?.state,
-        pincode: kycData?.communication_address?.pin_code,
-        country: kycData?.communication_address?.country,
-        checked: kycData?.billing_address?.same_as_communication, 
-        baddrline1: kycData?.billing_address?.address_line_1,
-        baddrline2: kycData?.billing_address?.address_line_2,
-        bdistrict: kycData?.billing_address?.district,
-        bcity: kycData?.billing_address?.city,
-        bstate: kycData?.billing_address?.state,
-        bpincode: kycData?.billing_address?.pin_code,
-        bcountry: kycData?.billing_address?.country
+        addrline1: communicationData?.address_line_1,
+        addrline2: communicationData?.address_line_2,
+        district: communicationData?.district,
+        city: communicationData?.city,
+        state: communicationData?.state,
+        pincode: communicationData?.pin_code,
+        country: communicationData?.country,
+        checked: billingData?.same_as_communication, 
+        baddrline1: billingData?.address_line_1,
+        baddrline2: billingData?.address_line_2,
+        bdistrict: billingData?.district,
+        bcity: billingData?.city,
+        bstate: billingData?.state,
+        bpincode: billingData?.pin_code,
+        bcountry: billingData?.country
       });
     }
   }
@@ -280,13 +367,20 @@ kycSubmissions:any[]=[];
     getKycSubmissions() {
         this.kycService.getKycSubmissions()
           .pipe(takeUntil(this.ngUnsubscribe)).subscribe((result: any) => {
-            this.kycSubmissions = result?.data || [];             
-            this.kycDocuments = result?.data[0]?.documents || [];        
+            this.kycSubmissions = result?.data || [];  
+            this.isEdit = this.kycSubmissions?.length > 0;           
+            this.kycDocuments = result?.data[0]?.documents || [];   
+            this.kycStatus = result?.data[0]?.status || '';     
             // this.getDocumnetTypes((this.companyForm.get('companyType')?.value?.value));     
             this.BindKycData();
             if(this.kycSubmissions?.length > 0){
+               this.updateProgress(4);
               this.getDocumnetTypes(this.kycSubmissions[0]?.company_type_id);
-              this.updateProgress(4);
+              // if(this.kycDocuments?.length > 0){
+              //    this.updateProgress(4);
+              // }    else{
+              //   this.updateProgress(3);
+              // }         
             }
           })
     }
@@ -321,6 +415,7 @@ kycSubmissions:any[]=[];
     if(this.uploadedFiles.length === 0){
       return;
     }
+    if (this.documentForm.valid && this.uploadedFiles.length > 0) {
     this.kycService.uploadKycDocument(this.uploadedFiles[0],this.documentForm.value,this.kycSubmissions[0]?.id)
       .pipe(takeUntil(this.ngUnsubscribe)).subscribe((result: any) => {
         if (result.status) {
@@ -332,6 +427,7 @@ kycSubmissions:any[]=[];
 
         }
       });
+    }
     }
 
      
@@ -351,5 +447,23 @@ downloadBase64File(base64: string, fileName: string, mimeType: string) {
 
   document.body.removeChild(link);
   URL.revokeObjectURL(blobUrl);
+}
+
+submitForReview() {
+  if(this.kycSubmissions?.length === 0){
+    return;
+  }
+  let disabledDocuments = this.documentTypes.filter((dt: any) => dt.disabled);
+  if(disabledDocuments?.length > 0){
+    this.messageService.add({severity:'error', summary: '', detail: 'Please upload all mandatory documents before submitting for review.'});
+    return;
+  }else{
+    this.kycService.kycSubmitReview(this.kycSubmissions[0]?.id)
+    .pipe(takeUntil(this.ngUnsubscribe)).subscribe((result: any) => {
+      if (result.status) {
+        this.getKycSubmissions();
+      }
+    })
+  }
 }
 }

@@ -72,4 +72,22 @@ export class KycService {
         return response;
       }), catchError(e => this.apiResponseHandler.handleError(e)));
   }
+
+  updateKycDetails(kycId: string,name:string,requestData: any) {
+    let url = "kyc/submissions/"+kycId+"/"+name;
+    return this.httpClient.put(url,requestData).pipe(
+      map((response: any) => {
+        this.apiResponseHandler.handleSuccess(response?.message);
+        return response;
+      }), catchError(e => this.apiResponseHandler.handleError(e)));
+  }
+
+   kycSubmitReview(kycId: string) {
+    let url = "kyc/submissions/"+kycId+"/submit";
+    return this.httpClient.put(url,null).pipe(
+      map((response: any) => {
+        this.apiResponseHandler.handleSuccess(response?.message);
+        return response;
+      }), catchError(e => this.apiResponseHandler.handleError(e)));
+  }
 }

@@ -11,7 +11,7 @@
           <div class="col-md-12 mt-2 heading">
             <div class="row">
               <span class="header-title">
-                <h5>Complete Your KYC Verification</h5>
+                <h5>Complete Your KYC Verification -                            <span class="status kycStaus {{kycStatus}}"> {{kycStatus}}</span></h5>
               </span>
             </div>
             <div class="row">
@@ -100,7 +100,8 @@
                     <div class="row justify-content-end">
                       
                          <div class="col-auto">
-                            <p-button label="Next" (onClick)="nextStep()"></p-button>
+                            <p-button label="Next" *ngIf="!isEdit" (onClick)="nextStep()"></p-button>
+                            <p-button label="Update" *ngIf="isEdit" (onClick)="updateKycDetails('company-details')"></p-button>
                         </div>
                     </div>                   
                   </div>
@@ -144,7 +145,8 @@
                             <p-button label="Previous" (onClick)="prevStep()"></p-button>
                         </div>
                          <div class="col-auto">
-                            <p-button label="Next" (onClick)="nextStep()"></p-button>
+                            <p-button label="Next" *ngIf="!isEdit" (onClick)="nextStep()"></p-button>
+                            <p-button label="Update" *ngIf="isEdit" (onClick)="updateKycDetails('business-tax-details')"></p-button>
                         </div>
                     </div>                   
                   </div>
@@ -188,7 +190,8 @@
                             <p-button label="Previous" (onClick)="prevStep()"></p-button>
                         </div>
                          <div class="col-auto">
-                            <p-button label="Next" (onClick)="nextStep()"></p-button>
+                            <p-button label="Next" *ngIf="!isEdit" (onClick)="nextStep()"></p-button>
+                            <p-button label="Update" *ngIf="isEdit" (onClick)="updateKycDetails('bank-details')"></p-button>
                         </div>
                     </div>                   
                   </div>
@@ -367,10 +370,11 @@
                     <div class="col-md-12">
                     <div class="row justify-content-end">
                         <div class="col-auto">
-                            <p-button label="Next" (onClick)="prevStep()"></p-button>
+                            <p-button label="Previous" (onClick)="prevStep()"></p-button>
                         </div>
                          <div class="col-auto">
-                            <p-button label="Submit KYC Details" (onClick)="kycFormSubmit()"></p-button>
+                            <p-button label="Submit KYC Details" *ngIf="!isEdit"  (onClick)="kycFormSubmit()"></p-button>
+                            <p-button label="Update Address" *ngIf="isEdit" (onClick)="updateKycDetails('addresses')"></p-button>
                         </div>
                     </div>                   
                   </div>               
@@ -476,7 +480,7 @@
           <p-button label="Previous" (onClick)="prevStep()"></p-button>
         </div>
         <div class="col-auto">
-          <p-button label="Submit for review"></p-button>
+          <p-button label="Submit for review" (click)="submitForReview()"></p-button>
         </div>
       </div>
     </div>
