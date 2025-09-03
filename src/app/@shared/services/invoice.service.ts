@@ -110,7 +110,6 @@ export class InvoiceService {
       }), catchError(e => this.apiResponseHandler.handleError(e)));
   }
   resendInvoice(requestData: any,invoiceId:string) {
-    debugger
     let data = JSON.stringify({
       discount_percentage: requestData.totaldiscount,
       disbursement_date: requestData.total_disbursement_date?.toISOString(),
