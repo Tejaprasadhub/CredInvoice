@@ -14,7 +14,7 @@ const routes: Routes = [
       { path: 'kyc', loadChildren: () => import('./kyc-shell/kyc-shell.module').then(m => m.KycShellModule) },
    ]),
 
-  { path: '**', redirectTo: '', pathMatch: 'full' }
+  { path: '**', redirectTo: 'home', pathMatch: 'full' }
 ];
 
 @NgModule({

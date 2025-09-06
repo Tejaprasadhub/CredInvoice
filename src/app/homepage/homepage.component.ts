@@ -20,6 +20,7 @@ interface BenefitData {
 
 @Component({
   selector: 'app-homepage',
+  standalone: false,
   templateUrl: './homepage.component.html',
   styleUrls: ['./homepage.component.scss']
 })
