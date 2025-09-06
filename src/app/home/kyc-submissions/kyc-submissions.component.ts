@@ -35,4 +35,21 @@ ngOnInit(){
   onRowCollapse(event: any) {
     console.log('Row collapsed', event);
   }
+  downloadBase64File(base64String: string, fileName: string, fileType: string) {
+    const linkSource = `data:${fileType};base64,${base64String}`;
+    const downloadLink = document.createElement("a");
+    downloadLink.href = linkSource;
+    downloadLink.download = fileName;
+    downloadLink.click();
+  }
+
+   acceptOrRejectSubmissions(kycId:string,status:string) {   
+    let dataObject:any={};
+    dataObject.status = status;
+    dataObject.review_notes = "";
+      this.kycService.acceptOrRejectKycSubmission(kycId,dataObject)
+        .pipe(takeUntil(this.ngUnsubscribe)).subscribe((result: any) => {
+          this.getKycSubmissions();
+        })
+  }
 }

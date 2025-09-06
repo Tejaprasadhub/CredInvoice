@@ -3,6 +3,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 import { AuthService } from '../../@shared/services/auth.service';
+import { KycService } from '../../@shared/services/kyc.service';
 
 @Component({
   selector: 'app-login',
@@ -11,10 +12,11 @@ import { AuthService } from '../../@shared/services/auth.service';
   styleUrl: './login.component.scss'
 })
 export class LoginComponent {
+  kycSubmissions:any[]=[];
   loginForm!: FormGroup;
   loginSubmitAttempt:boolean=false;
   private ngUnsubscribe = new Subject();
-  constructor( private router: Router,
+  constructor( private router: Router,private kycService:KycService,
     private route: ActivatedRoute,private authService : AuthService,private fb: FormBuilder) {}
 
   forgotPassword(){
@@ -28,7 +30,15 @@ export class LoginComponent {
   
   ngOnInit(): void {   
     this.createloginForm();
+     this.getKycSubmissions();
   }
+
+   getKycSubmissions() {
+        this.kycService.getKycSubmissions()
+          .pipe(takeUntil(this.ngUnsubscribe)).subscribe((result: any) => {
+            this.kycSubmissions = result?.data || [];  
+          })
+    }
 
   loginFormSubmit(){
     this.loginSubmitAttempt = true;
@@ -37,7 +47,11 @@ export class LoginComponent {
       this.authService.login(this.loginForm.value)
       .pipe(takeUntil(this.ngUnsubscribe)).subscribe((result: any) => {
         if (result.status) {
+           if(this.kycSubmissions.length > 0 &&  this.kycSubmissions[0].status == 'ACCEPTED'){
                     this.router.navigate(['/home/dashboard'], { relativeTo: this.route });
+           }else{
+            this.router.navigate(['/kyc/view'], { relativeTo: this.route });
+           }
           // this.router.navigate(['/kyc/view'], { relativeTo: this.route });
         }
         else{

@@ -98,4 +98,14 @@ export class KycService {
         return response;
       }), catchError(e => this.apiResponseHandler.handleError(e)));
   }
+
+
+  acceptOrRejectKycSubmission(submissionId: string,dataObject:any) {
+    let url = "admin/submissions/"+submissionId+"/review";
+    return this.httpClient.post(url,dataObject).pipe(
+      map((response: any) => {
+        this.apiResponseHandler.handleSuccess(response?.message);
+        return response;
+      }), catchError(e => this.apiResponseHandler.handleError(e)));
+  }
 }

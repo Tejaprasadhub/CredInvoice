@@ -1,48 +1,166 @@
 <p-toast />
-    <p-confirmPopup />
+<p-confirmPopup />
 <div class="row app-container">
     <div class="col-md-12">
         <div class="row align-items-center">
-    <p-toast />
-    <p-table [value]="kycSubmissions" dataKey="id" [tableStyle]="{ 'min-width': '60rem' }"  (onRowExpand)="onRowExpand($event)" (onRowCollapse)="onRowCollapse($event)">
-        
-        <ng-template pTemplate="header">
-            <tr>
-                <th style="width: 5rem"></th>
-                <th pSortableColumn="user_id">User Id</th>
-                <th pSortableColumn="submitted_at">Submitted at </th>
-                <th pSortableColumn="updated_at">Updated at </th>
-                <th pSortableColumn="status">Status </th>
-            </tr>
-        </ng-template>
-        <ng-template pTemplate="body" let-product let-expanded="expanded">
-            <tr>
-                <td>
-                    <p-button type="button" pRipple [pRowToggler]="product" [text]="true" [rounded]="true" [plain]="true" [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'" />
-                </td>
-                <td>{{ product.user_id }}</td>
-                <td>{{ product.submitted_at }}</td>
-                <td>{{ product.updated_at }}</td>
-                <td>{{ product.status }}
-                </td>
-            </tr>
-        </ng-template>
-        <ng-template pTemplate="rowexpansion" let-product>
-            <tr>
-                <td colspan="1"></td>
-                <td colspan="2">
-                    <div class="p-3">
-                        dsfsdf
-                    </div>
-                </td>
-                <td colspan="2">
-                    <div class="p-3">
-                        dsfsdf
-                    </div>
-                </td>
-            </tr>
-        </ng-template>
-    </p-table>
+            <p-toast />
+            <p-table [value]="kycSubmissions" dataKey="id" [tableStyle]="{ 'min-width': '60rem' }"
+                (onRowExpand)="onRowExpand($event)" (onRowCollapse)="onRowCollapse($event)">
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th style="width: 5rem"></th>
+                        <th pSortableColumn="user_id">User Id</th>
+                        <th pSortableColumn="submitted_at">Submitted at </th>
+                        <th pSortableColumn="updated_at">Updated at </th>
+                        <th pSortableColumn="status">Status </th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-product let-expanded="expanded">
+                    <tr>
+                        <td>
+                            <p-button type="button" pRipple [pRowToggler]="product" [text]="true" [rounded]="true"
+                                [plain]="true" [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'" />
+                        </td>
+                        <td>{{ product.user_id }}</td>
+                        <td>{{ product.submitted_at }}</td>
+                        <td>{{ product.updated_at }}</td>
+                        <td>
+                            <p-button *ngIf="product.status == 'SUBMITTED' || product.status == 'ACCEPTED'" (click)="acceptOrRejectSubmissions(product?.id,'ACCEPTED')"  class="btn-success mr-2" label="ACCEPT"  type="button"></p-button>
+                            <p-button *ngIf="product.status == 'SUBMITTED'  || product.status == 'REJECTED'" (click)="acceptOrRejectSubmissions(product?.id,'REJECTED')" class="btn-danger mr-2" label="REJECT"  type="button"></p-button>
+                        </td>
+
+
+                
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="rowexpansion" let-product>
+                    <tr>
+                        <td colspan="5">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="row p-3">
+                                        <div class="col-md-12 mb-3 details-header">
+                                            <h6><i class="pi pi-info-circle"></i> Bank Details</h6>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <span><strong>Account Number</strong>
+                                                <p>
+                                                    {{ product?.bank_details?.bank_account_number }}
+                                                </p>
+                                            </span>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <span><strong>IFSC Code</strong>
+                                                <p>
+                                                    {{ product?.bank_details?.bank_ifsc_number }}
+                                                </p>
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="row p-3">
+                                        <div class="col-md-12 mb-3 details-header">
+                                            <h6><i class="pi pi-info-circle"></i> Tax Details</h6>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <span><strong>PAN Number</strong>
+                                                <p>
+                                                    {{ product?.business_tax_details?.business_pan }}
+                                                </p>
+                                            </span>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <span><strong>GST Number</strong>
+                                                <p>
+                                                    {{ product?.business_tax_details?.gst_number }}
+                                                </p>
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="col-md-12">
+                                    <div class="row p-3">
+                                        <div class="col-md-12 mb-3 details-header">
+                                            <h6><i class="pi pi-info-circle"></i> Company Details</h6>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <span><strong>Company Name</strong>
+                                                <p>
+                                                    {{ product?.company_details?.company_name }}
+                                                </p>
+                                            </span>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <span><strong>Phone Number</strong>
+                                                <p>
+                                                    {{ product?.company_details?.phone_number }}
+                                                </p>
+                                            </span>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <span><strong>Email</strong>
+                                                <p>
+                                                    {{ product?.company_details?.email }}
+                                                </p>
+                                            </span>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <span><strong>Nature of business</strong>
+                                                <p>
+                                                    {{ product?.company_details?.nature_of_business }}
+                                                </p>
+                                            </span>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <span><strong>Company Type</strong>
+                                                <p>
+                                                    {{ product?.company_type?.description }}
+                                                </p>
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="row p-3">
+                                        <div class="col-md-12 mb-3 details-header">
+                                            <h6><i class="pi pi-info-circle"></i> Documents</h6>
+                                        </div>
+                                        <div class="col-md-12 mt-3">
+
+                                            <p-table [value]="product?.documents" [paginator]="true" [rows]="10"
+                                                styleClass="p-datatable-striped" [first]="first"
+                                                [showCurrentPageReport]="true" [tableStyle]="{ 'min-width': '50rem' }"
+                                                currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                                                [rowsPerPageOptions]="[10, 25, 50]">
+                                                <ng-template pTemplate="header">
+                    <tr>
+                        <th>Document Name</th>
+                        <th>Download</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-document let-rowIndex="rowIndex">
+                    <tr>
+                        <td>{{document?.document_type?.name}}</td>
+                        <td> <span class="invoice" *ngIf="document?.file_content"
+                                (click)="downloadBase64File(document?.file_content, document?.file_name, 'application/pdf')">
+                                <i class="pi pi-eye mr-2"></i>View</span></td>
+
+                    </tr>
+                </ng-template>
+            </p-table>
         </div>
     </div>
+</div>
+</div>
+</td>
+</tr>
+</ng-template>
+</p-table>
+</div>
+</div>
 </div>
