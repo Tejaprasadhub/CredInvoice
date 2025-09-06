@@ -84,7 +84,7 @@ export class KycService {
 
    kycSubmitReview(kycId: string) {
     let url = "kyc/submissions/"+kycId+"/submit";
-    return this.httpClient.put(url,null).pipe(
+    return this.httpClient.post(url,null).pipe(
       map((response: any) => {
         this.apiResponseHandler.handleSuccess(response?.message);
         return response;

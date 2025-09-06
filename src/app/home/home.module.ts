@@ -18,6 +18,7 @@ import { InvoiceDetailsComponent } from './invoice-details/invoice-details.compo
 import { SellerInvoiceDetailsComponent } from './seller-invoice-details/seller-invoice-details.component';
 import { SellerInvoicesComponent } from './seller-invoices/seller-invoices.component';
 import { InoviceBidsComponent } from './inovice-bids/inovice-bids.component';
+import { HomepageComponent } from '../homepage/homepage.component';
 
 
 @NgModule({
@@ -34,7 +35,8 @@ import { InoviceBidsComponent } from './inovice-bids/inovice-bids.component';
     InvoiceDetailsComponent,
     SellerInvoiceDetailsComponent,
     SellerInvoicesComponent,
-    InoviceBidsComponent
+    InoviceBidsComponent,
+    HomepageComponent
   ],
   imports: [
     ReactiveFormsModule,  

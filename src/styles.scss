@@ -38,7 +38,7 @@ textarea:focus-visible {
         color:#D97706;
     }
     &.INITIATED_BID{
-        background:#FFFBEB;
+        background:#eedea0;
         color:#D97706;
     }
     &.PENDING,&.DRAFT{
@@ -52,7 +52,7 @@ textarea:focus-visible {
         background: #FFF1F2;
         color:#F43F5E;
     }
-    &.ACCEPTED_BY_SELLER,&.APPLIED_DISCOUNT{
+    &.ACCEPTED_BY_SELLER,&.APPLIED_DISCOUNT,&.SUBMITTED{
         background:#F0F9FF;
         color: #0EA5E9;
     }

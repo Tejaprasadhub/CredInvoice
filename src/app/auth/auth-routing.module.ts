@@ -8,10 +8,12 @@ import { ChangePasswordComponent } from './change-password/change-password.compo
 import { SignUpComponent } from './sign-up/sign-up.component';
 import { KycInfoComponent } from '../kyc-shell/kyc-info/kyc-info.component';
 import { ProfileVerificationComponent } from './profile-verification/profile-verification.component';
+import { HomepageComponent } from '../homepage/homepage.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'login', pathMatch: 'full'  },
+  { path: '', redirectTo: 'home', pathMatch: 'full'  },
   { path: 'login', component: LoginComponent },
+  { path: 'home', component: HomepageComponent },
   { path: 'forgot-password', component: ForgotPasswordComponent },
   { path: 'change-password', component: ChangePasswordComponent },
   { path: 'verify', component: VerifyComponent },

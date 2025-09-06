@@ -11,7 +11,7 @@
           <div class="col-md-12 mt-2 heading">
             <div class="row">
               <span class="header-title">
-                <h5>Complete Your KYC Verification -                            <span class="status kycStaus {{kycStatus}}"> {{kycStatus}}</span></h5>
+                <h5>Complete Your KYC Verification <span *ngIf="kycStatus"> - </span> <span *ngIf="kycStatus" class="status kycStaus {{kycStatus}}">{{kycStatus}}</span></h5>
               </span>
             </div>
             <div class="row">

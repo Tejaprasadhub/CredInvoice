@@ -14,6 +14,7 @@ import { SellerInvoiceDetailsComponent } from './seller-invoice-details/seller-i
 import { SellerInvoicesComponent } from './seller-invoices/seller-invoices.component';
 import { KycInfoComponent } from '../kyc-shell/kyc-info/kyc-info.component';
 import { InoviceBidsComponent } from './inovice-bids/inovice-bids.component';
+import { HomepageComponent } from '../homepage/homepage.component';
 const isSeller = sessionStorage.getItem("role")?.toLowerCase()  === 'seller';
 const routes: Routes = [
   { path: 'dashboard', component: DashboardComponent,data: { title: 'Dashboard' } },

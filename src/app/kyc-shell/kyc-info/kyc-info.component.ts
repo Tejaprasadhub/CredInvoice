@@ -453,7 +453,7 @@ submitForReview() {
   if(this.kycSubmissions?.length === 0){
     return;
   }
-  let disabledDocuments = this.documentTypes.filter((dt: any) => dt.disabled);
+  let disabledDocuments = this.documentTypes.filter((dt: any) => !dt.disabled);
   if(disabledDocuments?.length > 0){
     this.messageService.add({severity:'error', summary: '', detail: 'Please upload all mandatory documents before submitting for review.'});
     return;
