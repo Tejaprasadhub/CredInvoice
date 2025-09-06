@@ -14,7 +14,8 @@ import { SellerInvoiceDetailsComponent } from './seller-invoice-details/seller-i
 import { SellerInvoicesComponent } from './seller-invoices/seller-invoices.component';
 import { KycInfoComponent } from '../kyc-shell/kyc-info/kyc-info.component';
 import { InoviceBidsComponent } from './inovice-bids/inovice-bids.component';
-import { HomepageComponent } from '../homepage/homepage.component';
+import { HomepageComponent } from './homepage/homepage.component';
+import { KycSubmissionsComponent } from './kyc-submissions/kyc-submissions.component';
 const isSeller = sessionStorage.getItem("role")?.toLowerCase()  === 'seller';
 const routes: Routes = [
   { path: 'dashboard', component: DashboardComponent,data: { title: 'Dashboard' } },
@@ -27,7 +28,9 @@ const routes: Routes = [
   { path: 'vendors', component: VendorsComponent,data: { title: 'My Vendors' } },
   { path: 'negotiate', component: NegotiateComponent,data: { title: 'Negotiate' } },
   { path: 'bidding', component: BiddingComponent,data: { title: 'Bidding Management' } },
-  { path: 'invoice-bids/:id', component: InoviceBidsComponent,data: { title: 'Invoice Bids' } }
+  { path: 'invoice-bids/:id', component: InoviceBidsComponent,data: { title: 'Invoice Bids' } },
+  { path: 'kycsubmissions', component: KycSubmissionsComponent,data: { title: 'KYC Submissions' } },
+
 ];
 
 @NgModule({

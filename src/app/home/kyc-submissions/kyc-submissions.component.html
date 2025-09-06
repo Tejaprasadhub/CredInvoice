@@ -1,0 +1,48 @@
+<p-toast />
+    <p-confirmPopup />
+<div class="row app-container">
+    <div class="col-md-12">
+        <div class="row align-items-center">
+    <p-toast />
+    <p-table [value]="kycSubmissions" dataKey="id" [tableStyle]="{ 'min-width': '60rem' }"  (onRowExpand)="onRowExpand($event)" (onRowCollapse)="onRowCollapse($event)">
+        
+        <ng-template pTemplate="header">
+            <tr>
+                <th style="width: 5rem"></th>
+                <th pSortableColumn="user_id">User Id</th>
+                <th pSortableColumn="submitted_at">Submitted at </th>
+                <th pSortableColumn="updated_at">Updated at </th>
+                <th pSortableColumn="status">Status </th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-product let-expanded="expanded">
+            <tr>
+                <td>
+                    <p-button type="button" pRipple [pRowToggler]="product" [text]="true" [rounded]="true" [plain]="true" [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'" />
+                </td>
+                <td>{{ product.user_id }}</td>
+                <td>{{ product.submitted_at }}</td>
+                <td>{{ product.updated_at }}</td>
+                <td>{{ product.status }}
+                </td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="rowexpansion" let-product>
+            <tr>
+                <td colspan="1"></td>
+                <td colspan="2">
+                    <div class="p-3">
+                        dsfsdf
+                    </div>
+                </td>
+                <td colspan="2">
+                    <div class="p-3">
+                        dsfsdf
+                    </div>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+        </div>
+    </div>
+</div>

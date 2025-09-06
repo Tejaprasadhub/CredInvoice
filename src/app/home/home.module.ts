@@ -18,7 +18,8 @@ import { InvoiceDetailsComponent } from './invoice-details/invoice-details.compo
 import { SellerInvoiceDetailsComponent } from './seller-invoice-details/seller-invoice-details.component';
 import { SellerInvoicesComponent } from './seller-invoices/seller-invoices.component';
 import { InoviceBidsComponent } from './inovice-bids/inovice-bids.component';
-import { HomepageComponent } from '../homepage/homepage.component';
+import { HomepageComponent } from './homepage/homepage.component';
+import { KycSubmissionsComponent } from './kyc-submissions/kyc-submissions.component';
 
 
 @NgModule({
@@ -36,7 +37,8 @@ import { HomepageComponent } from '../homepage/homepage.component';
     SellerInvoiceDetailsComponent,
     SellerInvoicesComponent,
     InoviceBidsComponent,
-    HomepageComponent
+    HomepageComponent,
+    KycSubmissionsComponent
   ],
   imports: [
     ReactiveFormsModule,  

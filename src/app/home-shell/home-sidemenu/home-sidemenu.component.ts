@@ -30,7 +30,8 @@ constructor(private sessionStorageService:SessionStorageTokenService,
       { label: 'Reports', icon: 'pi pi-chart-bar', routerLink: ['/home/reports'],url:'assets/icons/ChartBar.png' },
       { label: 'My Vendors', icon: 'pi pi-users', routerLink: ['/home/vendors'],url:'assets/icons/vendors.png' },
       { label: 'Negotiate', icon: 'pi pi-comments', routerLink: ['/home/negotiate'],url:'assets/icons/Handshake.png' },
-      { label: 'Bidding Management', icon: 'pi pi-gavel', routerLink: ['/home/bidding'],url:'assets/icons/Scales.png' }
+      { label: 'Bidding Management', icon: 'pi pi-gavel', routerLink: ['/home/bidding'],url:'assets/icons/Scales.png' },
+      { label: 'KYC Submissions', icon: 'pi pi-gavel', routerLink: ['/home/kycsubmissions'],url:'assets/icons/Scales.png' }
     ];
 
    

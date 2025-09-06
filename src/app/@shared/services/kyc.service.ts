@@ -90,4 +90,12 @@ export class KycService {
         return response;
       }), catchError(e => this.apiResponseHandler.handleError(e)));
   }
+
+  getAdminKycSubmissions() {
+    let url = "admin/submissions";
+    return this.httpClient.get(url).pipe(
+      map((response: any) => {
+        return response;
+      }), catchError(e => this.apiResponseHandler.handleError(e)));
+  }
 }
