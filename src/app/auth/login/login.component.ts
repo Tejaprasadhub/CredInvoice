@@ -30,15 +30,15 @@ export class LoginComponent {
   
   ngOnInit(): void {   
     this.createloginForm();
-     this.getKycSubmissions();
+    //  this.getKycSubmissions();
   }
 
-   getKycSubmissions() {
-        this.kycService.getKycSubmissions()
-          .pipe(takeUntil(this.ngUnsubscribe)).subscribe((result: any) => {
-            this.kycSubmissions = result?.data || [];  
-          })
-    }
+  //  getKycSubmissions() {
+  //       this.kycService.getKycSubmissions()
+  //         .pipe(takeUntil(this.ngUnsubscribe)).subscribe((result: any) => {
+  //           this.kycSubmissions = result?.data || [];  
+  //         })
+  //   }
 
   loginFormSubmit(){
     this.loginSubmitAttempt = true;
@@ -47,12 +47,15 @@ export class LoginComponent {
       this.authService.login(this.loginForm.value)
       .pipe(takeUntil(this.ngUnsubscribe)).subscribe((result: any) => {
         if (result.status) {
-           if(this.kycSubmissions.length > 0 &&  this.kycSubmissions[0].status == 'ACCEPTED'){
-                    this.router.navigate(['/home/dashboard'], { relativeTo: this.route });
-           }else{
-            this.router.navigate(['/kyc/view'], { relativeTo: this.route });
-           }
-          // this.router.navigate(['/kyc/view'], { relativeTo: this.route });
+          if(result?.data?.user_type == "ADMIN"){
+            this.router.navigate(['/home/dashboard'], { relativeTo: this.route });
+          }else{
+            if(result?.data?.kyc_status == 'APPROVED'){
+              this.router.navigate(['/home/dashboard'], { relativeTo: this.route });
+            }else{
+              this.router.navigate(['/kyc/view'], { relativeTo: this.route });
+            }
+          }
         }
         else{
           this.router.navigate(['/login'], {relativeTo: this.route})

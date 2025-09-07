@@ -25,8 +25,8 @@
                         <td>{{ product.submitted_at }}</td>
                         <td>{{ product.updated_at }}</td>
                         <td>
-                            <p-button *ngIf="product.status == 'SUBMITTED' || product.status == 'ACCEPTED'" (click)="acceptOrRejectSubmissions(product?.id,'ACCEPTED')"  class="btn-success mr-2" label="ACCEPT"  type="button"></p-button>
-                            <p-button *ngIf="product.status == 'SUBMITTED'  || product.status == 'REJECTED'" (click)="acceptOrRejectSubmissions(product?.id,'REJECTED')" class="btn-danger mr-2" label="REJECT"  type="button"></p-button>
+                            <p-button *ngIf="product.status == 'SUBMITTED' || product.status == 'APPROVED'" [disabled]="product.status == 'APPROVED'" (click)="acceptOrRejectSubmissions(product?.id,'APPROVED')"  class="btn-success mr-2" label="{{product.status == 'APPROVED' ? 'APPROVED' : 'APPROVE'}}"  type="button"></p-button>
+                            <p-button *ngIf="product.status == 'SUBMITTED'  || product.status == 'REJECTED'" [disabled]="product.status == 'REJECTED'" (click)="acceptOrRejectSubmissions(product?.id,'REJECTED')" class="btn-danger mr-2" label="{{product.status == 'REJECTED' ? 'REJECTED' : 'REJECT'}}"  type="button"></p-button>
                         </td>
 
 
